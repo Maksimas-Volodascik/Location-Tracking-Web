@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
