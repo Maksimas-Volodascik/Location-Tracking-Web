@@ -16,19 +16,45 @@ export function LoginForm() {
     >
       <Card
         sx={{
-          border: "1px solid #0a0a0a",
-          backgroundColor: "#121212",
+          background: " #111111",
+          border: "1px solid #1e1e1e",
           width: "350px",
           height: "500px",
         }}
       >
         <CardContent>
-          <Typography
+          <Box // Icon
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "15px",
+              marginTop: "5px",
+            }}
+          >
+            <Box
+              component="img"
+              src="src\assets\navIcon.png"
+              sx={{
+                alignContent: "center",
+                alignItems: "center",
+                width: "40px",
+                height: "40px",
+              }}
+            />
+          </Box>
+
+          <Typography // Title
             variant="h5"
             align="center"
-            sx={{ color: "#ff7d13", marginBottom: 3, fontWeight: "bold" }}
+            sx={{ color: "#fd8636", fontWeight: "bold" }}
           >
             Welcome back !
+          </Typography>
+          <Typography
+            align="center"
+            sx={{ color: "#464646", fontSize: "13px", marginBottom: 4 }}
+          >
+            Sign in to continue to your account
           </Typography>
 
           <Box
@@ -45,13 +71,20 @@ export function LoginForm() {
               <Link
                 href="#"
                 underline="hover"
-                sx={{ fontSize: 12, color: "#ff7d13" }}
+                sx={{ fontSize: 12, color: "#fd8636" }}
               >
                 Forgot password?
               </Link>
             </Box>
 
             <Button>Sign In</Button>
+
+            <Typography
+              align="center"
+              sx={{ color: "#363636", fontSize: "12px", marginTop: 2 }}
+            >
+              Don't have an account? <a href="/register">Sign up</a>
+            </Typography>
           </Box>
         </CardContent>
       </Card>

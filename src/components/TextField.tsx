@@ -16,20 +16,20 @@ export default function TextField({ label, type }: TextFieldProps) {
       sx={{
         "& .MuiInputBase-input": {
           //main text
-          color: "#ff7d13",
+          color: "#fd8636",
         },
         "& .MuiInputLabel-root": {
           //label
-          color: "#ff7d13",
+          color: "#fd8636",
         },
         "& .MuiFilledInput-underline:before": {
-          borderBottomColor: "#ff7d13",
+          borderBottomColor: "#fd8636",
         },
         "& .MuiFilledInput-underline:after": {
-          borderBottomColor: "#ff7d13",
+          borderBottomColor: "#fd8636",
         },
         "& .MuiFilledInput-underline:hover:before": {
-          borderBottomColor: "#ff7d13",
+          borderBottomColor: "#fd8636",
         },
         backgroundColor: "#212121",
       }}
