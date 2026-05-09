@@ -3,7 +3,7 @@ import Button from "./Button";
 import TextField from "./TextField";
 import { AuthLayout } from "./layout/AuthLayout";
 
-export function LoginForm() {
+export function RegisterForm() {
   return (
     <AuthLayout>
       <Card
@@ -39,42 +39,45 @@ export function LoginForm() {
             align="center"
             sx={{ color: "#fd8636", fontWeight: "bold" }}
           >
-            Welcome back !
+            Create account
           </Typography>
           <Typography
             align="center"
             sx={{ color: "#464646", fontSize: "13px", marginBottom: 4 }}
           >
-            Sign in to continue to your account
+            Sign up and get started for free
           </Typography>
 
-          <Box
+          <Box //Fields
             sx={{
               display: "flex",
               flexDirection: "column",
               gap: 2,
             }}
           >
-            <TextField label="Email" type="email"></TextField>
-            <TextField label="Password" type="password"></TextField>
-
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Link
-                href="#"
-                underline="hover"
-                sx={{ fontSize: 12, color: "#fd8636" }}
-              >
-                Forgot password?
-              </Link>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              <TextField label="First name" type="text"></TextField>
+              <TextField label="Last name" type="text"></TextField>
             </Box>
 
-            <Button>Sign In</Button>
+            <TextField label="Email" type="email"></TextField>
+
+            <TextField label="Password" type="password"></TextField>
+            <Typography
+              sx={{ color: "#363636", fontSize: "12px", marginTop: "-10px" }}
+            >
+              Min. 8 characters, mix of letters & numbers
+            </Typography>
+
+            <TextField label="Confirm password" type="password"></TextField>
+
+            <Button>Create account</Button>
 
             <Typography
               align="center"
               sx={{ color: "#363636", fontSize: "12px", marginTop: 2 }}
             >
-              Don't have an account? <a href="/register">Sign up</a>
+              Already have an account? <a href="/register">Sign in</a>
             </Typography>
           </Box>
         </CardContent>
