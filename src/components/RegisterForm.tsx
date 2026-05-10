@@ -2,8 +2,35 @@ import { Box, Card, CardContent, Typography, Link } from "@mui/material";
 import Button from "./Button";
 import TextField from "./TextField";
 import { AuthLayout } from "./layout/AuthLayout";
+import { useState } from "react";
+import type { RegisterProps } from "../types/user";
+import { userRegister } from "../services";
+import { useNavigate } from "react-router-dom";
+import { LoginForm } from "./LoginForm";
+import LoginPage from "../pages/LoginPage";
 
 export function RegisterForm() {
+  const [formData, setFormData] = useState<RegisterProps>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+  const navigate = useNavigate();
+
+  async function onSubmit(data: RegisterProps) {
+    const response = await userRegister(data);
+    if (response == null) {
+      navigate("/login");
+    }
+    console.log(response);
+  }
+
   return (
     <AuthLayout>
       <Card
@@ -56,22 +83,47 @@ export function RegisterForm() {
             }}
           >
             <Box sx={{ display: "flex", gap: "10px" }}>
-              <TextField label="First name" type="text"></TextField>
-              <TextField label="Last name" type="text"></TextField>
+              <TextField
+                name="firstName"
+                label="First name"
+                type="text"
+                onChange={handleChange}
+              ></TextField>
+              <TextField
+                name="lastName"
+                label="Last name"
+                type="text"
+                onChange={handleChange}
+              ></TextField>
             </Box>
 
-            <TextField label="Email" type="email"></TextField>
+            <TextField
+              name="email"
+              label="Email"
+              type="email"
+              onChange={handleChange}
+            ></TextField>
 
-            <TextField label="Password" type="password"></TextField>
+            <TextField
+              name="password"
+              label="Password"
+              type="password"
+              onChange={handleChange}
+            ></TextField>
             <Typography
               sx={{ color: "#363636", fontSize: "12px", marginTop: "-10px" }}
             >
               Min. 8 characters, mix of letters & numbers
             </Typography>
 
-            <TextField label="Confirm password" type="password"></TextField>
+            <TextField
+              name="confPassword"
+              label="Confirm password"
+              type="password"
+              onChange={handleChange}
+            ></TextField>
 
-            <Button>Create account</Button>
+            <Button onClick={() => onSubmit(formData)}>Create account</Button>
 
             <Typography
               align="center"
