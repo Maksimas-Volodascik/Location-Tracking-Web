@@ -2,8 +2,29 @@ import { Box, Card, CardContent, Typography, Link } from "@mui/material";
 import Button from "./Button";
 import TextField from "./TextField";
 import { AuthLayout } from "./layout/AuthLayout";
+import { useState } from "react";
+import type { LoginProps } from "../types/user";
+import { userLogin } from "../services";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
+  const [formData, setFormData] = useState<LoginProps>({
+    email: "",
+    password: "",
+  });
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const navigate = useNavigate();
+
+  async function onSubmit(data: LoginProps) {
+    const response = await userLogin(data);
+    console.log(response);
+  }
+
   return (
     <AuthLayout>
       <Card
@@ -55,8 +76,18 @@ export function LoginForm() {
               gap: 2,
             }}
           >
-            <TextField label="Email" type="email"></TextField>
-            <TextField label="Password" type="password"></TextField>
+            <TextField
+              label="Email"
+              type="email"
+              name="email"
+              onChange={handleOnChange}
+            ></TextField>
+            <TextField
+              label="Password"
+              type="password"
+              name="password"
+              onChange={handleOnChange}
+            ></TextField>
 
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               <Link
@@ -68,7 +99,7 @@ export function LoginForm() {
               </Link>
             </Box>
 
-            <Button>Sign In</Button>
+            <Button onClick={() => onSubmit(formData)}>Sign In</Button>
 
             <Typography
               align="center"

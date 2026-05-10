@@ -1,18 +1,27 @@
 import { TextField as MuiTextField } from "@mui/material";
 
 type TextFieldProps = {
+  name: string;
   label: string;
   type: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export default function TextField({ label, type }: TextFieldProps) {
+export default function TextField({
+  name,
+  label,
+  type,
+  onChange,
+}: TextFieldProps) {
   return (
     <MuiTextField
+      name={name}
       label={label}
       type={type}
       variant="filled"
       fullWidth
       color="warning"
+      onChange={onChange}
       sx={{
         "& .MuiInputBase-input": {
           //main text

@@ -3,13 +3,15 @@ import type { ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Button({ children }: ButtonProps) {
+export default function Button({ children, onClick }: ButtonProps) {
   return (
     <MuiButton
       variant="contained"
       fullWidth
+      onClick={onClick}
       sx={{
         width: "100%",
         height: "50px",
