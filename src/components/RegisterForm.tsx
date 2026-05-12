@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography, Link } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import Button from "./Button";
 import TextField from "./TextField";
 import { AuthLayout } from "./layout/AuthLayout";
@@ -6,8 +6,6 @@ import { useState } from "react";
 import type { RegisterProps } from "../types/user";
 import { userRegister } from "../services";
 import { useNavigate } from "react-router-dom";
-import { LoginForm } from "./LoginForm";
-import LoginPage from "../pages/LoginPage";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterProps>({
