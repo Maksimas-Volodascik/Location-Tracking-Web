@@ -64,7 +64,7 @@ export function DeviceActivityCard() {
                 innerRadius={65}
                 outerRadius={85}
                 paddingAngle={5}
-                cornerRadius={8}
+                cornerRadius={4}
                 stroke="none"
                 shape={MyCustomPie}
               ></Pie>
