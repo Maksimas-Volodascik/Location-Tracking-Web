@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { LoginProps } from "../types/user";
 import { userLogin } from "../services";
 import { useNavigate } from "react-router-dom";
+import { saveAccessToken } from "../services/tokenService";
 
 export function LoginForm() {
   const [formData, setFormData] = useState<LoginProps>({
@@ -22,7 +23,9 @@ export function LoginForm() {
 
   async function onSubmit(data: LoginProps) {
     const response = await userLogin(data);
-    console.log(response);
+    if (response) {
+      saveAccessToken(response);
+    }
   }
 
   return (
