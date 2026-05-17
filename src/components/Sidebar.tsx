@@ -1,6 +1,16 @@
 import { Box, Typography } from "@mui/material";
+import Button from "./Button";
+import { clearAccessToken } from "../services/tokenService";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    clearAccessToken();
+    navigate("/login");
+  };
+
   return (
     <Box
       sx={{
@@ -44,6 +54,7 @@ export default function Sidebar() {
           </Typography>
         </Box>
       </Box>
+      <Button onClick={() => handleLogout()}>Log out</Button>
     </Box>
   );
 }

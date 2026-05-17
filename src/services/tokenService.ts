@@ -13,7 +13,7 @@ export function clearAccessToken() {
 }
 
 export function isTokenExpired(): boolean {
-  const token = getAccessToken();
+  const token = localStorage.getItem("accessToken");
 
   if (!token) {
     return true; // no token found

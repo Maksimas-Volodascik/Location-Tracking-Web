@@ -1,4 +1,4 @@
-import { getAccessToken, isTokenExpired } from "./tokenService";
+import { isTokenExpired } from "./tokenService";
 import { Navigate, Outlet } from "react-router-dom";
 
 export function PublicAccess() {

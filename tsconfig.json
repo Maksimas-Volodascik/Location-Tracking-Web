@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    "strict": true,
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true
   },
   "files": [],
   "references": [
