@@ -2,8 +2,9 @@ import { PageLayout } from "../components/layout/PageLayout";
 import Sidebar from "../components/Sidebar";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
-import { MetricCard } from "../components/DashboardCards/MetricCard";
-import { DeviceActivityCard } from "../components/DashboardCards/DeviceActivityCard";
+import { MetricCard } from "../components/dashboardCards/MetricCard";
+import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
+import { Card } from "../components/Card";
 
 const TestKPIJSON = {
   Users: {
@@ -49,7 +50,7 @@ export default function DashboardPage() {
 
           <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="3fr 1fr">
             <DeviceActivityCard />
-            <DeviceActivityCard />
+            <Card />
           </DashboardGrid>
         </ContentLayout>
       </PageLayout>
