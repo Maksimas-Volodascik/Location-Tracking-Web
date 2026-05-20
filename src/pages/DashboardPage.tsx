@@ -4,29 +4,58 @@ import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
 import { MetricCard } from "../components/dashboardCards/MetricCard";
 import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
-import { Card } from "../components/Card";
+import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
+import type { ConnMetrics } from "../types/dashboard";
 
-const TestKPIJSON = {
-  Users: {
-    Total: 12,
-    Admin: 10,
-    Users: 2,
+const MetricCardJson = {
+  users: {
+    total: 12,
+    admin: 10,
+    users: 2,
   },
-  Records: {
-    Total: 9318,
-    DailyRecords: 15,
+  records: {
+    total: 9318,
+    daily: 15,
   },
-  Devices: {
-    Total: 13,
-    WeeklyDevices: 1,
+  devices: {
+    total: 13,
+    weekly: 1,
   },
-  Errors: {
-    Total: 1,
-    WeeklyErrors: 1,
+  errors: {
+    total: 1,
+    weekly: 1,
   },
 };
 
-const result = Object.entries(TestKPIJSON).map((value, key) => {
+const ConnMetricsJson: ConnMetrics = {
+  timestamp: "2023-10-01T12:00:00Z",
+  latency: {
+    lateRecords: 1,
+    latePercentage: 9,
+    latePerDevice: 4,
+    futureRecords: 7,
+    futurePercentage: 1,
+    futurePerDevice: 5,
+  },
+  connections: {
+    active: 97,
+  },
+  bandwidth: {
+    used: 102.2,
+    average: 12.4,
+    series: [
+      { timestamp: "Mon", value: 2.5 },
+      { timestamp: "Tue", value: 3.6 },
+      { timestamp: "Wed", value: 4.8 },
+      { timestamp: "Thu", value: 5.7 },
+      { timestamp: "Fri", value: 6.9 },
+      { timestamp: "Sat", value: 7.1 },
+      { timestamp: "Sun", value: 8.3 },
+    ],
+  },
+};
+
+const result = Object.entries(MetricCardJson).map((value, key) => {
   return {
     category: key,
     value: value,
@@ -48,9 +77,9 @@ export default function DashboardPage() {
             ))}
           </DashboardGrid>
 
-          <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="3fr 1fr">
+          <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
             <DeviceActivityCard />
-            <Card />
+            <ConnHealthCard metric={ConnMetricsJson} />
           </DashboardGrid>
         </ContentLayout>
       </PageLayout>

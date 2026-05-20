@@ -2,40 +2,40 @@ import { Box, Typography } from "@mui/material";
 import { Card } from "../Card";
 
 type UsersKPI = {
-  Total: number;
-  Admin: number;
-  Users: number;
+  total: number;
+  admin: number;
+  users: number;
 };
 
 type RecordsKPI = {
-  Total: number;
-  DailyRecords: number;
+  total: number;
+  daily: number;
 };
 
 type DevicesKPI = {
-  Total: number;
-  WeeklyDevices: number;
+  total: number;
+  weekly: number;
 };
 
 type ErrorsKPI = {
-  Total: number;
-  WeeklyErrors: number;
+  total: number;
+  weekly: number;
 };
 
 type CardViewMap = {
-  Users: {
+  users: {
     metricLabel: string;
     description: (kpi: UsersKPI) => React.ReactNode;
   };
-  Records: {
+  records: {
     metricLabel: string;
     description: (kpi: RecordsKPI) => React.ReactNode;
   };
-  Devices: {
+  devices: {
     metricLabel: string;
     description: (kpi: DevicesKPI) => React.ReactNode;
   };
-  Errors: {
+  errors: {
     metricLabel: string;
     description: (kpi: ErrorsKPI) => React.ReactNode;
   };
@@ -47,49 +47,49 @@ type MetricCardProps = {
 };
 
 const cardView: CardViewMap = {
-  Users: {
+  users: {
     metricLabel: "Total users with access",
     description: (kpi: UsersKPI) => (
       <>
         <Box component="span" sx={{ color: "#e2e2e2" }}>
-          {kpi.Admin}
+          {kpi.admin}
         </Box>{" "}
         admins -{" "}
         <Box component="span" sx={{ color: "#e2e2e2" }}>
-          {kpi.Users}
+          {kpi.users}
         </Box>{" "}
         users
       </>
     ),
   },
-  Records: {
+  records: {
     metricLabel: "Records received this month",
     description: (kpi: RecordsKPI) => (
       <>
         <Box component="span" sx={{ color: "#e2e2e2" }}>
-          {kpi.DailyRecords}{" "}
+          {kpi.daily}{" "}
         </Box>
         in last 24hours
       </>
     ),
   },
-  Devices: {
+  devices: {
     metricLabel: "Total registered devices",
     description: (kpi: DevicesKPI) => (
       <>
         <Box component="span" sx={{ color: "#e2e2e2" }}>
-          {kpi.WeeklyDevices}{" "}
+          {kpi.weekly}{" "}
         </Box>
         devices added in the past week
       </>
     ),
   },
-  Errors: {
+  errors: {
     metricLabel: "Errors",
     description: (kpi: ErrorsKPI) => (
       <>
         <Box component="span" sx={{ color: "#e2e2e2" }}>
-          {kpi.WeeklyErrors}{" "}
+          {kpi.weekly}{" "}
         </Box>
         errors in the past week
       </>
@@ -118,7 +118,7 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
           color: "#e2e2e2",
         }}
       >
-        {kpiValues.Total}
+        {kpiValues.total}
       </Typography>
       <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
         {cardView[cardType as keyof typeof cardView].metricLabel}
