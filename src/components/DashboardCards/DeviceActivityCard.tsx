@@ -27,7 +27,7 @@ export function DeviceActivityCard() {
           Across all registered devices
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center", paddingTop: "30px" }}>
         <DeviceActivityPieChart />
         <DeviceActivityLineChart />
       </Box>

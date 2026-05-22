@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { Card } from "../Card";
 import type { ConnMetrics } from "../../types/dashboard";
-import { useState } from "react";
 import { formatLable } from "../../utils";
+import { ConnHealthBarChart } from "./ConnHealthBarChart";
 
 type MetricProp = {
   metric: ConnMetrics;
@@ -70,6 +70,7 @@ export function ConnHealthCard({ metric }: MetricProp) {
             justifyContent: "space-between",
             borderTop: "1px solid #0a0a09",
             marginTop: "20px",
+            marginBottom: "15px",
             paddingTop: "10px",
           }}
         >
@@ -95,6 +96,7 @@ export function ConnHealthCard({ metric }: MetricProp) {
             {metric.connections.active}
           </Typography>
         </Box>
+        <ConnHealthBarChart metric={metric} />
       </Box>
     </Card>
   );

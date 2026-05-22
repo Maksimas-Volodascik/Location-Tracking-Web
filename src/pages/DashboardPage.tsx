@@ -44,13 +44,13 @@ const ConnMetricsJson: ConnMetrics = {
     used: 102.2,
     average: 12.4,
     series: [
-      { timestamp: "Mon", value: 2.5 },
-      { timestamp: "Tue", value: 3.6 },
+      { timestamp: "Mon", value: 3.5 },
+      { timestamp: "Tue", value: 5.1 },
       { timestamp: "Wed", value: 4.8 },
       { timestamp: "Thu", value: 5.7 },
       { timestamp: "Fri", value: 6.9 },
-      { timestamp: "Sat", value: 7.1 },
-      { timestamp: "Sun", value: 8.3 },
+      { timestamp: "Sat", value: 2.1 },
+      { timestamp: "Sun", value: 1.2 },
     ],
   },
 };
