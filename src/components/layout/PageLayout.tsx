@@ -1,11 +1,8 @@
 import { Box } from "@mui/material";
-import type { ReactNode } from "react";
+import Sidebar from "../Sidebar";
+import { Outlet } from "react-router-dom";
 
-type PageProps = {
-  children: ReactNode;
-};
-
-export function PageLayout({ children }: PageProps) {
+export function PageLayout() {
   return (
     <Box
       sx={{
@@ -15,7 +12,8 @@ export function PageLayout({ children }: PageProps) {
         background: "#111111",
       }}
     >
-      {children}
+      <Sidebar />
+      <Outlet />
     </Box>
   );
 }

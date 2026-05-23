@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import { PrivateAccess, PublicAccess } from "./services/authProvider";
+import { PageLayout } from "./components/layout/PageLayout";
 
 export const App = () => {
   return (
@@ -14,8 +15,10 @@ export const App = () => {
         <Route path="*" element={<RegisterPage />} />
       </Route>
       <Route element={<PrivateAccess />}>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
       </Route>
     </Routes>
   );

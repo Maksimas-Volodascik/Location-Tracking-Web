@@ -65,24 +65,21 @@ const result = Object.entries(MetricCardJson).map((value, key) => {
 export default function DashboardPage() {
   return (
     <>
-      <PageLayout>
-        <Sidebar />
-        <ContentLayout>
-          <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
-            {result.map((category) => (
-              <MetricCard
-                kpiValues={category.value[1]}
-                cardType={category.value[0]}
-              />
-            ))}
-          </DashboardGrid>
+      <ContentLayout>
+        <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
+          {result.map((category) => (
+            <MetricCard
+              kpiValues={category.value[1]}
+              cardType={category.value[0]}
+            />
+          ))}
+        </DashboardGrid>
 
-          <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
-            <DeviceActivityCard />
-            <ConnHealthCard metric={ConnMetricsJson} />
-          </DashboardGrid>
-        </ContentLayout>
-      </PageLayout>
+        <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
+          <DeviceActivityCard />
+          <ConnHealthCard metric={ConnMetricsJson} />
+        </DashboardGrid>
+      </ContentLayout>
     </>
   );
 }
