@@ -1,25 +1,30 @@
-import { Box, Menu, MenuItem, Typography } from "@mui/material";
-import Button from "./Button";
-import { clearAccessToken } from "../services/tokenService";
-import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import UserIcon from "@mui/icons-material/Person";
+import DevicesIcon from "@mui/icons-material/DeveloperBoard";
+import TelematicsIcon from "@mui/icons-material/Monitor";
+import SpeedIcon from "@mui/icons-material/Speed";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import AccessIcon from "@mui/icons-material/Groups";
+import DocumentationIcon from "@mui/icons-material/QuestionMark";
+import ApiIcon from "@mui/icons-material/Api";
+
+import { ProfileMenu } from "./sidebarComponents/profileMenu";
 
 export default function Sidebar() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    clearAccessToken();
-    navigate("/login");
-  };
+  const [openAccControl, setOpenAccControl] = useState(true);
+  const [openTelematics, setOpenTelematics] = useState(true);
+  const [openDocs, setOpenDocs] = useState(true);
 
   return (
     <>
@@ -65,77 +70,93 @@ export default function Sidebar() {
             </Typography>
           </Box>
         </Box>
-        <Box sx={{ flex: 1 }}></Box>
 
-        <Box
-          sx={{
-            padding: "5px 12px",
-            borderTop: "1px solid #0a0a09",
-            color: "white",
-          }}
-        >
-          <Box
-            onClick={handleClick}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "15%",
-              marginLeft: "10px",
-              textAlign: "center",
-              "&:hover": {
-                background: "#2b2b2b",
-                borderRadius: "10px",
-              },
-            }}
+        <Box sx={{ flex: 1 }}>
+          <List
+            sx={{ width: "100%", maxWidth: 360, color: "white" }}
+            component="nav"
+            dense={true}
           >
-            <Box
-              component="img"
-              src="src\assets\navIcon.png"
-              sx={{
-                width: "32px",
-                height: "32px",
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
 
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "12px",
-                fontWeight: "bold",
+            <ListItemButton onClick={() => setOpenTelematics(!openTelematics)}>
+              <ListItemIcon>
+                <TelematicsIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Telematics" />
+              {openTelematics ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            <Collapse in={openTelematics} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding dense={true}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <DevicesIcon sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Devices" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton
+              onClick={() => {
+                setOpenAccControl(!openAccControl);
               }}
-            />
-            <Box>
-              <Box>Name/Email</Box>
-              <Box>Role goes here</Box>
-            </Box>
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            slotProps={{
-              paper: {
-                sx: {
-                  backgroundColor: "#2b2929",
-                },
-              },
-            }}
-          >
-            <MenuItem
-              sx={{ color: "white", fontWeight: "bold" }}
-              onClick={handleLogout}
             >
-              Logout
-            </MenuItem>
-          </Menu>
+              <ListItemIcon>
+                <AccessIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Access Control" />
+              {openAccControl ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            <Collapse in={openAccControl} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding dense={true}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <UserIcon sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Users" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <SpeedIcon sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Limits" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton
+              onClick={() => {
+                setOpenDocs(!openDocs);
+              }}
+            >
+              <ListItemIcon>
+                <DocumentationIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Documentation" />
+              {openDocs ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+            <Collapse in={openDocs} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding dense={true}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <ApiIcon sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText primary="API" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </List>
         </Box>
+        <ProfileMenu />
       </Box>
     </>
   );
