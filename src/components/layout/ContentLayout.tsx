@@ -11,7 +11,7 @@ export function ContentLayout({ children }: ContentProps) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden",
+        overflow: "auto",
         width: "100%",
       }}
     >

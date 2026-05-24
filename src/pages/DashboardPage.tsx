@@ -1,210 +1,83 @@
-import { Box, Card, Typography } from "@mui/material";
-import { PageLayout } from "../components/layout/PageLayout";
-import Sidebar from "../components/Sidebar";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import Button from "../components/Button";
+import { DashboardGrid } from "../components/layout/DashboardGrid";
+import { MetricCard } from "../components/dashboardCards/MetricCard";
+import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
+import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
+import type { ConnMetrics } from "../types/dashboard";
+
+const MetricCardJson = {
+  users: {
+    total: 12,
+    admin: 10,
+    users: 2,
+  },
+  records: {
+    total: 9318,
+    daily: 15,
+  },
+  devices: {
+    total: 13,
+    weekly: 1,
+  },
+  errors: {
+    total: 1,
+    weekly: 1,
+  },
+};
+
+const ConnMetricsJson: ConnMetrics = {
+  timestamp: "2023-10-01T12:00:00Z",
+  latency: {
+    lateRecords: 1,
+    latePercentage: 9,
+    latePerDevice: 4,
+    futureRecords: 7,
+    futurePercentage: 1,
+    futurePerDevice: 5,
+  },
+  connections: {
+    active: 97,
+  },
+  bandwidth: {
+    used: 102.2,
+    average: 12.4,
+    series: [
+      { timestamp: "Mon", value: 3.5 },
+      { timestamp: "Tue", value: 5.1 },
+      { timestamp: "Wed", value: 4.8 },
+      { timestamp: "Thu", value: 5.7 },
+      { timestamp: "Fri", value: 6.9 },
+      { timestamp: "Sat", value: 2.1 },
+      { timestamp: "Sun", value: 1.2 },
+    ],
+  },
+};
+
+const result = Object.entries(MetricCardJson).map((value, key) => {
+  return {
+    category: key,
+    value: value,
+  };
+});
 
 export default function DashboardPage() {
   return (
     <>
-      <PageLayout>
-        <Sidebar />
-        <ContentLayout>
-          <Box
-            sx={{
-              padding: "30px",
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "14px",
-            }}
-          >
-            <Card
-              sx={{
-                background: "#1a1917",
-                borderRadius: "1px solid #0a0a09",
-                position: "relative",
-                padding: "16px",
-              }}
-            >
-              <Typography
-                sx={{
-                  display: "flex",
-                  color: "#fd8636",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                }}
-              >
-                Devices
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  letterSpacing: "0.5px",
-                  color: "#e2e2e2",
-                }}
-              >
-                148
-              </Typography>
-              <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
-                Registered Devices
-              </Typography>
-              <Typography
-                sx={{
-                  marginTop: "14px",
-                  paddingTop: "14px",
-                  borderTop: "1px solid #0a0a09",
-                  color: "#8a8682",
-                  fontSize: "11px",
-                }}
-              >
-                <Typography sx={{ fontWeight: "bold", color: "#e2e2e2" }}>
-                  127
-                </Typography>
-                added this week
-              </Typography>
-            </Card>
-            <Card
-              sx={{
-                background: "#1a1917",
-                borderRadius: "1px solid #0a0a09",
-                position: "relative",
-                padding: "16px",
-              }}
-            >
-              <Typography
-                sx={{
-                  display: "flex",
-                  color: "#fd8636",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                }}
-              >
-                Devices
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  letterSpacing: "0.5px",
-                  color: "#e2e2e2",
-                }}
-              >
-                148
-              </Typography>
-              <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
-                Registered Devices
-              </Typography>
-              <Typography
-                sx={{
-                  marginTop: "14px",
-                  paddingTop: "14px",
-                  borderTop: "1px solid #0a0a09",
-                  color: "#8a8682",
-                  fontSize: "11px",
-                }}
-              >
-                <Typography sx={{ fontWeight: "bold", color: "#e2e2e2" }}>
-                  127
-                </Typography>
-                added this week
-              </Typography>
-            </Card>
-            <Card
-              sx={{
-                background: "#1a1917",
-                borderRadius: "1px solid #0a0a09",
-                position: "relative",
-                padding: "16px",
-              }}
-            >
-              <Typography
-                sx={{
-                  display: "flex",
-                  color: "#fd8636",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                }}
-              >
-                Devices
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  letterSpacing: "0.5px",
-                  color: "#e2e2e2",
-                }}
-              >
-                148
-              </Typography>
-              <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
-                Registered Devices
-              </Typography>
-              <Typography
-                sx={{
-                  marginTop: "14px",
-                  paddingTop: "14px",
-                  borderTop: "1px solid #0a0a09",
-                  color: "#8a8682",
-                  fontSize: "11px",
-                }}
-              >
-                <Typography sx={{ fontWeight: "bold", color: "#e2e2e2" }}>
-                  127
-                </Typography>
-                added this week
-              </Typography>
-            </Card>
-            <Card
-              sx={{
-                background: "#1a1917",
-                borderRadius: "1px solid #0a0a09",
-                position: "relative",
-                padding: "16px",
-              }}
-            >
-              <Typography
-                sx={{
-                  display: "flex",
-                  color: "#fd8636",
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                }}
-              >
-                Devices
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  letterSpacing: "0.5px",
-                  color: "#e2e2e2",
-                }}
-              >
-                148
-              </Typography>
-              <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
-                Registered Devices
-              </Typography>
-              <Typography
-                sx={{
-                  marginTop: "14px",
-                  paddingTop: "14px",
-                  borderTop: "1px solid #0a0a09",
-                  color: "#8a8682",
-                  fontSize: "11px",
-                }}
-              >
-                <Typography sx={{ fontWeight: "bold", color: "#e2e2e2" }}>
-                  127
-                </Typography>
-                added this week
-              </Typography>
-            </Card>
-          </Box>
-        </ContentLayout>
-      </PageLayout>
+      <ContentLayout>
+        <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
+          {result.map((category) => (
+            <MetricCard
+              kpiValues={category.value[1]}
+              cardType={category.value[0]}
+            />
+          ))}
+        </DashboardGrid>
+
+        <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
+          <DeviceActivityCard />
+          <ConnHealthCard metric={ConnMetricsJson} />
+        </DashboardGrid>
+      </ContentLayout>
     </>
   );
 }

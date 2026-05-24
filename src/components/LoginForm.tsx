@@ -22,7 +22,9 @@ export function LoginForm() {
 
   async function onSubmit(data: LoginProps) {
     const response = await userLogin(data);
-    console.log(response);
+    if (!response) {
+      navigate("/dashboard");
+    }
   }
 
   return (

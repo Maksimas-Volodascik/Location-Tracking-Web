@@ -1,4 +1,5 @@
 import { BASE_URL, type LoginProps, type RegisterProps } from "../types/user";
+import { saveAccessToken } from "./tokenService";
 
 export async function userRegister({
   email,
@@ -12,7 +13,7 @@ export async function userRegister({
       { method: "POST" },
     );
 
-    return null;
+    return await response.text();
   } catch (error: any) {
     if (error.message.includes("NetworkError")) {
       return "NETWORK_ERROR";
@@ -30,8 +31,8 @@ export async function userLogin({
       `${BASE_URL}users/login?Email=${email}&Password=${password}`,
       { method: "POST" },
     );
-
-    return await response.text();
+    saveAccessToken(await response.text());
+    return null;
   } catch (error: any) {
     if (error.message.includes("NetworkError")) {
       return "NETWORK_ERROR";
