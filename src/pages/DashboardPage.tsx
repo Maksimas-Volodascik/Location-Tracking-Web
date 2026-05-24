@@ -1,5 +1,3 @@
-import { PageLayout } from "../components/layout/PageLayout";
-import Sidebar from "../components/Sidebar";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
 import { MetricCard } from "../components/dashboardCards/MetricCard";

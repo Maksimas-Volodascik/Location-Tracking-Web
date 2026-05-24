@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import { PrivateAccess, PublicAccess } from "./services/authProvider";
 import { PageLayout } from "./components/layout/PageLayout";
+import DevicesPage from "./pages/DevicesPage";
 
 export const App = () => {
   return (
@@ -18,6 +19,7 @@ export const App = () => {
         <Route element={<PageLayout />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/devices" element={<DevicesPage />} />
         </Route>
       </Route>
     </Routes>

@@ -18,8 +18,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import AccessIcon from "@mui/icons-material/Groups";
 import DocumentationIcon from "@mui/icons-material/QuestionMark";
 import ApiIcon from "@mui/icons-material/Api";
-
-import { ProfileMenu } from "./sidebarComponents/profileMenu";
+import { Link } from "react-router-dom";
+import { ProfileMenu } from "./sidebarComponents/ProfileMenu";
 
 export default function Sidebar() {
   const [openAccControl, setOpenAccControl] = useState(true);
@@ -77,7 +77,7 @@ export default function Sidebar() {
             component="nav"
             dense={true}
           >
-            <ListItemButton>
+            <ListItemButton component={Link} to="dashboard">
               <ListItemIcon>
                 <DashboardIcon sx={{ color: "white" }} />
               </ListItemIcon>
@@ -94,7 +94,7 @@ export default function Sidebar() {
 
             <Collapse in={openTelematics} timeout="auto" unmountOnExit>
               <List component="div" disablePadding dense={true}>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="devices" sx={{ pl: 4 }}>
                   <ListItemIcon>
                     <DevicesIcon sx={{ color: "white" }} />
                   </ListItemIcon>
