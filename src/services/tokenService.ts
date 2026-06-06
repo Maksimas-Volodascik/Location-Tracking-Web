@@ -4,8 +4,8 @@ export function saveAccessToken(accessToken: string) {
   localStorage.setItem("accessToken", accessToken);
 }
 
-export function getAccessToken(): string | null {
-  return localStorage.getItem("accessToken");
+export function getAccessToken(): string | undefined {
+  return localStorage.getItem("accessToken")?.split(" ")[1];
 }
 
 export function clearAccessToken() {

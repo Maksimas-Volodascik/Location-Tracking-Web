@@ -12,3 +12,16 @@ export type LoginProps = {
   email: string;
   password: string;
 };
+
+export type DeviceData = {
+  id: string;
+  imei: string;
+  name: string;
+  isEnabled: boolean;
+  lastSeen: string;
+  dateAdded: string;
+  userId: string;
+  user: null;
+  deviceModelId: string;
+  deviceModel: null;
+};

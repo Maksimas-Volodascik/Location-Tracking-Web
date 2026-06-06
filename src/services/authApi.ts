@@ -1,4 +1,4 @@
-import { BASE_URL, type LoginProps, type RegisterProps } from "../types/user";
+import { BASE_URL, type LoginProps, type RegisterProps } from "../types/shared";
 import { saveAccessToken } from "./tokenService";
 
 export async function userRegister({

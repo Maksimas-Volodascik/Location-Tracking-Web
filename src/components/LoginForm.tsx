@@ -3,8 +3,8 @@ import Button from "./Button";
 import TextField from "./TextField";
 import { AuthLayout } from "./layout/AuthLayout";
 import { useState } from "react";
-import type { LoginProps } from "../types/user";
-import { userLogin } from "../services";
+import type { LoginProps } from "../types/shared";
+import { userLogin } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {

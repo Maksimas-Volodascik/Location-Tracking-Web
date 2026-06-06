@@ -4,8 +4,21 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { Box } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
+import { getAllDevices } from "../services/deviceApi";
+import { useQuery } from "@tanstack/react-query";
+import type { DeviceData } from "../types/shared";
 
 export default function DevicesPage() {
+  const {
+    data: devices,
+    isLoading,
+    error,
+  } = useQuery<DeviceData[] | null>({
+    queryKey: ["devices"],
+    queryFn: getAllDevices,
+    staleTime: 2 * 60 * 1000, // data refresh every 2 minutes
+  });
+
   const handleToggle = () => {
     console.log("Toggle clicked");
   };
@@ -27,13 +40,10 @@ export default function DevicesPage() {
         >
           <Box sx={{ color: "white", fontWeight: "bold" }}>Devices</Box>
         </Box>
-
         <List sx={{ width: "100%" }}>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
-
+          {devices?.map((device) => {
             return (
-              <ListItem disablePadding key={value}>
+              <ListItem disablePadding key={device.id}>
                 <ListItemButton
                   dense
                   onClick={handleToggle}
@@ -70,11 +80,11 @@ export default function DevicesPage() {
                     }}
                   >
                     <Box sx={{ fontWeight: "bold", fontSize: 14 }}>
-                      Title {value + 1}
+                      {device.name}
                     </Box>
 
                     <Box sx={{ fontSize: 12, color: "#555" }}>
-                      Serial #{1000 + value}
+                      IMEI #{device.imei}
                     </Box>
                   </Box>
 
@@ -86,11 +96,11 @@ export default function DevicesPage() {
                     }}
                   >
                     <Box sx={{ fontWeight: "bold", fontSize: 13 }}>
-                      Title {value + 1}
+                      Title {device.deviceModel}
                     </Box>
 
                     <Box sx={{ fontSize: 12, color: "#555" }}>
-                      Serial #{1000 + value}
+                      Serial #{device.lastSeen}
                     </Box>
                   </Box>
                 </ListItemButton>
