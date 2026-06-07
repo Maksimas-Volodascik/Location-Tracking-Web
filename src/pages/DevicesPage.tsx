@@ -7,6 +7,8 @@ import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
 import type { DeviceData } from "../types/shared";
+import { useState } from "react";
+import ModalView from "../components/ModalView";
 
 export default function DevicesPage() {
   const {
@@ -16,12 +18,12 @@ export default function DevicesPage() {
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
-    staleTime: 2 * 60 * 1000, // data refresh every 2 minutes
+    staleTime: Infinity,
   });
 
-  const handleToggle = () => {
-    console.log("Toggle clicked");
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   return (
     <>
@@ -41,12 +43,13 @@ export default function DevicesPage() {
           <Box sx={{ color: "white", fontWeight: "bold" }}>Devices</Box>
         </Box>
         <List sx={{ width: "100%" }}>
+          <ModalView isOpen={isOpen} handleClose={handleClose} />
           {devices?.map((device) => {
             return (
               <ListItem disablePadding key={device.id}>
                 <ListItemButton
                   dense
-                  onClick={handleToggle}
+                  onClick={handleOpen}
                   sx={{
                     bgcolor: "#e0e0e0",
                     padding: "20px 10px",
