@@ -1,9 +1,10 @@
 import { Box, Button, Drawer, Typography } from "@mui/material";
+import type { RecordData } from "../../types/shared";
 
 type RecordDrawerProps = {
   handleClose: () => void;
   openDrawer: boolean;
-  selectedItem: any;
+  selectedItem: RecordData | null;
 };
 
 export default function RecordDrawer({
@@ -49,7 +50,7 @@ export default function RecordDrawer({
           X
         </Button>
         <Typography sx={{ fontSize: "14px", color: "gray" }}>
-          {selectedItem ? selectedItem.id : ""}
+          {selectedItem ? selectedItem.receivedAt : ""}
         </Typography>
       </Box>
     </Drawer>

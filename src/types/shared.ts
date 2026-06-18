@@ -25,3 +25,10 @@ export type DeviceData = {
   deviceModelId: string;
   deviceModel: null;
 };
+
+export type RecordData = {
+  rawData: string;
+  parsedData: string;
+  receivedAt: string;
+  expiresAt: string;
+};

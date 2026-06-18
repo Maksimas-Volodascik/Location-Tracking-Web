@@ -2,14 +2,19 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-import DeviceList from "./DeviceList/DeviceList";
+import RecordList from "./DeviceList/RecordList";
 
 type ModalProps = {
   handleClose: () => void;
   isOpen: boolean;
+  deviceId: string | null;
 };
 
-export default function ModalView({ isOpen, handleClose }: ModalProps) {
+export default function ModalView({
+  isOpen,
+  handleClose,
+  deviceId,
+}: ModalProps) {
   if (!isOpen) return null;
   const [activeTab, setActiveTab] = useState("Logs"); //Toolbar
 
@@ -126,7 +131,7 @@ export default function ModalView({ isOpen, handleClose }: ModalProps) {
               scrollbarColor: "#3f3f3f #1a1917",
             }}
           >
-            <DeviceList />
+            <RecordList deviceId={deviceId} />
           </Box>
         </Box>
       </Modal>
