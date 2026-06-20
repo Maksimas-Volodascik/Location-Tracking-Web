@@ -13,13 +13,12 @@ export default function RecordList({ deviceId }: RecordListProps) {
   console.log(deviceId);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
-
   const {
     data: records,
     isLoading,
     error,
   } = useQuery<RecordData[] | null>({
-    queryKey: ["records"],
+    queryKey: ["records", deviceId],
     queryFn: () => getDeviceRecords(deviceId),
     staleTime: 1000 * 60 * 2,
   });

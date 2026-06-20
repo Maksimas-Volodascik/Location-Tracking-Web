@@ -18,7 +18,7 @@ export default function DevicesPage() {
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
-    staleTime: Infinity,
+    staleTime: 1000 * 60 * 2,
   });
 
   const [isOpen, setIsOpen] = useState(false);
