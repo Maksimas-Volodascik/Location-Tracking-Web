@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { LoginProps } from "../types/shared";
 import { userLogin } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../styles/theme";
 
 export function LoginForm() {
   const [formData, setFormData] = useState<LoginProps>({
@@ -31,8 +32,8 @@ export function LoginForm() {
     <AuthLayout>
       <Card
         sx={{
-          background: " #111111",
-          border: "2px solid #1e1e1e",
+          background: theme.bg.page,
+          border: theme.borders.primary,
           width: "350px",
         }}
       >
@@ -60,13 +61,20 @@ export function LoginForm() {
           <Typography // Title
             variant="h5"
             align="center"
-            sx={{ color: "#fd8636", fontWeight: "bold" }}
+            sx={{
+              color: theme.colors.accent,
+              fontWeight: theme.fontWeight.bold,
+            }}
           >
             Welcome back !
           </Typography>
           <Typography
             align="center"
-            sx={{ color: "#464646", fontSize: "13px", marginBottom: 4 }}
+            sx={{
+              color: theme.colors.faintDescription,
+              fontSize: theme.fontSize.sm,
+              marginBottom: 4,
+            }}
           >
             Sign in to continue to your account
           </Typography>
@@ -95,7 +103,7 @@ export function LoginForm() {
               <Link
                 href="#"
                 underline="hover"
-                sx={{ fontSize: 12, color: "#fd8636" }}
+                sx={{ fontSize: theme.fontSize.xs, color: theme.colors.accent }}
               >
                 Forgot password?
               </Link>
@@ -105,7 +113,11 @@ export function LoginForm() {
 
             <Typography
               align="center"
-              sx={{ color: "#363636", fontSize: "12px", marginTop: 2 }}
+              sx={{
+                color: theme.colors.faintDescription,
+                fontSize: theme.fontSize.xs,
+                marginTop: 2,
+              }}
             >
               Don't have an account? <a href="/register">Sign up</a>
             </Typography>

@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { RegisterProps } from "../types/shared";
 import { userRegister } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../styles/theme";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -33,8 +34,8 @@ export function RegisterForm() {
     <AuthLayout>
       <Card
         sx={{
-          background: " #111111",
-          border: "2px solid #1e1e1e",
+          background: theme.bg.page,
+          border: theme.borders.primary,
           width: "350px",
         }}
       >
@@ -62,13 +63,20 @@ export function RegisterForm() {
           <Typography // Title
             variant="h5"
             align="center"
-            sx={{ color: "#fd8636", fontWeight: "bold" }}
+            sx={{
+              color: theme.colors.accent,
+              fontWeight: theme.fontWeight.bold,
+            }}
           >
             Create account
           </Typography>
           <Typography
             align="center"
-            sx={{ color: "#464646", fontSize: "13px", marginBottom: 4 }}
+            sx={{
+              color: theme.colors.faintDescription,
+              fontSize: theme.fontSize.sm,
+              marginBottom: 4,
+            }}
           >
             Sign up and get started for free
           </Typography>
@@ -109,7 +117,11 @@ export function RegisterForm() {
               onChange={handleChange}
             ></TextField>
             <Typography
-              sx={{ color: "#363636", fontSize: "12px", marginTop: "-10px" }}
+              sx={{
+                color: theme.colors.faintDescription,
+                fontSize: theme.fontSize.xs,
+                marginTop: "-10px",
+              }}
             >
               Min. 8 characters, mix of letters & numbers
             </Typography>
@@ -125,9 +137,13 @@ export function RegisterForm() {
 
             <Typography
               align="center"
-              sx={{ color: "#363636", fontSize: "12px", marginTop: 2 }}
+              sx={{
+                color: theme.colors.faintDescription,
+                fontSize: theme.fontSize.xs,
+                marginTop: 2,
+              }}
             >
-              Already have an account? <a href="/register">Sign in</a>
+              Already have an account? <a href="/login">Sign in</a>
             </Typography>
           </Box>
         </CardContent>

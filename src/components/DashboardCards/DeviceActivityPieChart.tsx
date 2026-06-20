@@ -6,6 +6,7 @@ import {
   Sector,
   type PieSectorShapeProps,
 } from "recharts";
+import { theme } from "../../styles/theme";
 
 const data = [
   { name: "Active", value: 72 },
@@ -13,10 +14,13 @@ const data = [
   { name: "Never connected", value: 12 },
 ];
 
-const colors = ["#e24646", "#ec7424", "#413c35"];
-
 const MyCustomPie = (props: PieSectorShapeProps) => (
-  <Sector {...props} fill={colors[props.index % colors.length]} />
+  <Sector
+    {...props}
+    fill={
+      theme.chart.seriesColors[props.index % theme.chart.seriesColors.length]
+    }
+  />
 );
 
 export function DeviceActivityPieChart() {
@@ -49,18 +53,18 @@ export function DeviceActivityPieChart() {
               <tspan
                 x="50%"
                 dy="-0.2em"
-                fontSize="42"
-                fontWeight="bold"
-                fill="#e2e2e2"
+                fontSize={theme.fontSize["4xl"]}
+                fontWeight={theme.fontWeight.bold}
+                fill={theme.colors.valueText}
               >
                 {100}
               </tspan>
               <tspan
                 x="50%"
                 dy="2em"
-                fontSize="14"
-                fontWeight="500"
-                fill="#8a8580"
+                fontSize={theme.fontSize.sm}
+                fontWeight={theme.fontWeight.semibold}
+                fill={theme.colors.description}
               >
                 Total
               </tspan>
@@ -82,15 +86,19 @@ export function DeviceActivityPieChart() {
               width: "10px",
               height: "15px",
               borderRadius: "3px",
-              backgroundColor: "#e24646",
+              backgroundColor: theme.chart.series.online,
             }}
           ></Box>
-          <Box sx={{ fontSize: "13px", color: "#e2e2e2" }}>Active today</Box>
+          <Box
+            sx={{ fontSize: theme.fontSize.sm, color: theme.colors.valueText }}
+          >
+            Active today
+          </Box>
           <Box
             sx={{
-              fontSize: "13px",
-              fontWeight: "bold",
-              color: "#e2e2e2",
+              fontSize: theme.fontSize.sm,
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
             }}
           >
             72
@@ -102,17 +110,19 @@ export function DeviceActivityPieChart() {
               width: "10px",
               height: "15px",
               borderRadius: "3px",
-              backgroundColor: "#ec7424",
+              backgroundColor: theme.chart.series.offline,
             }}
           ></Box>
-          <Box sx={{ fontSize: "13px", color: "#e2e2e2" }}>
+          <Box
+            sx={{ fontSize: theme.fontSize.sm, color: theme.colors.valueText }}
+          >
             Offline ({">"}24 hours)
           </Box>
           <Box
             sx={{
-              fontSize: "13px",
-              fontWeight: "bold",
-              color: "#e2e2e2",
+              fontSize: theme.fontSize.sm,
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
             }}
           >
             72
@@ -124,15 +134,19 @@ export function DeviceActivityPieChart() {
               width: "10px",
               height: "15px",
               borderRadius: "3px",
-              backgroundColor: "#413c35",
+              backgroundColor: theme.chart.series.never,
             }}
           ></Box>
-          <Box sx={{ fontSize: "13px", color: "#e2e2e2" }}>Never connected</Box>
+          <Box
+            sx={{ fontSize: theme.fontSize.sm, color: theme.colors.valueText }}
+          >
+            Never connected
+          </Box>
           <Box
             sx={{
-              fontSize: "13px",
-              fontWeight: "bold",
-              color: "#e2e2e2",
+              fontSize: theme.fontSize.sm,
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
             }}
           >
             72

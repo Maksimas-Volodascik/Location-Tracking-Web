@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import RecordList from "./DeviceList/RecordList";
+import { theme } from "../styles/theme";
 
 type ModalProps = {
   handleClose: () => void;
@@ -25,7 +26,7 @@ export default function ModalView({
           sx={{
             width: "100%",
             height: "100%",
-            background: "#1a1917",
+            background: theme.bg.page,
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
@@ -35,8 +36,8 @@ export default function ModalView({
             sx={{
               height: "10%",
               maxHeight: "80px",
-              background: "#141412",
-              borderBottom: "1px solid #2e2e2b",
+              background: theme.bg.drawer,
+              borderBottom: theme.borders.default,
               display: "flex",
               alignItems: "center",
               padding: "0 16px",
@@ -57,17 +58,17 @@ export default function ModalView({
                   width: 32,
                   height: 32,
                   borderRadius: "4px",
-                  border: "1px solid #3f3f3f",
-                  color: "#888",
+                  border: theme.borders.subtle,
+                  color: theme.colors.description,
                   fontSize: "16px",
                   lineHeight: 1,
                   transition:
                     "border-color 0.15s, color 0.15s, background 0.15s",
 
                   "&:hover": {
-                    borderColor: "#fd8636",
-                    color: "#fd8636",
-                    backgroundColor: "rgba(253,134,54,0.06)",
+                    borderColor: theme.colors.accent,
+                    color: theme.colors.accent,
+                    backgroundColor: theme.buttons.secondaryHover,
                   },
                 }}
               >
@@ -92,17 +93,19 @@ export default function ModalView({
                     onClick={() => setActiveTab(tab)}
                     sx={{
                       border: isActive
-                        ? "1px solid rgba(253,134,54,0.5)"
+                        ? theme.borders.focusDark
                         : "1px solid transparent",
 
                       borderBottom: isActive
-                        ? "2px solid #fd8636"
+                        ? theme.borders.focus
                         : "2px solid transparent",
 
-                      color: isActive ? "#fd8636" : "#666",
-                      fontSize: "11px",
+                      color: isActive
+                        ? theme.colors.accent
+                        : theme.colors.description,
+                      fontSize: theme.fontSize.xs,
                       textTransform: "uppercase",
-                      fontWeight: "Bold",
+                      fontWeight: theme.fontWeight.bold,
                       borderRadius: "3px 3px 0 0",
 
                       "&:hover": {

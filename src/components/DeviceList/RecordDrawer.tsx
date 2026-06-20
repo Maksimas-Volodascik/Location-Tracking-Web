@@ -1,5 +1,8 @@
-import { Box, Button, Drawer, Typography } from "@mui/material";
+import { Box, Button, Drawer, IconButton, Typography } from "@mui/material";
 import type { RecordData } from "../../types/shared";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { parseNumberOrKeepString } from "../../utils";
+import { theme } from "../../styles/theme";
 
 type RecordDrawerProps = {
   handleClose: () => void;
@@ -12,6 +15,23 @@ export default function RecordDrawer({
   handleClose,
   selectedItem,
 }: RecordDrawerProps) {
+  const parsedData = (() => {
+    if (!selectedItem) return [];
+
+    try {
+      const data = JSON.parse(selectedItem.parsedData);
+      return data;
+    } catch (error) {
+      console.error("Invalid JSON", error);
+      return [];
+    }
+  })();
+
+  function formatValue(v: unknown): string {
+    const value = parseNumberOrKeepString(v);
+    return typeof value === "number" ? `ID.${value}` : String(value);
+  }
+
   return (
     <Drawer
       variant="persistent"
@@ -21,8 +41,8 @@ export default function RecordDrawer({
         width: openDrawer ? "320px" : 0,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          background: "#141412",
-          borderLeft: "1px solid #2e2e2b",
+          background: theme.bg.drawer,
+          borderLeft: theme.borders.default,
           width: "320px",
           position: "relative",
         },
@@ -30,7 +50,7 @@ export default function RecordDrawer({
     >
       <Box
         sx={{
-          borderBottom: "1px solid #2e2e2b",
+          borderBottom: theme.borders.default,
           width: "100%",
           display: "flex",
           justifyContent: "space-between",
@@ -42,17 +62,56 @@ export default function RecordDrawer({
             width: 32,
             height: 32,
             borderRadius: "4px",
-            color: "#888",
-            fontSize: "16px",
+            color: theme.colors.valueText,
+            fontSize: theme.fontSize.base,
+            fontWeight: theme.fontWeight.bold,
           }}
           onClick={handleClose}
         >
           X
         </Button>
-        <Typography sx={{ fontSize: "14px", color: "gray" }}>
+        <Typography
+          sx={{ fontSize: theme.fontSize.xs, color: theme.colors.description }}
+        >
           {selectedItem ? selectedItem.receivedAt : ""}
         </Typography>
       </Box>
+
+      {Object.entries(parsedData).map(([key, value], idx) => (
+        <Box
+          key={idx}
+          sx={{
+            borderBottom: theme.borders.default,
+            width: "100%",
+            padding: "5px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <Typography
+              sx={{
+                fontSize: theme.fontSize.base,
+                color: theme.colors.valueText,
+              }}
+            >
+              {formatValue(key)}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: theme.fontSize.xs,
+                color: theme.colors.description,
+              }}
+            >
+              {String(value)}
+            </Typography>
+          </Box>
+
+          <IconButton aria-label="delete" size="small">
+            <AddCircleIcon sx={{ color: theme.buttons.success }} />
+          </IconButton>
+        </Box>
+      ))}
     </Drawer>
   );
 }

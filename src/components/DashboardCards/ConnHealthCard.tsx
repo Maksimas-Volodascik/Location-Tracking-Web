@@ -3,6 +3,7 @@ import { Card } from "../Card";
 import type { ConnMetrics } from "../../types/dashboard";
 import { formatLable } from "../../utils";
 import { ConnHealthBarChart } from "./ConnHealthBarChart";
+import { theme } from "../../styles/theme";
 
 type MetricProp = {
   metric: ConnMetrics;
@@ -14,18 +15,18 @@ export function ConnHealthCard({ metric }: MetricProp) {
       <Box>
         <Typography
           sx={{
-            fontSize: "16px",
-            color: "#fd8636",
-            fontWeight: "bold",
+            fontSize: theme.fontSize.base,
+            color: theme.colors.accent,
+            fontWeight: theme.fontWeight.bold,
           }}
         >
           Connection Health
         </Typography>
         <Typography
           sx={{
-            fontSize: "12px",
-            color: "#8a8580",
-            fontWeight: "bold",
+            fontSize: theme.fontSize.xs,
+            color: theme.colors.description,
+            fontWeight: theme.fontWeight.bold,
           }}
         >
           Across all registered devices
@@ -44,9 +45,9 @@ export function ConnHealthCard({ metric }: MetricProp) {
               >
                 <Typography
                   sx={{
-                    fontSize: "12px",
-                    color: "#8a8580",
-                    fontWeight: "bold",
+                    fontSize: theme.fontSize.xs,
+                    color: theme.colors.description,
+                    fontWeight: theme.fontWeight.bold,
                   }}
                 >
                   {formatLable(key)}:
@@ -54,9 +55,9 @@ export function ConnHealthCard({ metric }: MetricProp) {
 
                 <Typography
                   sx={{
-                    fontSize: "12px",
-                    color: "#e2e2e2",
-                    fontWeight: "bold",
+                    fontSize: theme.fontSize.xs,
+                    color: theme.colors.valueText,
+                    fontWeight: theme.fontWeight.bold,
                   }}
                 >
                   {value}
@@ -68,7 +69,7 @@ export function ConnHealthCard({ metric }: MetricProp) {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            borderTop: "1px solid #0a0a09",
+            borderTop: theme.borders.default,
             marginTop: "20px",
             marginBottom: "15px",
             paddingTop: "10px",
@@ -76,10 +77,9 @@ export function ConnHealthCard({ metric }: MetricProp) {
         >
           <Typography
             sx={{
-              fontSize: "12px",
-
-              color: "#8a8580",
-              fontWeight: "bold",
+              fontSize: theme.fontSize.xs,
+              color: theme.colors.description,
+              fontWeight: theme.fontWeight.bold,
             }}
           >
             Active connections:
@@ -87,9 +87,9 @@ export function ConnHealthCard({ metric }: MetricProp) {
 
           <Typography
             sx={{
-              fontSize: "12px",
-              color: "#e2e2e2",
-              fontWeight: "bold",
+              fontSize: theme.fontSize.xs,
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
               marginRight: "30px",
             }}
           >

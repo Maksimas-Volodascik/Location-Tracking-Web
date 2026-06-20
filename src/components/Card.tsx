@@ -1,5 +1,6 @@
 import { Card as MuiCard } from "@mui/material";
 import type { ReactNode } from "react";
+import { theme } from "../styles/theme";
 
 type CardProps = {
   children: ReactNode;
@@ -9,8 +10,8 @@ export function Card({ children }: CardProps) {
   return (
     <MuiCard
       sx={{
-        background: "#1a1917",
-        border: "1px solid #3f3f3f",
+        background: theme.bg.card,
+        border: theme.borders.subtle,
         borderRadius: 1,
         position: "relative",
         padding: "20px",

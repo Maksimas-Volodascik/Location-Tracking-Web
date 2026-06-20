@@ -4,13 +4,13 @@ import RecordDrawer from "./RecordDrawer";
 import { useQuery } from "@tanstack/react-query";
 import type { RecordData } from "../../types/shared";
 import { getDeviceRecords } from "../../services/deviceApi";
+import { theme } from "../../styles/theme";
 
 type RecordListProps = {
   deviceId: string | null;
 };
 
 export default function RecordList({ deviceId }: RecordListProps) {
-  console.log(deviceId);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
   const {
@@ -29,8 +29,6 @@ export default function RecordList({ deviceId }: RecordListProps) {
     setOpenDrawer(true);
   }
 
-  console.log(records);
-
   return (
     <Box sx={{ display: "flex", height: "100%" }}>
       <List disablePadding>
@@ -47,19 +45,20 @@ export default function RecordList({ deviceId }: RecordListProps) {
                 height: 38,
                 alignItems: "stretch",
                 borderLeft: "2px solid transparent",
-                borderBottom: "1px solid rgba(255,255,255,0.04)",
+                borderBottom: theme.borders.subtle,
+                backgroundColor: theme.bg.card,
 
                 "&:hover": {
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  backgroundColor: theme.bg.cardHover,
                 },
               }}
             >
               <Typography
                 sx={{
                   height: "100%",
-                  fontSize: 14,
-                  color: "#d8d8d8",
-                  fontWeight: "bold",
+                  fontSize: theme.fontSize.sm,
+                  color: theme.colors.valueText,
+                  fontWeight: theme.fontWeight.bold,
                 }}
               >
                 {item.receivedAt}
@@ -67,18 +66,18 @@ export default function RecordList({ deviceId }: RecordListProps) {
 
               <Typography
                 sx={{
-                  fontSize: 14,
-                  color: "#d8d8d8",
-                  fontWeight: "bold",
+                  fontSize: theme.fontSize.sm,
+                  color: theme.colors.valueText,
+                  fontWeight: theme.fontWeight.bold,
                 }}
               >
                 {item.expiresAt}
               </Typography>
               <Typography
                 sx={{
-                  fontSize: 14,
-                  color: "#d8d8d8",
-                  fontWeight: "bold",
+                  fontSize: theme.fontSize.sm,
+                  color: theme.colors.valueText,
+                  fontWeight: theme.fontWeight.bold,
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
