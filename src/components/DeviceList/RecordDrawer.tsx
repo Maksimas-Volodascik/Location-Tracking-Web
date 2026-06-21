@@ -1,16 +1,22 @@
 import { Box, Button, Drawer, IconButton, Typography } from "@mui/material";
 import type { RecordData } from "../../types/shared";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { parseNumberOrKeepString } from "../../utils";
 import { theme } from "../../styles/theme";
+import type { Dispatch, SetStateAction } from "react";
 
 type RecordDrawerProps = {
+  headers: string[];
+  setHeaders: Dispatch<SetStateAction<string[]>>;
   handleClose: () => void;
   openDrawer: boolean;
   selectedItem: RecordData | null;
 };
 
 export default function RecordDrawer({
+  headers,
+  setHeaders,
   openDrawer,
   handleClose,
   selectedItem,
@@ -32,6 +38,15 @@ export default function RecordDrawer({
     return typeof value === "number" ? `ID.${value}` : String(value);
   }
 
+  function handleAdd(key: string) {
+    setHeaders([...headers, key]);
+  }
+
+  function handleRemove(key: string) {
+    setHeaders(headers.filter((header) => header !== key));
+  }
+
+  console.log(headers);
   return (
     <Drawer
       variant="persistent"
@@ -107,9 +122,23 @@ export default function RecordDrawer({
             </Typography>
           </Box>
 
-          <IconButton aria-label="delete" size="small">
-            <AddCircleIcon sx={{ color: theme.buttons.success }} />
-          </IconButton>
+          {headers.includes(key) ? (
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => handleRemove(key)}
+            >
+              <RemoveCircleIcon sx={{ color: theme.buttons.danger }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => handleAdd(key)}
+            >
+              <AddCircleIcon sx={{ color: theme.buttons.success }} />
+            </IconButton>
+          )}
         </Box>
       ))}
     </Drawer>

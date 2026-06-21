@@ -42,7 +42,7 @@ export const theme = {
   bg: {
     page: "#111111",
     card: "#1a1917",
-    cardHover: "#ffffff0a",
+    cardHover: "#cccccc2a",
     tooltip: "#1f1f1f",
     drawer: "#141412",
   },

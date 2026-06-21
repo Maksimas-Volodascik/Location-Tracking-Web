@@ -1,4 +1,17 @@
-import { Box, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  ListSubheader,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import RecordDrawer from "./RecordDrawer";
 import { useQuery } from "@tanstack/react-query";
@@ -11,8 +24,15 @@ type RecordListProps = {
 };
 
 export default function RecordList({ deviceId }: RecordListProps) {
+  const [headers, setHeaders] = useState<string[]>([
+    "recieved at",
+    "expires at",
+    "raw record",
+  ]);
+
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
+
   const {
     data: records,
     isLoading,
@@ -30,69 +50,96 @@ export default function RecordList({ deviceId }: RecordListProps) {
   }
 
   return (
-    <Box sx={{ display: "flex", height: "100%" }}>
-      <List disablePadding>
-        {records?.map((item, idx) => {
-          return (
-            <ListItem
-              key={idx}
-              onClick={() => handleDrawerOpen(item)}
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "auto auto 1fr",
-                px: 3,
-                gap: 3,
-                height: 38,
-                alignItems: "stretch",
-                borderLeft: "2px solid transparent",
-                borderBottom: theme.borders.subtle,
-                backgroundColor: theme.bg.card,
-
-                "&:hover": {
-                  backgroundColor: theme.bg.cardHover,
-                },
-              }}
-            >
-              <Typography
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+      }}
+    >
+      <TableContainer>
+        <Table size="small" stickyHeader>
+          <TableHead>
+            <TableRow>
+              {headers.map((header, idx) => (
+                <TableCell
+                  key={idx}
+                  sx={{
+                    fontSize: theme.fontSize.sm,
+                    color: theme.colors.valueText,
+                    fontWeight: theme.fontWeight.bold,
+                    whiteSpace: "nowrap",
+                    backgroundColor: theme.bg.tooltip,
+                    borderBottom: theme.borders.subtle,
+                    px: 3,
+                    height: 38,
+                  }}
+                >
+                  {header}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {records?.map((item, idx) => (
+              <TableRow
+                key={idx}
+                onClick={() => handleDrawerOpen(item)}
                 sx={{
-                  height: "100%",
-                  fontSize: theme.fontSize.sm,
-                  color: theme.colors.valueText,
-                  fontWeight: theme.fontWeight.bold,
+                  height: 38,
+                  cursor: "pointer",
+                  borderLeft: "2px solid transparent",
+                  backgroundColor: theme.bg.card,
+                  "&:hover": {
+                    backgroundColor: theme.bg.cardHover,
+                  },
+                  "& td": {
+                    borderBottom: theme.borders.subtle,
+                  },
                 }}
               >
-                {item.receivedAt}
-              </Typography>
-
-              <Typography
-                sx={{
-                  fontSize: theme.fontSize.sm,
-                  color: theme.colors.valueText,
-                  fontWeight: theme.fontWeight.bold,
-                }}
-              >
-                {item.expiresAt}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: theme.fontSize.sm,
-                  color: theme.colors.valueText,
-                  fontWeight: theme.fontWeight.bold,
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  minWidth: 0,
-                }}
-              >
-                {item.parsedData}
-              </Typography>
-            </ListItem>
-          );
-        })}
-
-        <Box sx={{ height: 3 }} />
-      </List>
+                <TableCell
+                  sx={{
+                    fontSize: theme.fontSize.sm,
+                    color: theme.colors.valueText,
+                    fontWeight: theme.fontWeight.bold,
+                    whiteSpace: "nowrap",
+                    px: 3,
+                  }}
+                >
+                  {item.receivedAt}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: theme.fontSize.sm,
+                    color: theme.colors.valueText,
+                    fontWeight: theme.fontWeight.bold,
+                    whiteSpace: "nowrap",
+                    px: 3,
+                  }}
+                >
+                  {item.expiresAt}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontSize: theme.fontSize.sm,
+                    color: theme.colors.valueText,
+                    fontWeight: theme.fontWeight.bold,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    px: 3,
+                  }}
+                >
+                  {item.parsedData}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <RecordDrawer
+        headers={headers}
+        setHeaders={setHeaders}
         selectedItem={selectedItem}
         openDrawer={openDrawer}
         handleClose={() => {

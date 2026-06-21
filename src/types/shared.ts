@@ -32,3 +32,8 @@ export type RecordData = {
   receivedAt: string;
   expiresAt: string;
 };
+
+export type TableHeader = {
+  key: string;
+  flex: "max-content" | "1fr" | string;
+};
