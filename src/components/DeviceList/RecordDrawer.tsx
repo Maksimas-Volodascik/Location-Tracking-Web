@@ -39,14 +39,15 @@ export default function RecordDrawer({
   }
 
   function handleAdd(key: string) {
-    setHeaders([...headers, key]);
+    const original = headers.slice(0, -1);
+    const lastItem = headers[headers.length - 1];
+    setHeaders([...original, key, lastItem]);
   }
 
   function handleRemove(key: string) {
     setHeaders(headers.filter((header) => header !== key));
   }
 
-  console.log(headers);
   return (
     <Drawer
       variant="persistent"

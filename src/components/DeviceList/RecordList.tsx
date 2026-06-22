@@ -1,17 +1,12 @@
 import {
   Box,
-  List,
-  ListItem,
-  ListSubheader,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import RecordDrawer from "./RecordDrawer";
 import { useQuery } from "@tanstack/react-query";
@@ -25,13 +20,14 @@ type RecordListProps = {
 
 export default function RecordList({ deviceId }: RecordListProps) {
   const [headers, setHeaders] = useState<string[]>([
-    "recieved at",
-    "expires at",
-    "raw record",
+    "Server.Timestamp",
+    "Expires.Date",
+    "Raw.Record",
   ]);
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
+  const [ioElements, setIoElements] = useState([]);
 
   const {
     data: records,
@@ -48,6 +44,77 @@ export default function RecordList({ deviceId }: RecordListProps) {
     setSelectedItem(item);
     setOpenDrawer(true);
   }
+
+  function parsedData(item: string) {
+    try {
+      const data = JSON.parse(item);
+      return data;
+    } catch (error) {
+      console.error("Invalid JSON", error);
+      return [];
+    }
+  }
+
+  const handleRow = () => {
+    return records?.map((item, idx) => (
+      <TableRow
+        key={idx}
+        onClick={() => handleDrawerOpen(item)}
+        sx={{
+          height: 38,
+          cursor: "pointer",
+          borderLeft: "2px solid transparent",
+          backgroundColor: theme.bg.card,
+          "&:hover": {
+            backgroundColor: theme.bg.cardHover,
+          },
+          "& td": {
+            borderBottom: theme.borders.subtle,
+          },
+        }}
+      >
+        <TableCell
+          sx={{
+            fontSize: theme.fontSize.sm,
+            color: theme.colors.valueText,
+            fontWeight: theme.fontWeight.bold,
+            whiteSpace: "nowrap",
+            px: 3,
+          }}
+        >
+          {item.receivedAt}
+        </TableCell>
+        <TableCell
+          sx={{
+            fontSize: theme.fontSize.sm,
+            color: theme.colors.valueText,
+            fontWeight: theme.fontWeight.bold,
+            whiteSpace: "nowrap",
+            px: 3,
+          }}
+        >
+          {item.expiresAt}
+        </TableCell>
+        {headers.slice(2).map((header) => (
+          <TableCell
+            key={header}
+            sx={{
+              fontSize: theme.fontSize.sm,
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
+              whiteSpace: "nowrap",
+              px: 3,
+              height: 38,
+            }}
+          >
+            {header === "Raw.Record"
+              ? item.parsedData
+              : parsedData(item.parsedData)[header]}
+          </TableCell>
+        ))}
+      </TableRow>
+    ));
+  };
 
   return (
     <Box
@@ -79,62 +146,7 @@ export default function RecordList({ deviceId }: RecordListProps) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {records?.map((item, idx) => (
-              <TableRow
-                key={idx}
-                onClick={() => handleDrawerOpen(item)}
-                sx={{
-                  height: 38,
-                  cursor: "pointer",
-                  borderLeft: "2px solid transparent",
-                  backgroundColor: theme.bg.card,
-                  "&:hover": {
-                    backgroundColor: theme.bg.cardHover,
-                  },
-                  "& td": {
-                    borderBottom: theme.borders.subtle,
-                  },
-                }}
-              >
-                <TableCell
-                  sx={{
-                    fontSize: theme.fontSize.sm,
-                    color: theme.colors.valueText,
-                    fontWeight: theme.fontWeight.bold,
-                    whiteSpace: "nowrap",
-                    px: 3,
-                  }}
-                >
-                  {item.receivedAt}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontSize: theme.fontSize.sm,
-                    color: theme.colors.valueText,
-                    fontWeight: theme.fontWeight.bold,
-                    whiteSpace: "nowrap",
-                    px: 3,
-                  }}
-                >
-                  {item.expiresAt}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontSize: theme.fontSize.sm,
-                    color: theme.colors.valueText,
-                    fontWeight: theme.fontWeight.bold,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    px: 3,
-                  }}
-                >
-                  {item.parsedData}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <TableBody>{handleRow()}</TableBody>
         </Table>
       </TableContainer>
       <RecordDrawer
