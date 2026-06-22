@@ -9,3 +9,17 @@ export function formatLable(text: string): string {
     .replace(/^./, (str) => str.toUpperCase()) // capitalize everything
     .trim(); // remove unecessary spaces
 }
+
+export function parseNumberOrKeepString(
+  value: unknown,
+): number | string | null {
+  if (typeof value === "number") return value;
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (trimmed === "") return null;
+
+    const num = Number(trimmed);
+    return Number.isNaN(num) ? value : num;
+  }
+  return null;
+}

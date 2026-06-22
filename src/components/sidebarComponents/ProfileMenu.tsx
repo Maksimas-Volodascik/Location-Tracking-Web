@@ -2,6 +2,7 @@ import { Box, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { clearAccessToken } from "../../services/tokenService";
+import { theme } from "../../styles/theme";
 
 export function ProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,8 +25,8 @@ export function ProfileMenu() {
     <Box
       sx={{
         padding: "5px 12px",
-        borderTop: "1px solid #0a0a09",
-        color: "white",
+        borderTop: theme.borders.strong,
+        color: theme.colors.valueText,
       }}
     >
       <Box
@@ -37,7 +38,7 @@ export function ProfileMenu() {
           marginLeft: "10px",
           textAlign: "center",
           "&:hover": {
-            background: "#2b2b2b",
+            background: theme.buttons.secondaryHover,
             borderRadius: "10px",
           },
         }}
@@ -53,8 +54,8 @@ export function ProfileMenu() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "12px",
-            fontWeight: "bold",
+            fontSize: theme.fontSize.xs,
+            fontWeight: theme.fontWeight.bold,
           }}
         />
         <Box>
@@ -77,13 +78,16 @@ export function ProfileMenu() {
         slotProps={{
           paper: {
             sx: {
-              backgroundColor: "#2b2929",
+              backgroundColor: theme.bg.tooltip,
             },
           },
         }}
       >
         <MenuItem
-          sx={{ color: "white", fontWeight: "bold" }}
+          sx={{
+            color: theme.colors.valueText,
+            fontWeight: theme.fontWeight.bold,
+          }}
           onClick={handleLogout}
         >
           Logout

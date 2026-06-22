@@ -25,3 +25,15 @@ export type DeviceData = {
   deviceModelId: string;
   deviceModel: null;
 };
+
+export type RecordData = {
+  rawData: string;
+  parsedData: string;
+  receivedAt: string;
+  expiresAt: string;
+};
+
+export type TableHeader = {
+  key: string;
+  flex: "max-content" | "1fr" | string;
+};

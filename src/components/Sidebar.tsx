@@ -20,6 +20,7 @@ import DocumentationIcon from "@mui/icons-material/QuestionMark";
 import ApiIcon from "@mui/icons-material/Api";
 import { Link } from "react-router-dom";
 import { ProfileMenu } from "./sidebarComponents/ProfileMenu";
+import { theme } from "../styles/theme";
 
 export default function Sidebar() {
   const [openAccControl, setOpenAccControl] = useState(true);
@@ -31,8 +32,8 @@ export default function Sidebar() {
       <Box
         sx={{
           width: "300px",
-          background: "#1a1917",
-          borderRight: "1px solid #2e2c29",
+          background: theme.bg.card,
+          borderRight: theme.borders.default,
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
@@ -59,12 +60,20 @@ export default function Sidebar() {
 
           <Box>
             <Typography
-              sx={{ fontSize: "20px", color: "white", fontWeight: "bold" }}
+              sx={{
+                fontSize: theme.fontSize.xl,
+                color: theme.colors.valueText,
+                fontWeight: theme.fontWeight.bold,
+              }}
             >
               LTW
             </Typography>
             <Typography
-              sx={{ fontSize: "12px", color: "#8a8580", fontWeight: "bold" }}
+              sx={{
+                fontSize: theme.fontSize.xs,
+                color: theme.colors.description,
+                fontWeight: theme.fontWeight.bold,
+              }}
             >
               Location Tracking Web
             </Typography>
@@ -73,20 +82,20 @@ export default function Sidebar() {
 
         <Box sx={{ flex: 1 }}>
           <List
-            sx={{ width: "100%", maxWidth: 360, color: "white" }}
+            sx={{ width: "100%", maxWidth: 360, color: theme.colors.valueText }}
             component="nav"
             dense={true}
           >
             <ListItemButton component={Link} to="dashboard">
               <ListItemIcon>
-                <DashboardIcon sx={{ color: "white" }} />
+                <DashboardIcon sx={{ color: theme.colors.valueText }} />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
 
             <ListItemButton onClick={() => setOpenTelematics(!openTelematics)}>
               <ListItemIcon>
-                <TelematicsIcon sx={{ color: "white" }} />
+                <TelematicsIcon sx={{ color: theme.colors.valueText }} />
               </ListItemIcon>
               <ListItemText primary="Telematics" />
               {openTelematics ? <ExpandLess /> : <ExpandMore />}
@@ -96,7 +105,7 @@ export default function Sidebar() {
               <List component="div" disablePadding dense={true}>
                 <ListItemButton component={Link} to="devices" sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <DevicesIcon sx={{ color: "white" }} />
+                    <DevicesIcon sx={{ color: theme.colors.valueText }} />
                   </ListItemIcon>
                   <ListItemText primary="Devices" />
                 </ListItemButton>
@@ -109,7 +118,7 @@ export default function Sidebar() {
               }}
             >
               <ListItemIcon>
-                <AccessIcon sx={{ color: "white" }} />
+                <AccessIcon sx={{ color: theme.colors.valueText }} />
               </ListItemIcon>
               <ListItemText primary="Access Control" />
               {openAccControl ? <ExpandLess /> : <ExpandMore />}
@@ -119,13 +128,13 @@ export default function Sidebar() {
               <List component="div" disablePadding dense={true}>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <UserIcon sx={{ color: "white" }} />
+                    <UserIcon sx={{ color: theme.colors.valueText }} />
                   </ListItemIcon>
                   <ListItemText primary="Users" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <SpeedIcon sx={{ color: "white" }} />
+                    <SpeedIcon sx={{ color: theme.colors.valueText }} />
                   </ListItemIcon>
                   <ListItemText primary="Limits" />
                 </ListItemButton>
@@ -138,7 +147,7 @@ export default function Sidebar() {
               }}
             >
               <ListItemIcon>
-                <DocumentationIcon sx={{ color: "white" }} />
+                <DocumentationIcon sx={{ color: theme.colors.valueText }} />
               </ListItemIcon>
               <ListItemText primary="Documentation" />
               {openDocs ? <ExpandLess /> : <ExpandMore />}
@@ -148,7 +157,7 @@ export default function Sidebar() {
               <List component="div" disablePadding dense={true}>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <ApiIcon sx={{ color: "white" }} />
+                    <ApiIcon sx={{ color: theme.colors.valueText }} />
                   </ListItemIcon>
                   <ListItemText primary="API" />
                 </ListItemButton>

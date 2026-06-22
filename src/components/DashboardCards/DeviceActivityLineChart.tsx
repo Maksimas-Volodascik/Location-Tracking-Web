@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { theme } from "../../styles/theme";
 
 const weeklyData = [
   { day: "Mon", value: 42 },
@@ -25,7 +26,7 @@ export function DeviceActivityLineChart() {
       sx={{
         width: "100%",
         height: 340,
-        background: "#1a1917",
+        background: theme.bg.card,
         borderRadius: "8px",
       }}
     >
@@ -34,45 +35,42 @@ export function DeviceActivityLineChart() {
           data={weeklyData}
           margin={{ top: 5, right: 5, left: 28, bottom: 8 }}
         >
-          <CartesianGrid stroke="#2b2b2b" vertical={false} />
+          <CartesianGrid stroke={theme.chart.gridStroke} vertical={false} />
 
           <XAxis
             dataKey="day"
-            stroke="#9ca3af"
-            tick={{ fill: "#9ca3af", fontSize: 12 }}
-            axisLine={{ stroke: "#3f3f3f" }}
-            tickLine={{ stroke: "#3f3f3f" }}
+            tick={{ fill: theme.chart.tickText, fontSize: theme.fontSize.xs }}
+            axisLine={{ stroke: theme.chart.axisLine }}
+            tickLine={{ stroke: theme.chart.tickLine }}
           />
 
           <YAxis
-            stroke="#9ca3af"
-            tick={{ fill: "#9ca3af", fontSize: 12 }}
-            axisLine={{ stroke: "#3f3f3f" }}
-            tickLine={{ stroke: "#3f3f3f" }}
+            tick={{ fill: theme.chart.tickText, fontSize: theme.fontSize.xs }}
+            axisLine={{ stroke: theme.chart.axisLine }}
+            tickLine={{ stroke: theme.chart.tickLine }}
           />
 
           <Tooltip
             contentStyle={{
-              backgroundColor: "#1f1f1f",
-              border: "1px solid #3f3f3f",
+              backgroundColor: theme.bg.tooltip,
+              border: theme.borders.subtle,
               borderRadius: "6px",
-              color: "#ffffff",
             }}
-            labelStyle={{ color: "#ffffff" }}
+            labelStyle={{ color: theme.colors.valueText }}
           />
 
           <Line
             type="linear"
             dataKey="value"
-            stroke="#ffffff"
+            stroke={theme.colors.accent}
             strokeWidth={3}
             dot={{
               r: 4,
-              fill: "#ffffff",
-              stroke: "#1a1917",
+              fill: theme.chart.dot.fill,
+              stroke: theme.chart.dot.stroke,
               strokeWidth: 2,
             }}
-            activeDot={{ r: 6, fill: "#ffffff" }}
+            activeDot={{ r: 6, fill: theme.chart.dot.fill }}
           />
         </LineChart>
       </ResponsiveContainer>

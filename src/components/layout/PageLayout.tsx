@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import Sidebar from "../Sidebar";
 import { Outlet } from "react-router-dom";
+import { theme } from "../../styles/theme";
 
 export function PageLayout() {
   return (
@@ -9,7 +10,7 @@ export function PageLayout() {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        background: "#111111",
+        background: theme.bg.page,
       }}
     >
       <Sidebar />

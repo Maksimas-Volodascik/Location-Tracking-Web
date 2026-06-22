@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Card } from "../Card";
+import { theme } from "../../styles/theme";
 
 type UsersKPI = {
   total: number;
@@ -51,11 +52,11 @@ const cardView: CardViewMap = {
     metricLabel: "Total users with access",
     description: (kpi: UsersKPI) => (
       <>
-        <Box component="span" sx={{ color: "#e2e2e2" }}>
+        <Box component="span" sx={{ color: theme.colors.valueText }}>
           {kpi.admin}
         </Box>{" "}
         admins -{" "}
-        <Box component="span" sx={{ color: "#e2e2e2" }}>
+        <Box component="span" sx={{ color: theme.colors.valueText }}>
           {kpi.users}
         </Box>{" "}
         users
@@ -66,7 +67,7 @@ const cardView: CardViewMap = {
     metricLabel: "Records received this month",
     description: (kpi: RecordsKPI) => (
       <>
-        <Box component="span" sx={{ color: "#e2e2e2" }}>
+        <Box component="span" sx={{ color: theme.colors.valueText }}>
           {kpi.daily}{" "}
         </Box>
         in last 24hours
@@ -77,7 +78,7 @@ const cardView: CardViewMap = {
     metricLabel: "Total registered devices",
     description: (kpi: DevicesKPI) => (
       <>
-        <Box component="span" sx={{ color: "#e2e2e2" }}>
+        <Box component="span" sx={{ color: theme.colors.valueText }}>
           {kpi.weekly}{" "}
         </Box>
         devices added in the past week
@@ -88,7 +89,7 @@ const cardView: CardViewMap = {
     metricLabel: "Errors",
     description: (kpi: ErrorsKPI) => (
       <>
-        <Box component="span" sx={{ color: "#e2e2e2" }}>
+        <Box component="span" sx={{ color: theme.colors.valueText }}>
           {kpi.weekly}{" "}
         </Box>
         errors in the past week
@@ -103,8 +104,8 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
       <Typography
         sx={{
           display: "flex",
-          color: "#fd8636",
-          fontWeight: "bold",
+          color: theme.colors.accent,
+          fontWeight: theme.fontWeight.bold,
           marginBottom: "16px",
         }}
       >
@@ -112,24 +113,26 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
       </Typography>
       <Typography
         sx={{
-          fontSize: "30px",
-          fontWeight: "bold",
+          fontSize: theme.fontSize["3xl"],
+          fontWeight: theme.fontWeight.bold,
           letterSpacing: "0.5px",
-          color: "#e2e2e2",
+          color: theme.colors.valueText,
         }}
       >
         {kpiValues.total}
       </Typography>
-      <Typography sx={{ color: "#8a8682", fontSize: "11px" }}>
+      <Typography
+        sx={{ color: theme.colors.description, fontSize: theme.fontSize.xs }}
+      >
         {cardView[cardType as keyof typeof cardView].metricLabel}
       </Typography>
       <Typography
         sx={{
           marginTop: "14px",
           paddingTop: "14px",
-          borderTop: "1px solid #0a0a09",
-          color: "#8a8682",
-          fontSize: "11px",
+          borderTop: theme.borders.default,
+          color: theme.colors.description,
+          fontSize: theme.fontSize.xs,
         }}
       >
         {cardView[cardType as keyof typeof cardView].description(

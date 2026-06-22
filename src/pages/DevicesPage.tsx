@@ -18,11 +18,15 @@ export default function DevicesPage() {
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
-    staleTime: Infinity,
+    staleTime: 1000 * 60 * 2,
   });
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(true);
+  const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+  const handleOpen = (deviceId: string) => {
+    setSelectedDevice(deviceId);
+    setIsOpen(true);
+  };
   const handleClose = () => setIsOpen(false);
 
   return (
@@ -43,13 +47,17 @@ export default function DevicesPage() {
           <Box sx={{ color: "white", fontWeight: "bold" }}>Devices</Box>
         </Box>
         <List sx={{ width: "100%" }}>
-          <ModalView isOpen={isOpen} handleClose={handleClose} />
+          <ModalView
+            isOpen={isOpen}
+            handleClose={handleClose}
+            deviceId={selectedDevice}
+          />
           {devices?.map((device) => {
             return (
               <ListItem disablePadding key={device.id}>
                 <ListItemButton
                   dense
-                  onClick={handleOpen}
+                  onClick={() => handleOpen(device.id)}
                   sx={{
                     bgcolor: "#e0e0e0",
                     padding: "20px 10px",
