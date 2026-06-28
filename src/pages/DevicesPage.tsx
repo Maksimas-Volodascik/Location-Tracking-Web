@@ -2,7 +2,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { Box, colors, Typography } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Box,
+  IconButton,
+  InputBase,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +19,8 @@ import type { DeviceData } from "../types/shared";
 import { useState } from "react";
 import ModalView from "../components/ModalView";
 import { theme } from "../styles/theme";
-import Button from "../components/Button";
+import SearchIcon from "@mui/icons-material/Search";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function DevicesPage() {
   const {
@@ -25,6 +35,9 @@ export default function DevicesPage() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+  const [focused, setFocused] = useState(false);
+  const [query, setQuery] = useState("");
+
   const handleOpen = (deviceId: string) => {
     setSelectedDevice(deviceId);
     setIsOpen(true);
@@ -33,14 +46,12 @@ export default function DevicesPage() {
 
   return (
     <>
-      <ContentLayout>
+      <ContentLayout overflow="hidden">
         <Box
           sx={{
-            background: "#1a1917",
+            background: theme.bg.card,
+            border: theme.borders.subtle,
             borderWidth: "0px 1px 1px 1px",
-            borderColor: "#3f3f3f",
-            borderStyle: "solid",
-            borderRadius: 1,
             position: "relative",
             padding: "15px",
             marginBottom: "10px",
@@ -48,7 +59,7 @@ export default function DevicesPage() {
         >
           <Box sx={{ color: "white", fontWeight: "bold" }}>Devices</Box>
         </Box>
-        <List sx={{ width: "100%" }}>
+        <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
           <ModalView
             isOpen={isOpen}
             handleClose={handleClose}
@@ -147,6 +158,70 @@ export default function DevicesPage() {
             </Box>
           ) : null}
         </List>
+
+        <Box
+          sx={{
+            background: theme.bg.card,
+            display: "flex",
+            position: "relative",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              bgcolor: "#cecece",
+              border: `1px solid ${focused ? "#5b8dee" : "#2e2e2e"}`,
+              borderRadius: "12px",
+              px: 1,
+              margin: "10px",
+              gap: 1,
+              width: "90%",
+              overflowX: "auto",
+              overflowY: "hidden",
+            }}
+          >
+            <SearchIcon
+              sx={{ fontSize: 15, color: focused ? "#5b8dee" : "#888888" }}
+            />
+            <InputBase
+              fullWidth
+              placeholder="Search IMEI…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setTimeout(() => setFocused(false), 150)}
+              sx={{
+                height: "40px",
+                color: "#ffffff",
+                fontSize: "0.8rem",
+                "& input": {
+                  padding: "4px 0",
+                  "&::placeholder": { color: "#888888", opacity: 1 },
+                },
+              }}
+            />
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
+            <IconButton
+              sx={{
+                position: "absolute",
+                transform: "translateY(-35%)",
+              }}
+              aria-label="delete"
+              onClick={() => console.log("Add Device Button")}
+            >
+              <AddCircleIcon
+                sx={{
+                  color: theme.buttons.success,
+                  width: "60px",
+                  height: "60px",
+                }}
+              />
+            </IconButton>
+          </Box>
+        </Box>
       </ContentLayout>
     </>
   );
