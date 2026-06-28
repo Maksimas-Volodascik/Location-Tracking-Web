@@ -27,8 +27,6 @@ export default function RecordList({ deviceId }: RecordListProps) {
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
-  const [ioElements, setIoElements] = useState([]);
-
   const {
     data: records,
     isLoading,

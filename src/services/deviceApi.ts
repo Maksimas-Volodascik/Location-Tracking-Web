@@ -22,7 +22,7 @@ export async function getAllDevices(): Promise<DeviceData[] | null> {
     return data;
   } catch (error: any) {
     console.error("Error fetching data:", error.message);
-    return null;
+    throw error;
   }
 }
 

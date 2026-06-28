@@ -2,19 +2,21 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { Box } from "@mui/material";
+import { Box, colors, Typography } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
 import type { DeviceData } from "../types/shared";
 import { useState } from "react";
 import ModalView from "../components/ModalView";
+import { theme } from "../styles/theme";
+import Button from "../components/Button";
 
 export default function DevicesPage() {
   const {
     data: devices,
     isLoading,
-    error,
+    isError,
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
@@ -52,72 +54,98 @@ export default function DevicesPage() {
             handleClose={handleClose}
             deviceId={selectedDevice}
           />
-          {devices?.map((device) => {
-            return (
-              <ListItem disablePadding key={device.id}>
-                <ListItemButton
-                  dense
-                  onClick={() => handleOpen(device.id)}
-                  sx={{
-                    bgcolor: "#e0e0e0",
-                    padding: "20px 10px",
-                    margin: "0px 5px 5px 5px",
-                    borderRadius: "10px",
-                    "&:hover": {
-                      bgcolor: "#999999",
-                    },
-
-                    "&:active": {
-                      transform: "scale(0.98)",
-                    },
-
-                    transition: "all 120ms ease",
-                  }}
-                >
-                  <DevicesIcon
+          {isLoading ? (
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+            >
+              <img
+                src="src\assets\loading.svg"
+                alt="loading"
+                width={50}
+                height={50}
+              />
+            </Box>
+          ) : (
+            devices?.map((device) => {
+              return (
+                <ListItem disablePadding key={device.id}>
+                  <ListItemButton
+                    dense
+                    onClick={() => handleOpen(device.id)}
                     sx={{
-                      width: 28,
-                      height: 28,
-                      marginRight: 2,
-                      flexShrink: 0,
-                    }}
-                  />
+                      bgcolor: "#e0e0e0",
+                      padding: "20px 10px",
+                      margin: "0px 5px 5px 5px",
+                      borderRadius: "10px",
+                      "&:hover": {
+                        bgcolor: "#999999",
+                      },
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      minWidth: 0,
+                      "&:active": {
+                        transform: "scale(0.98)",
+                      },
+
+                      transition: "all 120ms ease",
                     }}
                   >
-                    <Box sx={{ fontWeight: "bold", fontSize: 14 }}>
-                      {device.name}
+                    <DevicesIcon
+                      sx={{
+                        width: 28,
+                        height: 28,
+                        marginRight: 2,
+                        flexShrink: 0,
+                      }}
+                    />
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        minWidth: 0,
+                      }}
+                    >
+                      <Box sx={{ fontWeight: "bold", fontSize: 14 }}>
+                        {device.name}
+                      </Box>
+
+                      <Box sx={{ fontSize: 12, color: "#555" }}>
+                        IMEI #{device.imei}
+                      </Box>
                     </Box>
 
-                    <Box sx={{ fontSize: 12, color: "#555" }}>
-                      IMEI #{device.imei}
-                    </Box>
-                  </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginLeft: 15,
+                      }}
+                    >
+                      <Box sx={{ fontWeight: "bold", fontSize: 13 }}>
+                        Title {device.deviceModel}
+                      </Box>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginLeft: 15,
-                    }}
-                  >
-                    <Box sx={{ fontWeight: "bold", fontSize: 13 }}>
-                      Title {device.deviceModel}
+                      <Box sx={{ fontSize: 12, color: "#555" }}>
+                        Serial #{device.lastSeen}
+                      </Box>
                     </Box>
+                  </ListItemButton>
+                </ListItem>
+              );
+            })
+          )}
 
-                    <Box sx={{ fontSize: 12, color: "#555" }}>
-                      Serial #{device.lastSeen}
-                    </Box>
-                  </Box>
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
+          {isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                sx={{
+                  color: theme.colors.faintDescription,
+                  fontSize: theme.fontSize.xl,
+                }}
+              >
+                List is empty :(
+              </Typography>
+            </Box>
+          ) : null}
         </List>
       </ContentLayout>
     </>
