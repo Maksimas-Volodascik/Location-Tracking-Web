@@ -2,16 +2,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Box,
-  IconButton,
-  InputBase,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, InputBase, Typography } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
@@ -19,8 +10,7 @@ import type { DeviceData } from "../types/shared";
 import { useState } from "react";
 import ModalView from "../components/ModalView";
 import { theme } from "../styles/theme";
-import SearchIcon from "@mui/icons-material/Search";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeviceListFooter from "../components/DeviceList/DeviceListFooter";
 
 export default function DevicesPage() {
   const {
@@ -35,8 +25,6 @@ export default function DevicesPage() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
-  const [focused, setFocused] = useState(false);
-  const [query, setQuery] = useState("");
 
   const handleOpen = (deviceId: string) => {
     setSelectedDevice(deviceId);
@@ -159,69 +147,7 @@ export default function DevicesPage() {
           ) : null}
         </List>
 
-        <Box
-          sx={{
-            background: theme.bg.card,
-            display: "flex",
-            position: "relative",
-            width: "100%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              bgcolor: "#cecece",
-              border: `1px solid ${focused ? "#5b8dee" : "#2e2e2e"}`,
-              borderRadius: "12px",
-              px: 1,
-              margin: "10px",
-              gap: 1,
-              width: "90%",
-              overflowX: "auto",
-              overflowY: "hidden",
-            }}
-          >
-            <SearchIcon
-              sx={{ fontSize: 15, color: focused ? "#5b8dee" : "#888888" }}
-            />
-            <InputBase
-              fullWidth
-              placeholder="Search IMEI…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setTimeout(() => setFocused(false), 150)}
-              sx={{
-                height: "40px",
-                color: "#ffffff",
-                fontSize: "0.8rem",
-                "& input": {
-                  padding: "4px 0",
-                  "&::placeholder": { color: "#888888", opacity: 1 },
-                },
-              }}
-            />
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
-            <IconButton
-              sx={{
-                position: "absolute",
-                transform: "translateY(-35%)",
-              }}
-              aria-label="delete"
-              onClick={() => console.log("Add Device Button")}
-            >
-              <AddCircleIcon
-                sx={{
-                  color: theme.buttons.success,
-                  width: "60px",
-                  height: "60px",
-                }}
-              />
-            </IconButton>
-          </Box>
-        </Box>
+        <DeviceListFooter />
       </ContentLayout>
     </>
   );
