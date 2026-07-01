@@ -2,7 +2,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { Box, IconButton, InputBase, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
@@ -72,7 +72,7 @@ export default function DevicesPage() {
                     dense
                     onClick={() => handleOpen(device.id)}
                     sx={{
-                      bgcolor: "#e0e0e0",
+                      bgcolor: theme.bg.listItem,
                       padding: "20px 10px",
                       margin: "0px 5px 5px 5px",
                       borderRadius: "10px",
@@ -93,6 +93,7 @@ export default function DevicesPage() {
                         height: 28,
                         marginRight: 2,
                         flexShrink: 0,
+                        color: theme.colors.contrastText,
                       }}
                     />
 
@@ -101,6 +102,7 @@ export default function DevicesPage() {
                         display: "flex",
                         flexDirection: "column",
                         minWidth: 0,
+                        color: theme.colors.contrastText,
                       }}
                     >
                       <Box sx={{ fontWeight: "bold", fontSize: 14 }}>
@@ -119,12 +121,18 @@ export default function DevicesPage() {
                         marginLeft: 15,
                       }}
                     >
-                      <Box sx={{ fontWeight: "bold", fontSize: 13 }}>
+                      <Box
+                        sx={{
+                          fontWeight: "bold",
+                          fontSize: 13,
+                          color: theme.colors.contrastText,
+                        }}
+                      >
                         Title {device.deviceModel}
                       </Box>
 
                       <Box sx={{ fontSize: 12, color: "#555" }}>
-                        Serial #{device.lastSeen}
+                        Serial #{device.id}
                       </Box>
                     </Box>
                   </ListItemButton>
