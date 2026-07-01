@@ -45,6 +45,7 @@ export const theme = {
     cardHover: "#cccccc2a",
     tooltip: "#1f1f1f",
     drawer: "#141412",
+    listItem: "#e0e0e0",
   },
 
   //Card/Table/Form Borders
