@@ -20,6 +20,8 @@ import {
 
 import ClearIcon from "@mui/icons-material/Clear";
 import DevicesIcon from "@mui/icons-material/Devices";
+import type { EmptyDeviceForm } from "../../types/shared";
+import { createNewDevice } from "../../services/deviceApi";
 
 const theme = createTheme({
   palette: {
@@ -74,8 +76,8 @@ const theme = createTheme({
 });
 
 const DEVICE_MODELS = [
-  "FMC650",
-  "FMC125",
+  "CustomProtocol",
+  "CtmProt",
   "FMC920",
   "FMC630",
   "FMC640",
@@ -89,7 +91,7 @@ const EMPTY_FORM = {
   name: "",
   isEnabled: false,
   deviceModelName: "",
-};
+} as EmptyDeviceForm;
 
 export default function DeviceModal({
   open,
@@ -98,7 +100,7 @@ export default function DeviceModal({
   open: boolean;
   setIsOpen: (v: boolean) => void;
 }) {
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState<EmptyDeviceForm>(EMPTY_FORM);
 
   const handleClose = () => setIsOpen(false);
 
@@ -107,6 +109,7 @@ export default function DeviceModal({
 
   const handleAdd = () => {
     console.log("Device added:", form);
+    createNewDevice(form);
     handleClose();
   };
 

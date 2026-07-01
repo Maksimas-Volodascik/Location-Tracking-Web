@@ -37,3 +37,10 @@ export type TableHeader = {
   key: string;
   flex: "max-content" | "1fr" | string;
 };
+
+export type EmptyDeviceForm = {
+  imei: string;
+  name: string;
+  isEnabled: boolean;
+  deviceModelName: string;
+};
