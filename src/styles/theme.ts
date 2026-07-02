@@ -1,3 +1,5 @@
+import { createTheme } from "@mui/material";
+
 export const theme = {
   //Text
   colors: {
@@ -5,7 +7,9 @@ export const theme = {
     valueText: "#e2e2e2",
     description: "#8a8682",
     faintDescription: "#8a868270",
+    label: "#9CA3AF",
     contrastText: "#000000",
+    lightText: "#ffffff",
   },
 
   //Buttons
@@ -76,3 +80,37 @@ export const theme = {
     bold: "700" as const,
   },
 } as const;
+
+export const themeTemplate = createTheme({
+  palette: {
+    mode: "dark",
+  },
+  components: {
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          "&.Mui-checked": { color: theme.colors.accent },
+          "&.Mui-checked + .MuiSwitch-track": {
+            backgroundColor: theme.colors.accent,
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: theme.colors.valueText,
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.colors.faintDescription,
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.colors.description,
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.colors.accent,
+          },
+        },
+      },
+    },
+  },
+});

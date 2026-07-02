@@ -23,8 +23,8 @@ export default function DeviceListFooter() {
         sx={{
           display: "flex",
           alignItems: "center",
-          bgcolor: "#cecece",
-          border: `1px solid ${focused ? "#5b8dee" : "#2e2e2e"}`,
+          bgcolor: theme.bg.listItem,
+          border: `1px solid ${focused ? theme.colors.accent : theme.colors.faintDescription}`,
           borderRadius: "12px",
           px: 1,
           margin: "10px",
@@ -35,7 +35,10 @@ export default function DeviceListFooter() {
         }}
       >
         <SearchIcon
-          sx={{ fontSize: 15, color: focused ? "#5b8dee" : "#888888" }}
+          sx={{
+            fontSize: theme.fontSize.base,
+            color: focused ? theme.colors.accent : theme.colors.description,
+          }}
         />
         <InputBase
           fullWidth
@@ -46,11 +49,11 @@ export default function DeviceListFooter() {
           onBlur={() => setTimeout(() => setFocused(false), 150)}
           sx={{
             height: "40px",
-            color: "#ffffff",
-            fontSize: "0.8rem",
+            color: theme.colors.contrastText,
+            fontSize: theme.fontSize.sm,
             "& input": {
               padding: "4px 0",
-              "&::placeholder": { color: "#888888", opacity: 1 },
+              "&::placeholder": { color: theme.colors.description, opacity: 1 },
             },
           }}
         />
