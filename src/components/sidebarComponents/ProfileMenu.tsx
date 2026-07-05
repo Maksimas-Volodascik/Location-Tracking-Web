@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { clearAccessToken } from "../../services/tokenService";
 import { theme } from "../../styles/theme";
+import navIcon from "../../assets/navIcon.png";
 
 export function ProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -45,7 +46,7 @@ export function ProfileMenu() {
       >
         <Box
           component="img"
-          src="src\assets\navIcon.png"
+          src={navIcon}
           sx={{
             width: "32px",
             height: "32px",

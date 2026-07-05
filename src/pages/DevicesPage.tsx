@@ -11,6 +11,7 @@ import { useState } from "react";
 import ModalView from "../components/ModalView";
 import { theme } from "../styles/theme";
 import DeviceListFooter from "../components/DeviceList/DeviceListFooter";
+import loadingIcon from "../assets/loading.svg";
 
 export default function DevicesPage() {
   const {
@@ -57,12 +58,7 @@ export default function DevicesPage() {
             <Box
               sx={{ width: "100%", display: "flex", justifyContent: "center" }}
             >
-              <img
-                src="src\assets\loading.svg"
-                alt="loading"
-                width={50}
-                height={50}
-              />
+              <img src={loadingIcon} alt="loading" width={50} height={50} />
             </Box>
           ) : (
             devices?.map((device) => {

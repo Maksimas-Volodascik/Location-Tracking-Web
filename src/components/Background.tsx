@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import backgroundImg from "../assets/background.png";
 
 export function Background() {
   return (
@@ -11,7 +12,7 @@ export function Background() {
     >
       <Box
         component="img"
-        src="src\assets\background.png"
+        src={backgroundImg}
         sx={{
           width: "100%",
           height: "100%",

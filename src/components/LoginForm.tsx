@@ -7,6 +7,7 @@ import type { LoginProps } from "../types/shared";
 import { userLogin } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../styles/theme";
+import navIcon from "../assets/navIcon.png";
 
 export function LoginForm() {
   const [formData, setFormData] = useState<LoginProps>({
@@ -48,7 +49,7 @@ export function LoginForm() {
           >
             <Box
               component="img"
-              src="src\assets\navIcon.png"
+              src={navIcon}
               sx={{
                 alignContent: "center",
                 alignItems: "center",

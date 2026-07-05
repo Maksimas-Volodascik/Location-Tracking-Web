@@ -19,8 +19,9 @@ import AccessIcon from "@mui/icons-material/Groups";
 import DocumentationIcon from "@mui/icons-material/QuestionMark";
 import ApiIcon from "@mui/icons-material/Api";
 import { Link } from "react-router-dom";
-import { ProfileMenu } from "./sidebarComponents/ProfileMenu";
+import { ProfileMenu } from "./SidebarComponents/ProfileMenu";
 import { theme } from "../styles/theme";
+import navIcon from "../assets/navIcon.png";
 
 export default function Sidebar() {
   const [openAccControl, setOpenAccControl] = useState(true);
@@ -50,7 +51,7 @@ export default function Sidebar() {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
               component="img"
-              src="src\assets\navIcon.png"
+              src={navIcon}
               sx={{
                 width: "40px",
                 height: "40px",

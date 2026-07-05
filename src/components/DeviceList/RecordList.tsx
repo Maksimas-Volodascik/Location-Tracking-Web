@@ -29,8 +29,8 @@ export default function RecordList({ deviceId }: RecordListProps) {
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
   const {
     data: records,
-    isLoading,
-    error,
+    //isLoading,
+    //error,
   } = useQuery<RecordData[] | null>({
     queryKey: ["records", deviceId],
     queryFn: () => getDeviceRecords(deviceId),

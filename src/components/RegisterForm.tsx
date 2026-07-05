@@ -7,6 +7,7 @@ import type { RegisterProps } from "../types/shared";
 import { userRegister } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../styles/theme";
+import navIcon from "../assets/navIcon.png";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -50,7 +51,7 @@ export function RegisterForm() {
           >
             <Box
               component="img"
-              src="src\assets\navIcon.png"
+              src={navIcon}
               sx={{
                 alignContent: "center",
                 alignItems: "center",
