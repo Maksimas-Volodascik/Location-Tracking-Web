@@ -44,12 +44,12 @@ export const theme = {
 
   //Background
   bg: {
-    page: "#111111",
+    page: "#0e0e10",
     card: "#1a1917",
     cardHover: "#cccccc2a",
     tooltip: "#1f1f1f",
     drawer: "#141412",
-    listItem: "#e0e0e0",
+    listItem: "#18181b",
   },
 
   //Card/Table/Form Borders
@@ -59,7 +59,8 @@ export const theme = {
     default: "1px solid #2e2e2b",
     primary: "2px solid #1e1e1e",
     focus: "2px solid #fd8636",
-    focusDark: "1px solid rgba(253,134,54,0.5)",
+    focusDark: "1px solid #fd863680",
+    listItemBorder: "1px solid #ffffff0f",
   },
 
   fontSize: {

@@ -67,6 +67,7 @@ export default function DashboardPage() {
         <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
           {result.map((category) => (
             <MetricCard
+              key={category.category}
               kpiValues={category.value[1]}
               cardType={category.value[0]}
             />

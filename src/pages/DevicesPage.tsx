@@ -2,7 +2,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { Box, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Typography } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { getAllDevices } from "../services/deviceApi";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ import ModalView from "../components/ModalView";
 import { theme } from "../styles/theme";
 import DeviceListFooter from "../components/DeviceList/DeviceListFooter";
 import loadingIcon from "../assets/loading.svg";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 export default function DevicesPage() {
   const {
@@ -46,7 +47,30 @@ export default function DevicesPage() {
             marginBottom: "10px",
           }}
         >
-          <Box sx={{ color: "white", fontWeight: "bold" }}>Devices</Box>
+          <Box sx={{ color: "white", fontWeight: "bold", marginBottom: "6px" }}>
+            Devices
+          </Box>
+          <Breadcrumbs
+            separator={
+              <NavigateNextIcon
+                sx={{ fontSize: 14, color: theme.colors.description }}
+              />
+            }
+          >
+            <Typography
+              sx={{
+                fontSize: theme.fontSize.xs,
+                color: theme.colors.description,
+              }}
+            >
+              Telematics
+            </Typography>
+            <Typography
+              sx={{ fontSize: theme.fontSize.xs, color: theme.colors.accent }}
+            >
+              Devices
+            </Typography>
+          </Breadcrumbs>
         </Box>
         <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
           <ModalView

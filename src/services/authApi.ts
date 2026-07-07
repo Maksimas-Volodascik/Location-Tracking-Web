@@ -1,4 +1,5 @@
-import { BASE_URL, type LoginProps, type RegisterProps } from "../types/shared";
+import { type LoginProps, type RegisterProps } from "../types/shared";
+import { baseURL } from "./api";
 import { saveAccessToken } from "./tokenService";
 
 export async function userRegister({
@@ -9,7 +10,7 @@ export async function userRegister({
 }: RegisterProps): Promise<string | null> {
   try {
     const response = await fetch(
-      `${BASE_URL}users/register?FirstName=${firstName}&LastName=${lastName}&Email=${email}&Password=${password}`,
+      `${baseURL}users/register?FirstName=${firstName}&LastName=${lastName}&Email=${email}&Password=${password}`,
       { method: "POST" },
     );
 
@@ -28,7 +29,7 @@ export async function userLogin({
 }: LoginProps): Promise<string | null> {
   try {
     const response = await fetch(
-      `${BASE_URL}users/login?Email=${email}&Password=${password}`,
+      `${baseURL}users/login?Email=${email}&Password=${password}`,
       { method: "POST" },
     );
     saveAccessToken(await response.text());

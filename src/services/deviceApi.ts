@@ -1,15 +1,15 @@
 import {
-  BASE_URL,
   type DeviceData,
   type EmptyDeviceForm,
   type RecordData,
 } from "../types/shared";
+import { baseURL } from "./api";
 import { getAccessToken } from "./tokenService";
 
 export async function getAllDevices(): Promise<DeviceData[] | null> {
   const accessToken = getAccessToken();
   try {
-    const response = await fetch(`${BASE_URL}device`, {
+    const response = await fetch(`${baseURL}device`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -41,7 +41,7 @@ export async function getDeviceRecords(
 
   const accessToken = getAccessToken();
   try {
-    const response = await fetch(`${BASE_URL}records/${deviceId}`, {
+    const response = await fetch(`${baseURL}records/${deviceId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
