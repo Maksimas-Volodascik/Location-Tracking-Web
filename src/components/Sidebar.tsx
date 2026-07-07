@@ -127,7 +127,7 @@ export default function Sidebar() {
 
             <Collapse in={openAccControl} timeout="auto" unmountOnExit>
               <List component="div" disablePadding dense={true}>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="users" sx={{ pl: 4 }}>
                   <ListItemIcon>
                     <UserIcon sx={{ color: theme.colors.valueText }} />
                   </ListItemIcon>
