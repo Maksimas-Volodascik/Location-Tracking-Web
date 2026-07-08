@@ -2,12 +2,14 @@ import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
-import { PrivateAccess, PublicAccess } from "./services/authProvider";
 import { PageLayout } from "./components/layout/PageLayout";
 import DevicesPage from "./pages/DevicesPage";
 import UsersPage from "./pages/UsersPage";
 import { ThemeProvider } from "@mui/material";
 import { themeTemplate } from "./styles/theme";
+import { PublicAccess } from "./components/routes/PublicAccess";
+import { PrivateAccess } from "./components/routes/PrivateAccess";
+import { RequirePermission } from "./components/routes/RequirePermission";
 
 export const App = () => {
   return (
@@ -22,8 +24,14 @@ export const App = () => {
           <Route element={<PageLayout />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/devices" element={<DevicesPage />} />
-            <Route path="/users" element={<UsersPage />} />
+
+            <Route element={<RequirePermission permission="view:devices" />}>
+              <Route path="/devices" element={<DevicesPage />} />
+            </Route>
+
+            <Route element={<RequirePermission permission="view:users" />}>
+              <Route path="/users" element={<UsersPage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
