@@ -15,7 +15,7 @@ export function clearAccessToken() {
 export function isTokenExpired(): boolean {
   const token = localStorage.getItem("accessToken");
 
-  if (!token) {
+  if (!token || token === "Invalid credentials.") {
     return true; // no token found
   }
 
