@@ -10,7 +10,7 @@ import type { DeviceData } from "../types/shared";
 import { useState } from "react";
 import ModalView from "../components/ModalView";
 import { theme } from "../styles/theme";
-import DeviceListFooter from "../components/DeviceList/DeviceListFooter";
+import DeviceListFooter from "../components/deviceList/DeviceListFooter";
 import loadingIcon from "../assets/loading.svg";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 

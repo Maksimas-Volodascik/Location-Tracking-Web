@@ -19,7 +19,7 @@ import AccessIcon from "@mui/icons-material/Groups";
 import DocumentationIcon from "@mui/icons-material/QuestionMark";
 import ApiIcon from "@mui/icons-material/Api";
 import { Link } from "react-router-dom";
-import { ProfileMenu } from "./SidebarComponents/ProfileMenu";
+import { ProfileMenu } from "./sidebarComponents/ProfileMenu";
 import { theme } from "../styles/theme";
 import navIcon from "../assets/navIcon.png";
 
