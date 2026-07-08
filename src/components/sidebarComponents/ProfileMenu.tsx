@@ -79,7 +79,7 @@ export function ProfileMenu() {
         slotProps={{
           paper: {
             sx: {
-              backgroundColor: theme.bg.tooltip,
+              backgroundColor: theme.surface.tooltip,
             },
           },
         }}

@@ -10,7 +10,7 @@ export function PageLayout() {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        background: theme.bg.page,
+        background: theme.surface.page,
       }}
     >
       <Sidebar />

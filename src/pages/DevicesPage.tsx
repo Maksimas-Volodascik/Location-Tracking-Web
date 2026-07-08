@@ -39,7 +39,7 @@ export default function DevicesPage() {
       <ContentLayout overflow="hidden">
         <Box
           sx={{
-            background: theme.bg.card,
+            background: theme.surface.card,
             border: theme.borders.subtle,
             borderWidth: "0px 1px 1px 1px",
             position: "relative",
@@ -47,13 +47,22 @@ export default function DevicesPage() {
             marginBottom: "10px",
           }}
         >
-          <Box sx={{ color: "white", fontWeight: "bold", marginBottom: "6px" }}>
+          <Box
+            sx={{
+              color: theme.colors.valueText,
+              fontWeight: theme.fontWeight.bold,
+              marginBottom: "6px",
+            }}
+          >
             Devices
           </Box>
           <Breadcrumbs
             separator={
               <NavigateNextIcon
-                sx={{ fontSize: 14, color: theme.colors.description }}
+                sx={{
+                  fontSize: theme.fontSize.sm,
+                  color: theme.colors.description,
+                }}
               />
             }
           >
@@ -92,19 +101,10 @@ export default function DevicesPage() {
                     dense
                     onClick={() => handleOpen(device.id)}
                     sx={{
-                      bgcolor: theme.bg.listItem,
                       padding: "20px 10px",
                       margin: "0px 5px 5px 5px",
                       borderRadius: "10px",
-                      "&:hover": {
-                        bgcolor: "#999999",
-                      },
-
-                      "&:active": {
-                        transform: "scale(0.98)",
-                      },
-
-                      transition: "all 120ms ease",
+                      ...theme.listItem,
                     }}
                   >
                     <DevicesIcon
@@ -113,7 +113,7 @@ export default function DevicesPage() {
                         height: 28,
                         marginRight: 2,
                         flexShrink: 0,
-                        color: theme.colors.contrastText,
+                        color: theme.colors.valueText,
                       }}
                     />
 
@@ -122,14 +122,25 @@ export default function DevicesPage() {
                         display: "flex",
                         flexDirection: "column",
                         minWidth: 0,
-                        color: theme.colors.contrastText,
+                        color: theme.colors.valueText,
                       }}
                     >
-                      <Box sx={{ fontWeight: "bold", fontSize: 14 }}>
-                        {device.name}
+                      <Box
+                        sx={{
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                        }}
+                      >
+                        {device.name ? device.name : "{Unknown}"}
                       </Box>
 
-                      <Box sx={{ fontSize: 12, color: "#555" }}>
+                      <Box
+                        sx={{
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                          color: theme.colors.faintDescription,
+                        }}
+                      >
                         IMEI #{device.imei}
                       </Box>
                     </Box>
@@ -143,15 +154,21 @@ export default function DevicesPage() {
                     >
                       <Box
                         sx={{
-                          fontWeight: "bold",
-                          fontSize: 13,
-                          color: theme.colors.contrastText,
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                          color: theme.colors.valueText,
                         }}
                       >
-                        Title {device.deviceModel}
+                        {device.deviceModel ? device.deviceModel : "NovaX130"}
                       </Box>
 
-                      <Box sx={{ fontSize: 12, color: "#555" }}>
+                      <Box
+                        sx={{
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                          color: theme.colors.faintDescription,
+                        }}
+                      >
                         Serial #{device.id}
                       </Box>
                     </Box>

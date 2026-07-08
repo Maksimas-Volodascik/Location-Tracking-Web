@@ -7,17 +7,5 @@ type CardProps = {
 };
 
 export function Card({ children }: CardProps) {
-  return (
-    <MuiCard
-      sx={{
-        background: theme.bg.card,
-        border: theme.borders.subtle,
-        borderRadius: 1,
-        position: "relative",
-        padding: "20px",
-      }}
-    >
-      {children}
-    </MuiCard>
-  );
+  return <MuiCard sx={theme.card}>{children}</MuiCard>;
 }

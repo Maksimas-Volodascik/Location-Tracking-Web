@@ -56,12 +56,7 @@ export default function RecordDrawer({
       sx={{
         width: openDrawer ? "320px" : 0,
         flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          background: theme.bg.drawer,
-          borderLeft: theme.borders.default,
-          width: "320px",
-          position: "relative",
-        },
+        ...theme.drawer,
       }}
     >
       <Box

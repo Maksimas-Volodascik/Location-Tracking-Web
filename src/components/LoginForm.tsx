@@ -33,7 +33,7 @@ export function LoginForm() {
     <AuthLayout>
       <Card
         sx={{
-          background: theme.bg.page,
+          background: theme.surface.page,
           border: theme.borders.primary,
           width: "350px",
         }}

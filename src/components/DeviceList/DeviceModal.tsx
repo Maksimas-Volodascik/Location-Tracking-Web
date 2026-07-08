@@ -69,10 +69,7 @@ export default function DeviceModal({
       aria-labelledby="device-modal-title"
       slotProps={{
         backdrop: {
-          sx: {
-            bgcolor: "#0000007a",
-            backdropFilter: "blur(1px)",
-          },
+          sx: { ...theme.modalBlur },
         },
       }}
     >
@@ -83,7 +80,7 @@ export default function DeviceModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: { xs: "90vw", sm: "480px" },
-          bgcolor: theme.bg.card,
+          bgcolor: theme.surface.card,
           border: theme.borders.default,
           borderRadius: "16px",
           overflow: "hidden",
@@ -213,7 +210,9 @@ export default function DeviceModal({
                 <Typography
                   sx={{
                     fontSize: theme.fontSize.sm,
-                    color: form.isEnabled ? "#F97316" : "#6B7280",
+                    color: form.isEnabled
+                      ? theme.colors.accent
+                      : theme.colors.faintDescription,
                   }}
                 >
                   {form.isEnabled ? "Enabled" : "Disabled"}

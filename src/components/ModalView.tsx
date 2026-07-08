@@ -26,7 +26,7 @@ export default function ModalView({
           sx={{
             width: "100%",
             height: "100%",
-            background: theme.bg.page,
+            background: theme.surface.page,
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
@@ -36,7 +36,7 @@ export default function ModalView({
             sx={{
               height: "10%",
               maxHeight: "80px",
-              background: theme.bg.drawer,
+              background: theme.surface.drawer,
               borderBottom: theme.borders.default,
               display: "flex",
               alignItems: "center",
@@ -109,11 +109,15 @@ export default function ModalView({
                       borderRadius: "3px 3px 0 0",
 
                       "&:hover": {
-                        color: isActive ? "#fd8636" : "#aaa",
+                        color: isActive
+                          ? theme.colors.accent
+                          : theme.colors.valueText,
                         borderColor: isActive
-                          ? "rgba(253,134,54,0.5)"
-                          : "#3f3f3f",
-                        borderBottomColor: isActive ? "#fd8636" : "#3f3f3f",
+                          ? theme.borders.focusDark
+                          : theme.borders.subtle,
+                        borderBottomColor: isActive
+                          ? theme.colors.accent
+                          : theme.borders.subtle,
                       },
                     }}
                   >
@@ -131,7 +135,6 @@ export default function ModalView({
               position: "relative",
               zIndex: 1,
               scrollbarWidth: "thin",
-              scrollbarColor: "#3f3f3f #1a1917",
             }}
           >
             <RecordList deviceId={deviceId} />

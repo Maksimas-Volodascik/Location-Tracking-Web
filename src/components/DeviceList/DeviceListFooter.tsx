@@ -13,7 +13,7 @@ export default function DeviceListFooter() {
   return (
     <Box
       sx={{
-        background: theme.bg.card,
+        background: theme.surface.card,
         display: "flex",
         position: "relative",
         width: "100%",
@@ -23,7 +23,7 @@ export default function DeviceListFooter() {
         sx={{
           display: "flex",
           alignItems: "center",
-          bgcolor: theme.bg.listItem,
+          bgcolor: theme.surface.listItem,
           border: `1px solid ${focused ? theme.colors.accent : theme.colors.faintDescription}`,
           borderRadius: "12px",
           px: 1,

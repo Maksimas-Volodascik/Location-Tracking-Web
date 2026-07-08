@@ -26,7 +26,7 @@ export function DeviceActivityLineChart() {
       sx={{
         width: "100%",
         height: 340,
-        background: theme.bg.card,
+        background: theme.surface.card,
         borderRadius: "8px",
       }}
     >
@@ -52,7 +52,7 @@ export function DeviceActivityLineChart() {
 
           <Tooltip
             contentStyle={{
-              backgroundColor: theme.bg.tooltip,
+              backgroundColor: theme.surface.tooltip,
               border: theme.borders.subtle,
               borderRadius: "6px",
             }}

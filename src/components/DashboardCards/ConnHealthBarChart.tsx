@@ -17,11 +17,7 @@ export function ConnHealthBarChart({ metric }: MetricProp) {
           <XAxis dataKey="timestamp" fontSize={"10px"} interval={0} />
 
           <Tooltip
-            contentStyle={{
-              backgroundColor: theme.bg.tooltip,
-              border: theme.borders.subtle,
-              borderRadius: "6px",
-            }}
+            contentStyle={theme.tooltip}
             labelStyle={{ color: theme.colors.valueText }}
           />
           <Bar

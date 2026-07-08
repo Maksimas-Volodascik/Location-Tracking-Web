@@ -1,4 +1,5 @@
 import { TextField as MuiTextField } from "@mui/material";
+import { theme } from "../styles/theme";
 
 type TextFieldProps = {
   name: string;
@@ -25,22 +26,27 @@ export default function TextField({
       sx={{
         "& .MuiInputBase-input": {
           //main text
-          color: "#fd8636",
+          color: theme.colors.lightText,
         },
         "& .MuiInputLabel-root": {
           //label
-          color: "#fd8636",
+          color: theme.colors.accent,
         },
         "& .MuiFilledInput-underline:before": {
-          borderBottomColor: "#fd8636",
+          borderBottomColor: theme.colors.accent,
         },
         "& .MuiFilledInput-underline:after": {
-          borderBottomColor: "#fd8636",
+          borderBottomColor: theme.colors.accent,
         },
         "& .MuiFilledInput-underline:hover:before": {
-          borderBottomColor: "#fd8636",
+          borderBottomColor: theme.colors.accent,
         },
-        backgroundColor: "#212121",
+        "& .MuiFilledInput-root:hover": {
+          backgroundColor: theme.surface.textBox,
+        },
+        "& .MuiFilledInput-root.Mui-focused": {
+          backgroundColor: theme.surface.textBox,
+        },
       }}
     />
   );

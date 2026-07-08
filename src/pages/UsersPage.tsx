@@ -4,8 +4,6 @@ import {
   Breadcrumbs,
   Chip,
   Divider,
-  IconButton,
-  InputBase,
   List,
   ListItem,
   ListItemAvatar,
@@ -19,8 +17,6 @@ import React, { useState } from "react";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { theme } from "../styles/theme";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import SearchIcon from "@mui/icons-material/Search";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeviceListFooter from "../components/DeviceList/DeviceListFooter";
@@ -30,7 +26,7 @@ type MockUser = {
   firstName: string;
   lastName: string;
   email: string;
-  role: "Admin" | "User";
+  role: string;
   isOnline: boolean;
 };
 
@@ -72,7 +68,7 @@ const mockUsers: MockUser[] = [
     firstName: "Dovydas",
     lastName: "Sakalauskas",
     email: "dovydas.s@ltw.io",
-    role: "User",
+    role: "Admin",
     isOnline: true,
   },
   {
@@ -103,20 +99,29 @@ export default function UsersPage() {
     <ContentLayout overflow="hidden">
       <Box
         sx={{
-          background: theme.bg.card,
+          background: theme.surface.card,
           border: theme.borders.subtle,
           borderWidth: "0px 1px 1px 1px",
           padding: "15px",
           marginBottom: "10px",
         }}
       >
-        <Box sx={{ color: "white", fontWeight: "bold", marginBottom: "6px" }}>
+        <Box
+          sx={{
+            color: theme.colors.valueText,
+            fontWeight: theme.fontWeight.bold,
+            marginBottom: "6px",
+          }}
+        >
           Users
         </Box>
         <Breadcrumbs
           separator={
             <NavigateNextIcon
-              sx={{ fontSize: 14, color: theme.colors.description }}
+              sx={{
+                fontSize: theme.fontSize.sm,
+                color: theme.colors.description,
+              }}
             />
           }
         >
@@ -143,25 +148,16 @@ export default function UsersPage() {
               dense
               onClick={handleItemClick}
               sx={{
-                bgcolor: theme.bg.listItem,
                 padding: "14px 10px",
                 margin: "0px 5px 5px 5px",
                 borderRadius: "10px",
-                border: theme.borders.listItemBorder,
-
-                "&:hover": {
-                  bgcolor: "#1f1f23",
-                },
-                "&:active": {
-                  transform: "scale(0.98)",
-                },
-                transition: "all 120ms ease",
+                ...theme.listItem,
               }}
             >
               <ListItemAvatar>
                 <Avatar
                   sx={{
-                    bgcolor: "#3f3f46",
+                    bgcolor: theme.surface.avatar,
                     color: theme.colors.lightText,
                     fontSize: theme.fontSize.sm,
                   }}
@@ -177,13 +173,16 @@ export default function UsersPage() {
                 slotProps={{
                   primary: {
                     sx: {
-                      fontWeight: "bold",
-                      fontSize: 14,
+                      fontWeight: theme.fontWeight.bold,
+                      fontSize: theme.fontSize.xs,
                       color: theme.colors.lightText,
                     },
                   },
                   secondary: {
-                    sx: { fontSize: 12, color: theme.colors.description },
+                    sx: {
+                      fontSize: theme.fontSize.xs,
+                      color: theme.colors.description,
+                    },
                   },
                 }}
               />
@@ -194,19 +193,8 @@ export default function UsersPage() {
                 sx={{
                   marginRight: "10px",
                   border: "1px solid",
-                  ...(user.role === "Admin"
-                    ? {
-                        color: "#c3b6dd",
-                        bgcolor: "#651dff43",
-                        borderColor: "#9684be3d",
-                      }
-                    : {
-                        color: "#a1a1aa",
-                        bgcolor: "#26262a",
-                        borderColor: "#ffffff12",
-                      }),
-
-                  color: theme.colors.lightText,
+                  ...(theme.roleTheme[user.role?.toLowerCase()] ??
+                    theme.roleTheme.user),
                 }}
               />
 
@@ -216,16 +204,8 @@ export default function UsersPage() {
                 sx={{
                   border: "1px solid",
                   ...(user.isOnline
-                    ? {
-                        color: "#29df90",
-                        bgcolor: "rgba(90,165,133,0.14)",
-                        borderColor: "rgba(16, 218, 131, 0.31)",
-                      }
-                    : {
-                        color: "#71717a",
-                        bgcolor: "#26262a",
-                        borderColor: "rgba(255,255,255,0.07)",
-                      }),
+                    ? theme.userStatusTheme.online
+                    : theme.userStatusTheme.offline),
                 }}
               />
             </ListItemButton>
@@ -237,13 +217,15 @@ export default function UsersPage() {
         anchorEl={menuAnchor}
         open={Boolean(menuAnchor)}
         onClose={handleMenuClose}
-        slotProps={{ paper: { sx: { backgroundColor: theme.bg.tooltip } } }}
+        slotProps={{
+          paper: { sx: { backgroundColor: theme.surface.tooltip } },
+        }}
       >
         <MenuItem
           onClick={() => handleAction("edit")}
           sx={{ color: theme.colors.valueText }}
         >
-          <EditIcon sx={{ marginRight: "8px", fontSize: 18 }} />
+          <EditIcon sx={{ marginRight: "8px", fontSize: theme.fontSize.lg }} />
           Edit
         </MenuItem>
         <Divider />
@@ -251,7 +233,9 @@ export default function UsersPage() {
           onClick={() => handleAction("delete")}
           sx={{ color: theme.buttons.danger }}
         >
-          <DeleteIcon sx={{ marginRight: "8px", fontSize: 18 }} />
+          <DeleteIcon
+            sx={{ marginRight: "8px", fontSize: theme.fontSize.lg }}
+          />
           Delete
         </MenuItem>
       </Menu>

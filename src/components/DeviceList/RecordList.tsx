@@ -62,9 +62,9 @@ export default function RecordList({ deviceId }: RecordListProps) {
           height: 38,
           cursor: "pointer",
           borderLeft: "2px solid transparent",
-          backgroundColor: theme.bg.card,
+          backgroundColor: theme.surface.card,
           "&:hover": {
-            backgroundColor: theme.bg.cardHover,
+            backgroundColor: theme.surface.cardHover,
           },
           "& td": {
             borderBottom: theme.borders.subtle,
@@ -133,7 +133,7 @@ export default function RecordList({ deviceId }: RecordListProps) {
                     color: theme.colors.valueText,
                     fontWeight: theme.fontWeight.bold,
                     whiteSpace: "nowrap",
-                    backgroundColor: theme.bg.tooltip,
+                    backgroundColor: theme.surface.tooltip,
                     borderBottom: theme.borders.subtle,
                     px: 3,
                     height: 38,

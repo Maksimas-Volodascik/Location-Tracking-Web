@@ -30,16 +30,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <Box
-        sx={{
-          width: "300px",
-          background: theme.bg.card,
-          borderRight: theme.borders.default,
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-        }}
-      >
+      <Box sx={theme.sidebar}>
         <Box
           sx={{
             padding: "20px",
