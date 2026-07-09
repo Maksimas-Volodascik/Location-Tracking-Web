@@ -11,7 +11,11 @@ type ModalProps = {
   deviceId: string | null;
 };
 
-export function ModalView({ isOpen, handleClose, deviceId }: ModalProps) {
+export function DeviceRecordsModal({
+  isOpen,
+  handleClose,
+  deviceId,
+}: ModalProps) {
   if (!isOpen) return null;
   const [activeTab, setActiveTab] = useState("Logs"); //Toolbar
 

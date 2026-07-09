@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   Box,
@@ -17,14 +17,13 @@ import {
 
 import ClearIcon from "@mui/icons-material/Clear";
 import DevicesIcon from "@mui/icons-material/Devices";
-import type { EmptyDeviceForm } from "../../types/shared";
-import { createNewDevice } from "../../services/deviceApi";
+import type { DeviceData, DeviceForm } from "../../types/shared";
 import { theme } from "../../styles/theme";
 
 const DEVICE_MODELS = [
   "CustomProtocol",
   "CtmProt",
-  "FMC920",
+  "FMC650",
   "FMC630",
   "FMC640",
   "FMC120",
@@ -32,35 +31,58 @@ const DEVICE_MODELS = [
   "FMC150",
 ];
 
-const EMPTY_FORM = {
+const EMPTY_FORM: DeviceForm = {
   imei: "",
   name: "",
   isEnabled: false,
   deviceModelName: "",
-} as EmptyDeviceForm;
+};
+
+function toForm(device: DeviceData): DeviceForm {
+  return {
+    imei: device.imei,
+    name: device.name,
+    isEnabled: device.isEnabled,
+    deviceModelName: "FMC650", //edit once devicemodel is fetched from backend
+  };
+}
+
+interface DeviceModalProps {
+  open: boolean;
+  setIsOpen: (v: boolean) => void;
+  onSubmit: (form: DeviceForm, deviceId: string | null) => void;
+  initialData?: DeviceData | null;
+}
 
 export function DeviceModal({
   open,
   setIsOpen,
-}: {
-  open: boolean;
-  setIsOpen: (v: boolean) => void;
-}) {
-  const [form, setForm] = useState<EmptyDeviceForm>(EMPTY_FORM);
+  onSubmit,
+  initialData,
+}: DeviceModalProps) {
+  const isEditMode = initialData !== null;
+  const [form, setForm] = useState<DeviceForm>(
+    initialData ? toForm(initialData) : EMPTY_FORM,
+  );
+
+  useEffect(() => {
+    if (open) {
+      setForm(initialData ? toForm(initialData) : EMPTY_FORM);
+    }
+  }, [open, initialData]);
 
   const handleClose = () => setIsOpen(false);
 
   const handleChange = (field: string, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleAdd = () => {
-    console.log("Device added:", form);
-    createNewDevice(form);
-    setForm(EMPTY_FORM);
+  const handleSubmit = () => {
+    onSubmit(form, initialData ? initialData.id : null);
     handleClose();
   };
 
-  const handleClear = () => setForm(EMPTY_FORM);
+  const handleClear = () =>
+    setForm(initialData ? toForm(initialData) : EMPTY_FORM);
 
   return (
     <Modal
@@ -122,7 +144,7 @@ export function DeviceModal({
                 lineHeight: 1.2,
               }}
             >
-              Add Device
+              {isEditMode ? "Edit Device" : "Add Device"}
             </Typography>
             <Typography
               sx={{
@@ -131,7 +153,9 @@ export function DeviceModal({
                 mt: 0.2,
               }}
             >
-              Fill in the details below to register a new device
+              {isEditMode
+                ? "Update the details for this device"
+                : "Fill in the details below to register a new device"}
             </Typography>
           </Box>
         </Box>
@@ -285,7 +309,7 @@ export function DeviceModal({
             Clear
           </Button>
           <Button
-            onClick={handleAdd}
+            onClick={handleSubmit}
             sx={{
               bgcolor: theme.buttons.primary,
               color: theme.colors.lightText,
@@ -294,7 +318,7 @@ export function DeviceModal({
               "&:hover": { bgcolor: theme.buttons.primaryHover },
             }}
           >
-            Add Device
+            {isEditMode ? "Save Changes" : "Add Device"}
           </Button>
         </Box>
       </Box>

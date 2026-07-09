@@ -1,6 +1,6 @@
 import {
   type DeviceData,
-  type EmptyDeviceForm,
+  type DeviceForm,
   type RecordData,
 } from "../types/shared";
 import { baseURL } from "./api";
@@ -63,7 +63,7 @@ export async function getDeviceRecords(
   }
 }
 
-export async function createNewDevice(deviceData: EmptyDeviceForm) {
+export async function createNewDevice(deviceData: DeviceForm) {
   const accessToken = getAccessToken();
   console.log(deviceData);
   try {
@@ -81,6 +81,46 @@ export async function createNewDevice(deviceData: EmptyDeviceForm) {
         deviceModelName: deviceData.deviceModelName,
       }),
     });
+
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+
+    return response; //.json();
+  } catch (error: any) {
+    throw new Error(`Something went wrong: ${error.message}`);
+  }
+}
+
+export async function updateDevice(
+  deviceData: DeviceForm,
+  deviceId: string | null,
+) {
+  const accessToken = getAccessToken();
+  console.log(deviceData);
+
+  if (deviceId === null) {
+    throw new Error(`Request failed: Device ID cannot be null`);
+  }
+
+  try {
+    const response = await fetch(
+      `https://localhost:7256/v1/device/${deviceId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          imei: deviceData.imei,
+          name: deviceData.name,
+          isEnabled: deviceData.isEnabled,
+          deviceModelName: deviceData.deviceModelName,
+        }),
+      },
+    );
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);

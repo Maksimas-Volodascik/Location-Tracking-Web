@@ -9,6 +9,6 @@ export type Permissions =
 
 export const Role_Permissions: Record<Role, Permissions[]> = {
   admin: ["view:dashboard", "view:devices", "view:users", "create:objects"],
-  user: ["view:dashboard", "view:devices", "view:users"],
+  user: ["view:dashboard", "view:devices", "view:users", "create:objects"],
   demo: ["view:dashboard"],
 };
