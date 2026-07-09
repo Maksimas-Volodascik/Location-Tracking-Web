@@ -2,8 +2,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-import RecordList from "./deviceList/RecordList";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
+import { RecordList } from "./RecordList";
 
 type ModalProps = {
   handleClose: () => void;
@@ -11,11 +11,7 @@ type ModalProps = {
   deviceId: string | null;
 };
 
-export default function ModalView({
-  isOpen,
-  handleClose,
-  deviceId,
-}: ModalProps) {
+export function ModalView({ isOpen, handleClose, deviceId }: ModalProps) {
   if (!isOpen) return null;
   const [activeTab, setActiveTab] = useState("Logs"); //Toolbar
 

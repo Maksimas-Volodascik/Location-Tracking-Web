@@ -39,7 +39,7 @@ const EMPTY_FORM = {
   deviceModelName: "",
 } as EmptyDeviceForm;
 
-export default function DeviceModal({
+export function DeviceModal({
   open,
   setIsOpen,
 }: {

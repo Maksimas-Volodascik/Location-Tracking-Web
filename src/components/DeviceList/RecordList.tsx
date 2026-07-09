@@ -8,17 +8,17 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
-import RecordDrawer from "./RecordDrawer";
 import { useQuery } from "@tanstack/react-query";
 import type { RecordData } from "../../types/shared";
 import { getDeviceRecords } from "../../services/deviceApi";
 import { theme } from "../../styles/theme";
+import { RecordDrawer } from "./RecordDrawer";
 
 type RecordListProps = {
   deviceId: string | null;
 };
 
-export default function RecordList({ deviceId }: RecordListProps) {
+export function RecordList({ deviceId }: RecordListProps) {
   const [headers, setHeaders] = useState<string[]>([
     "Server.Timestamp",
     "Expires.Date",

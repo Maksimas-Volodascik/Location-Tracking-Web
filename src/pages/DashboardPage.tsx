@@ -60,7 +60,7 @@ const result = Object.entries(MetricCardJson).map((value, key) => {
   };
 });
 
-export default function DashboardPage() {
+export function DashboardPage() {
   return (
     <>
       <ContentLayout>

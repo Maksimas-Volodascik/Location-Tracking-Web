@@ -19,7 +19,7 @@ import { theme } from "../styles/theme";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeviceListFooter from "../components/deviceList/DeviceListFooter";
+import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
 
 type MockUser = {
   id: string;
@@ -81,7 +81,7 @@ const mockUsers: MockUser[] = [
   },
 ];
 
-export default function UsersPage() {
+export function UsersPage() {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
   const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {

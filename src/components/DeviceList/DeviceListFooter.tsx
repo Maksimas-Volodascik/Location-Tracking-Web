@@ -3,10 +3,10 @@ import { theme } from "../../styles/theme";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeviceModal from "./DeviceModal";
 import { Can } from "../Can";
+import { DeviceModal } from "./DeviceModal";
 
-export default function DeviceListFooter() {
+export function DeviceListFooter() {
   const [focused, setFocused] = useState(false);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { usePermissions } from "../../contexts/PermissionsContext";
-import type { Permissions } from "../../types/permissions";
+import type { Permissions } from "../types/permissions";
+import { usePermissions } from "../contexts/PermissionsContext";
 
 export function RequirePermission({ permission }: { permission: Permissions }) {
   const { can } = usePermissions();

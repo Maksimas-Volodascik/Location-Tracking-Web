@@ -1,13 +1,13 @@
 import { Button as MuiButton } from "@mui/material";
 import type { ReactNode } from "react";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
 
 type ButtonProps = {
   children: ReactNode;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Button({ children, onClick }: ButtonProps) {
+export function Button({ children, onClick }: ButtonProps) {
   return (
     <MuiButton
       variant="contained"

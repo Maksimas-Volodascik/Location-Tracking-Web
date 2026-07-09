@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import backgroundImg from "../assets/background.png";
+import backgroundImg from "../../assets/background.png";
 
 export function Background() {
   return (

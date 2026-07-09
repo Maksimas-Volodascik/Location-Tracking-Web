@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { Card } from "../Card";
 import type { ConnMetrics } from "../../types/dashboard";
 import { formatLable } from "../../utils";
 import { ConnHealthBarChart } from "./ConnHealthBarChart";
 import { theme } from "../../styles/theme";
+import { Card } from "../ui/Card";
 
 type MetricProp = {
   metric: ConnMetrics;

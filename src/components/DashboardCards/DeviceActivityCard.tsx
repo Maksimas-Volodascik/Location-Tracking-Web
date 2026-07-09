@@ -1,9 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import { Card } from "../Card";
-
 import { DeviceActivityPieChart } from "./DeviceActivityPieChart";
 import { DeviceActivityLineChart } from "./DeviceActivityLineChart";
 import { theme } from "../../styles/theme";
+import { Card } from "../ui/Card";
 
 export function DeviceActivityCard() {
   return (
