@@ -4,6 +4,7 @@ import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeviceModal from "./DeviceModal";
+import { Can } from "../Can";
 
 export default function DeviceListFooter() {
   const [focused, setFocused] = useState(false);
@@ -58,24 +59,26 @@ export default function DeviceListFooter() {
           }}
         />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
-        <IconButton
-          sx={{
-            position: "absolute",
-            transform: "translateY(-35%)",
-          }}
-          aria-label="delete"
-          onClick={() => setOpen(true)}
-        >
-          <AddCircleIcon
+      <Can permission="create:objects">
+        <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
+          <IconButton
             sx={{
-              color: theme.buttons.success,
-              width: "60px",
-              height: "60px",
+              position: "absolute",
+              transform: "translateY(-35%)",
             }}
-          />
-        </IconButton>
-      </Box>
+            aria-label="delete"
+            onClick={() => setOpen(true)}
+          >
+            <AddCircleIcon
+              sx={{
+                color: theme.buttons.success,
+                width: "60px",
+                height: "60px",
+              }}
+            />
+          </IconButton>
+        </Box>
+      </Can>
       <DeviceModal open={open} setIsOpen={setOpen} />
     </Box>
   );

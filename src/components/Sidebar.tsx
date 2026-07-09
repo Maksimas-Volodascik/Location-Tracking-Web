@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { ProfileMenu } from "./sidebarComponents/ProfileMenu";
 import { theme } from "../styles/theme";
 import navIcon from "../assets/navIcon.png";
+import { Can } from "./Can";
 
 export default function Sidebar() {
   const [openAccControl, setOpenAccControl] = useState(true);
@@ -85,54 +86,59 @@ export default function Sidebar() {
               <ListItemText primary="Dashboard" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => setOpenTelematics(!openTelematics)}>
-              <ListItemIcon>
-                <TelematicsIcon sx={{ color: theme.colors.valueText }} />
-              </ListItemIcon>
-              <ListItemText primary="Telematics" />
-              {openTelematics ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+            <Can permission="view:devices">
+              <ListItemButton
+                onClick={() => setOpenTelematics(!openTelematics)}
+              >
+                <ListItemIcon>
+                  <TelematicsIcon sx={{ color: theme.colors.valueText }} />
+                </ListItemIcon>
+                <ListItemText primary="Telematics" />
+                {openTelematics ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
 
-            <Collapse in={openTelematics} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding dense={true}>
-                <ListItemButton component={Link} to="devices" sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <DevicesIcon sx={{ color: theme.colors.valueText }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Devices" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+              <Collapse in={openTelematics} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding dense={true}>
+                  <ListItemButton component={Link} to="devices" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <DevicesIcon sx={{ color: theme.colors.valueText }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Devices" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            </Can>
 
-            <ListItemButton
-              onClick={() => {
-                setOpenAccControl(!openAccControl);
-              }}
-            >
-              <ListItemIcon>
-                <AccessIcon sx={{ color: theme.colors.valueText }} />
-              </ListItemIcon>
-              <ListItemText primary="Access Control" />
-              {openAccControl ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+            <Can permission="view:users">
+              <ListItemButton
+                onClick={() => {
+                  setOpenAccControl(!openAccControl);
+                }}
+              >
+                <ListItemIcon>
+                  <AccessIcon sx={{ color: theme.colors.valueText }} />
+                </ListItemIcon>
+                <ListItemText primary="Access Control" />
+                {openAccControl ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
 
-            <Collapse in={openAccControl} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding dense={true}>
-                <ListItemButton component={Link} to="users" sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <UserIcon sx={{ color: theme.colors.valueText }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Users" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <SpeedIcon sx={{ color: theme.colors.valueText }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Limits" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-
+              <Collapse in={openAccControl} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding dense={true}>
+                  <ListItemButton component={Link} to="users" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <UserIcon sx={{ color: theme.colors.valueText }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Users" />
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <SpeedIcon sx={{ color: theme.colors.valueText }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Limits" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            </Can>
             <ListItemButton
               onClick={() => {
                 setOpenDocs(!openDocs);
