@@ -14,7 +14,7 @@ type RecordDrawerProps = {
   selectedItem: RecordData | null;
 };
 
-export default function RecordDrawer({
+export function RecordDrawer({
   headers,
   setHeaders,
   openDrawer,

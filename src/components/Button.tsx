@@ -7,7 +7,7 @@ type ButtonProps = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Button({ children, onClick }: ButtonProps) {
+export function Button({ children, onClick }: ButtonProps) {
   return (
     <MuiButton
       variant="contained"

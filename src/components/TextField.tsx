@@ -8,12 +8,7 @@ type TextFieldProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export default function TextField({
-  name,
-  label,
-  type,
-  onChange,
-}: TextFieldProps) {
+export function TextField({ name, label, type, onChange }: TextFieldProps) {
   return (
     <MuiTextField
       name={name}

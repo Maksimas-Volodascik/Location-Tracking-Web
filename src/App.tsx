@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
 import { PageLayout } from "./components/layout/PageLayout";
-import DevicesPage from "./pages/DevicesPage";
-import UsersPage from "./pages/UsersPage";
 import { ThemeProvider } from "@mui/material";
 import { themeTemplate } from "./styles/theme";
 import { PublicAccess } from "./components/routes/PublicAccess";
 import { PrivateAccess } from "./components/routes/PrivateAccess";
 import { RequirePermission } from "./components/routes/RequirePermission";
+import { UsersPage } from "./pages/UsersPage";
+import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
+import { DashboardPage } from "./pages/DashboardPage";
+import { DevicesPage } from "./pages/DevicesPage";
 
 export const App = () => {
   return (
