@@ -3,25 +3,43 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Box } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { theme } from "../../styles/theme";
-import type { DeviceData } from "../../types/shared";
+import type { DeviceData, MenuOptions } from "../../types/shared";
+import { OptionMenu } from "../ui/OptionMenu";
+import { useState } from "react";
 
 interface DeviceListItemProps {
   device: DeviceData;
   onClick: (deviceId: string) => void;
-  onContextMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  handleAction: (type: MenuOptions, device: DeviceData) => void;
 }
 
 export function DeviceListItem({
   device,
   onClick,
-  onContextMenu,
+  handleAction,
 }: DeviceListItemProps) {
+  const [menuIsOpen, setMenuIsOpen] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
+  const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault(); //disable default browser right click menu
+    setMenuIsOpen({ top: event.clientY, left: event.clientX });
+  };
+  const handleMenuClose = () => setMenuIsOpen(null);
+
+  const handleSelectedAction = (type: MenuOptions) => {
+    handleAction(type, device);
+    handleMenuClose();
+  };
+
   return (
     <ListItem disablePadding>
       <ListItemButton
         dense
         onClick={() => onClick(device.id)}
-        onContextMenu={onContextMenu}
+        onContextMenu={handleItemClick}
         sx={{
           padding: "20px 10px",
           margin: "0px 5px 5px 5px",
@@ -95,6 +113,11 @@ export function DeviceListItem({
           </Box>
         </Box>
       </ListItemButton>
+      <OptionMenu
+        menuIsOpen={menuIsOpen}
+        handleMenuClose={handleMenuClose}
+        handleAction={handleSelectedAction}
+      />
     </ListItem>
   );
 }

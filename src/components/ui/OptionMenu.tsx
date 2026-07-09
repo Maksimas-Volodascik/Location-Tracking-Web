@@ -3,17 +3,19 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { theme } from "../../styles/theme";
+import type { MenuOptions } from "../../types/shared";
 
 type OptionMenuProps = {
   menuIsOpen: { top: number; left: number } | null;
   handleMenuClose: () => void;
+  handleAction: (type: MenuOptions) => void;
 };
 
-export function OptionMenu({ menuIsOpen, handleMenuClose }: OptionMenuProps) {
-  const handleAction = (type: "view" | "edit" | "delete") => {
-    console.log("pressed " + type);
-    handleMenuClose();
-  };
+export function OptionMenu({
+  menuIsOpen,
+  handleMenuClose,
+  handleAction,
+}: OptionMenuProps) {
   return (
     <Menu
       anchorReference="anchorPosition"
@@ -43,6 +45,7 @@ export function OptionMenu({ menuIsOpen, handleMenuClose }: OptionMenuProps) {
         Edit
       </MenuItem>
       <MenuItem
+        dense
         onClick={() => handleAction("delete")}
         sx={{ color: theme.buttons.danger }}
       >

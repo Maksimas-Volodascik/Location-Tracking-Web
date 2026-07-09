@@ -5,11 +5,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Can } from "../Can";
 import { DeviceModal } from "./DeviceModal";
+import { createNewDevice } from "../../services/deviceApi";
+import { useQueryClient } from "@tanstack/react-query";
+import type { DeviceForm } from "../../types/shared";
 
 export function DeviceListFooter() {
   const [focused, setFocused] = useState(false);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  const handleCreate = async (form: DeviceForm) => {
+    console.log(form);
+    await createNewDevice(form);
+    queryClient.invalidateQueries({ queryKey: ["devices"] });
+  };
 
   return (
     <Box
@@ -79,7 +89,7 @@ export function DeviceListFooter() {
           </IconButton>
         </Box>
       </Can>
-      <DeviceModal open={open} setIsOpen={setOpen} />
+      <DeviceModal open={open} setIsOpen={setOpen} onSubmit={handleCreate} />
     </Box>
   );
 }
