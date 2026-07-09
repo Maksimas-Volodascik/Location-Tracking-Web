@@ -1,5 +1,5 @@
 import { TextField as MuiTextField } from "@mui/material";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
 
 type TextFieldProps = {
   name: string;

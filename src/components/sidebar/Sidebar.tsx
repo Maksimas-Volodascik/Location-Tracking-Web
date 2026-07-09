@@ -21,7 +21,7 @@ import ApiIcon from "@mui/icons-material/Api";
 import { Link } from "react-router-dom";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../styles/theme";
-import navIcon from "../assets/navIcon.png";
+import navIcon from "../../assets/navIcon.png";
 import { Can } from "../Can";
 
 export function Sidebar() {

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import Sidebar from "../sidebarComponents/Sidebar";
 import { Outlet } from "react-router-dom";
 import { theme } from "../../styles/theme";
+import { Sidebar } from "../sidebar/Sidebar";
 
 export function PageLayout() {
   return (

@@ -1,6 +1,6 @@
 import { Button as MuiButton } from "@mui/material";
 import type { ReactNode } from "react";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
 
 type ButtonProps = {
   children: ReactNode;

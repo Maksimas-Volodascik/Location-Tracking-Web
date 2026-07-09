@@ -2,8 +2,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-import { theme } from "../styles/theme";
-import { RecordList } from "./deviceList/RecordList";
+import { theme } from "../../styles/theme";
+import { RecordList } from "./RecordList";
 
 type ModalProps = {
   handleClose: () => void;

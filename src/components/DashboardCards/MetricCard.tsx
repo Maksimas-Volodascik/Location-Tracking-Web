@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { Card } from "../Card";
 import { theme } from "../../styles/theme";
+import { Card } from "../ui/Card";
 
 type UsersKPI = {
   total: number;

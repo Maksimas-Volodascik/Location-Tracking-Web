@@ -21,7 +21,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
-import { ModalView } from "../components/ModalView";
+import { ModalView } from "../components/deviceList/DeviceRecordsModal";
 
 export function DevicesPage() {
   const {
