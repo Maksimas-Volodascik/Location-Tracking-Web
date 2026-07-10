@@ -97,7 +97,6 @@ export async function updateDevice(
   deviceId: string | null,
 ) {
   const accessToken = getAccessToken();
-  console.log(deviceData);
 
   if (deviceId === null) {
     throw new Error(`Request failed: Device ID cannot be null`);
@@ -119,6 +118,36 @@ export async function updateDevice(
           isEnabled: deviceData.isEnabled,
           deviceModelName: deviceData.deviceModelName,
         }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+
+    return response; //.json();
+  } catch (error: any) {
+    throw new Error(`Something went wrong: ${error.message}`);
+  }
+}
+
+export async function deleteDevice(deviceId: string | null) {
+  const accessToken = getAccessToken();
+
+  if (deviceId === null) {
+    throw new Error(`Request failed: Device ID cannot be null`);
+  }
+
+  try {
+    const response = await fetch(
+      `https://localhost:7256/v1/device/${deviceId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       },
     );
 

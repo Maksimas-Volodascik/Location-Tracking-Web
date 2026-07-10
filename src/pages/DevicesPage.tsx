@@ -1,7 +1,11 @@
 import List from "@mui/material/List";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { Box, Typography } from "@mui/material";
-import { getAllDevices, updateDevice } from "../services/deviceApi";
+import {
+  deleteDevice,
+  getAllDevices,
+  updateDevice,
+} from "../services/deviceApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DeviceData, DeviceForm, MenuOptions } from "../types/shared";
 import { useState } from "react";
@@ -12,6 +16,7 @@ import { DeviceRecordsModal } from "../components/deviceList/DeviceRecordsModal"
 import { DeviceListItem } from "../components/deviceList/DeviceListItem";
 import { Header } from "../components/ui/Header";
 import { DeviceModal } from "../components/deviceList/DeviceModal";
+import { ConfirmDialog } from "../components/ui/ConfirmDialog";
 
 export function DevicesPage() {
   const {
@@ -25,26 +30,32 @@ export function DevicesPage() {
   });
   const queryClient = useQueryClient();
 
-  const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<DeviceData | null>(null);
   const [isRecordListOpen, setIsRecordListOpen] = useState(false);
   const handleClose = () => setIsRecordListOpen(false);
-  const handleOpen = (deviceId: string) => {
-    setSelectedDevice(deviceId);
+  const handleOpen = (device: DeviceData) => {
+    setSelectedDevice(device);
     setIsRecordListOpen(true);
   };
 
-  const [editDevice, setEditDevice] = useState<DeviceData | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const handleAction = (type: MenuOptions, device: DeviceData) => {
     if (type === "edit") {
-      setEditDevice(device);
+      setSelectedDevice(device);
       setIsEditModalOpen(true);
     } else if (type === "delete") {
-      console.log(device);
+      setSelectedDevice(device);
+      setIsDeleteDialogOpen(true);
     } else {
-      handleOpen(device.id);
+      handleOpen(device);
     }
+  };
+
+  const handleDelete = async () => {
+    await deleteDevice(selectedDevice ? selectedDevice.id : null);
+    queryClient.invalidateQueries({ queryKey: ["devices"] });
   };
 
   const handleUpdate = async (form: DeviceForm, deviceId: string | null) => {
@@ -57,11 +68,6 @@ export function DevicesPage() {
       <ContentLayout overflow="hidden">
         <Header page="Devices" tab="Telematics" />
         <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-          <DeviceRecordsModal
-            isOpen={isRecordListOpen}
-            handleClose={handleClose}
-            deviceId={selectedDevice}
-          />
           {isLoading ? (
             <Box
               sx={{ width: "100%", display: "flex", justifyContent: "center" }}
@@ -98,7 +104,19 @@ export function DevicesPage() {
         open={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
         onSubmit={handleUpdate}
-        initialData={editDevice}
+        initialData={selectedDevice}
+      />
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        title={`Are you sure you want to delete ${selectedDevice?.imei}?`}
+        message="Deleting this device will permanently remove all of its data. This action cannot be undone."
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteDialogOpen(false)}
+      />
+      <DeviceRecordsModal
+        isOpen={isRecordListOpen}
+        handleClose={handleClose}
+        deviceId={selectedDevice ? selectedDevice.id : null}
       />
     </>
   );

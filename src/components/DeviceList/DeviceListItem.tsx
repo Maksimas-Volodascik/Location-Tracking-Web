@@ -9,7 +9,7 @@ import { useState } from "react";
 
 interface DeviceListItemProps {
   device: DeviceData;
-  onClick: (deviceId: string) => void;
+  onClick: (deviceId: DeviceData) => void;
   handleAction: (type: MenuOptions, device: DeviceData) => void;
 }
 
@@ -38,7 +38,7 @@ export function DeviceListItem({
     <ListItem disablePadding>
       <ListItemButton
         dense
-        onClick={() => onClick(device.id)}
+        onClick={() => onClick(device)}
         onContextMenu={handleItemClick}
         sx={{
           padding: "20px 10px",
