@@ -1,27 +1,33 @@
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
-import type { ConnMetrics } from "../types/dashboard";
+import type {
+  ConnMetrics,
+  MetricCardData,
+  MetricEntry,
+} from "../types/dashboard";
 import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
 import { MetricCard } from "../components/dashboardCards/MetricCard";
 import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
+import { getMetricData } from "../services/dashboardApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const MetricCardJson = {
+const EmptyMetricCardJson: MetricCardData = {
   users: {
-    total: 12,
-    admin: 10,
-    users: 2,
+    total: 0,
+    admin: 0,
+    users: 0,
   },
   records: {
-    total: 9318,
-    daily: 15,
+    total: 0,
+    daily: 0,
   },
   devices: {
-    total: 13,
-    weekly: 1,
+    total: 0,
+    weekly: 0,
   },
   errors: {
-    total: 1,
-    weekly: 1,
+    total: 0,
+    weekly: 0,
   },
 };
 
@@ -53,27 +59,34 @@ const ConnMetricsJson: ConnMetrics = {
   },
 };
 
-const result = Object.entries(MetricCardJson).map((value, key) => {
-  return {
-    category: key,
-    value: value,
-  };
-});
+const result: MetricEntry[] = Object.entries(EmptyMetricCardJson).map(
+  ([category, value]) => {
+    return {
+      category,
+      value,
+    };
+  },
+);
 
 export function DashboardPage() {
+  const { data: metrics } = useQuery<MetricEntry[] | null>({
+    queryKey: ["metrics"],
+    queryFn: getMetricData,
+    staleTime: 1000 * 60 * 1,
+    initialData: result,
+  });
   return (
     <>
       <ContentLayout>
         <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
-          {result.map((category) => (
+          {metrics?.map((category) => (
             <MetricCard
               key={category.category}
-              kpiValues={category.value[1]}
-              cardType={category.value[0]}
+              cardType={category.category}
+              kpiValues={category.value}
             />
           ))}
         </DashboardGrid>
-
         <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
           <DeviceActivityCard />
           <ConnHealthCard metric={ConnMetricsJson} />
