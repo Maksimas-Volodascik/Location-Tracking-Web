@@ -1,27 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { theme } from "../../styles/theme";
 import { Card } from "../ui/Card";
-
-type UsersKPI = {
-  total: number;
-  admin: number;
-  users: number;
-};
-
-type RecordsKPI = {
-  total: number;
-  daily: number;
-};
-
-type DevicesKPI = {
-  total: number;
-  weekly: number;
-};
-
-type ErrorsKPI = {
-  total: number;
-  weekly: number;
-};
+import type {
+  DevicesKPI,
+  ErrorsKPI,
+  RecordsKPI,
+  UsersKPI,
+} from "../../types/dashboard";
 
 type CardViewMap = {
   users: {
@@ -40,11 +25,6 @@ type CardViewMap = {
     metricLabel: string;
     description: (kpi: ErrorsKPI) => React.ReactNode;
   };
-};
-
-type MetricCardProps = {
-  cardType: string;
-  kpiValues: DevicesKPI | ErrorsKPI | UsersKPI | RecordsKPI;
 };
 
 const cardView: CardViewMap = {
@@ -96,6 +76,11 @@ const cardView: CardViewMap = {
       </>
     ),
   },
+};
+
+type MetricCardProps = {
+  cardType: string;
+  kpiValues: DevicesKPI | ErrorsKPI | UsersKPI | RecordsKPI;
 };
 
 export function MetricCard({ cardType, kpiValues }: MetricCardProps) {

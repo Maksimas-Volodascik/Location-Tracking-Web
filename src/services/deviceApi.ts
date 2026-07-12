@@ -22,7 +22,6 @@ export async function getAllDevices(): Promise<DeviceData[] | null> {
     }
 
     const data: DeviceData[] = await response.json();
-    console.log("Success:", data);
 
     return data;
   } catch (error: any) {
@@ -54,7 +53,6 @@ export async function getDeviceRecords(
     }
 
     const data: RecordData[] = await response.json();
-    console.log("Success:", data);
 
     return data;
   } catch (error: any) {
@@ -67,7 +65,7 @@ export async function createNewDevice(deviceData: DeviceForm) {
   const accessToken = getAccessToken();
   console.log(deviceData);
   try {
-    const response = await fetch("https://localhost:7256/v1/device", {
+    const response = await fetch(`${baseURL}/device`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -103,23 +101,20 @@ export async function updateDevice(
   }
 
   try {
-    const response = await fetch(
-      `https://localhost:7256/v1/device/${deviceId}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          imei: deviceData.imei,
-          name: deviceData.name,
-          isEnabled: deviceData.isEnabled,
-          deviceModelName: deviceData.deviceModelName,
-        }),
+    const response = await fetch(`${baseURL}device/${deviceId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        imei: deviceData.imei,
+        name: deviceData.name,
+        isEnabled: deviceData.isEnabled,
+        deviceModelName: deviceData.deviceModelName,
+      }),
+    });
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
