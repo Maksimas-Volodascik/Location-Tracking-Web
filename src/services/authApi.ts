@@ -32,7 +32,12 @@ export async function userLogin({
       `${baseURL}users/login?Email=${email}&Password=${password}`,
       { method: "POST" },
     );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     saveAccessToken(await response.text());
+
     return null;
   } catch (error: any) {
     if (error.message.includes("NetworkError")) {

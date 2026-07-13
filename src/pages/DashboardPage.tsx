@@ -9,7 +9,7 @@ import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
 import { MetricCard } from "../components/dashboardCards/MetricCard";
 import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
 import { getMetricData } from "../services/dashboardApi";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const EmptyMetricCardJson: MetricCardData = {
   users: {
