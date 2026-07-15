@@ -15,11 +15,14 @@ export async function userRegister({
     );
 
     return await response.text();
-  } catch (error: any) {
-    if (error.message.includes("NetworkError")) {
-      return "NETWORK_ERROR";
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message.includes("NetworkError")) {
+        return "NETWORK_ERROR";
+      }
     }
-    return "UNKNOWN_ERROR";
+
+    return "UNKNOWN_ERROR" + String(error);
   }
 }
 
@@ -39,10 +42,13 @@ export async function userLogin({
     saveAccessToken(await response.text());
 
     return null;
-  } catch (error: any) {
-    if (error.message.includes("NetworkError")) {
-      return "NETWORK_ERROR";
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      if (error.message.includes("NetworkError")) {
+        return "NETWORK_ERROR";
+      }
     }
-    return "UNKNOWN_ERROR" + error.message;
+
+    return "UNKNOWN_ERROR" + String(error);
   }
 }

@@ -2,7 +2,7 @@ import type { MetricCardData, MetricEntry } from "../types/dashboard";
 import { baseURL } from "./api";
 import { getAccessToken } from "./tokenService";
 
-export async function getMetricData(): Promise<MetricEntry[] | null> {
+export async function getMetricData(): Promise<MetricEntry[]> {
   const accessToken = getAccessToken();
   try {
     const response = await fetch(`${baseURL}dashboard`, {
@@ -29,8 +29,10 @@ export async function getMetricData(): Promise<MetricEntry[] | null> {
     );
 
     return result;
-  } catch (error: any) {
-    console.error("Error fetching data:", error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error fetching data:", error.message);
+    }
     throw error;
   }
 }

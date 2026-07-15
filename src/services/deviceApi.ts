@@ -63,9 +63,9 @@ export async function getDeviceRecords(
 
 export async function createNewDevice(deviceData: DeviceForm) {
   const accessToken = getAccessToken();
-  console.log(deviceData);
+
   try {
-    const response = await fetch(`${baseURL}/device`, {
+    const response = await fetch(`${baseURL}device`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -84,7 +84,7 @@ export async function createNewDevice(deviceData: DeviceForm) {
       throw new Error(`Request failed: ${response.status}`);
     }
 
-    return response; //.json();
+    return response;
   } catch (error: any) {
     throw new Error(`Something went wrong: ${error.message}`);
   }
@@ -120,7 +120,7 @@ export async function updateDevice(
       throw new Error(`Request failed: ${response.status}`);
     }
 
-    return response; //.json();
+    return response;
   } catch (error: any) {
     throw new Error(`Something went wrong: ${error.message}`);
   }
@@ -134,23 +134,20 @@ export async function deleteDevice(deviceId: string | null) {
   }
 
   try {
-    const response = await fetch(
-      `https://localhost:7256/v1/device/${deviceId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(`${baseURL}device/${deviceId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    );
+    });
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
     }
 
-    return response; //.json();
+    return response;
   } catch (error: any) {
     throw new Error(`Something went wrong: ${error.message}`);
   }
