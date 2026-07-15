@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { theme } from "../../styles/theme";
 import { Card } from "../ui/Card";
 import type {
@@ -7,6 +7,7 @@ import type {
   RecordsKPI,
   UsersKPI,
 } from "../../types/dashboard";
+import { capitalizeFirstLetter } from "../../utils";
 
 type CardViewMap = {
   users: {
@@ -80,7 +81,7 @@ const cardView: CardViewMap = {
 
 type MetricCardProps = {
   cardType: string;
-  kpiValues: DevicesKPI | ErrorsKPI | UsersKPI | RecordsKPI;
+  kpiValues?: DevicesKPI | ErrorsKPI | UsersKPI | RecordsKPI;
 };
 
 export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
@@ -94,8 +95,9 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
           marginBottom: "16px",
         }}
       >
-        {cardType}
+        {capitalizeFirstLetter(cardType)}
       </Typography>
+
       <Typography
         sx={{
           fontSize: theme.fontSize["3xl"],
@@ -104,13 +106,23 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
           color: theme.colors.valueText,
         }}
       >
-        {kpiValues.total}
+        {kpiValues ? (
+          kpiValues.total
+        ) : (
+          <Skeleton variant="text" sx={{ width: "100%" }} />
+        )}
       </Typography>
+
       <Typography
         sx={{ color: theme.colors.description, fontSize: theme.fontSize.xs }}
       >
-        {cardView[cardType as keyof typeof cardView].metricLabel}
+        {cardType ? (
+          cardView[cardType as keyof typeof cardView].metricLabel
+        ) : (
+          <Skeleton variant="text" sx={{ width: "100%" }} />
+        )}
       </Typography>
+
       <Typography
         sx={{
           marginTop: "14px",
@@ -120,8 +132,12 @@ export function MetricCard({ cardType, kpiValues }: MetricCardProps) {
           fontSize: theme.fontSize.xs,
         }}
       >
-        {cardView[cardType as keyof typeof cardView].description(
-          kpiValues as any,
+        {kpiValues ? (
+          cardView[cardType as keyof typeof cardView].description(
+            kpiValues as any,
+          )
+        ) : (
+          <Skeleton variant="text" sx={{ width: "100%" }} />
         )}
       </Typography>
     </Card>

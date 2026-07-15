@@ -1,35 +1,13 @@
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
-import type {
-  ConnMetrics,
-  MetricCardData,
-  MetricEntry,
-} from "../types/dashboard";
+import type { ConnMetrics, MetricEntry } from "../types/dashboard";
 import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
 import { MetricCard } from "../components/dashboardCards/MetricCard";
 import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
 import { getMetricData } from "../services/dashboardApi";
 import { useQuery } from "@tanstack/react-query";
 
-const EmptyMetricCardJson: MetricCardData = {
-  users: {
-    total: 0,
-    admin: 0,
-    users: 0,
-  },
-  records: {
-    total: 0,
-    daily: 0,
-  },
-  devices: {
-    total: 0,
-    weekly: 0,
-  },
-  errors: {
-    total: 0,
-    weekly: 0,
-  },
-};
+const CardTypes = ["users", "records", "devices", "errors"];
 
 const ConnMetricsJson: ConnMetrics = {
   timestamp: "2023-10-01T12:00:00Z",
@@ -59,33 +37,30 @@ const ConnMetricsJson: ConnMetrics = {
   },
 };
 
-const result: MetricEntry[] = Object.entries(EmptyMetricCardJson).map(
-  ([category, value]) => {
-    return {
-      category,
-      value,
-    };
-  },
-);
-
 export function DashboardPage() {
-  const { data: metrics } = useQuery<MetricEntry[] | null>({
+  const {
+    data: metrics,
+    isLoading,
+    isError,
+  } = useQuery<MetricEntry[] | null>({
     queryKey: ["metrics"],
     queryFn: getMetricData,
     staleTime: 1000 * 60 * 1,
-    initialData: result,
   });
+
   return (
     <>
       <ContentLayout>
         <DashboardGrid padding="30px" gridTemplate="repeat(4, 1fr)">
-          {metrics?.map((category) => (
-            <MetricCard
-              key={category.category}
-              cardType={category.category}
-              kpiValues={category.value}
-            />
-          ))}
+          {isLoading || isError
+            ? CardTypes.map((type) => <MetricCard key={type} cardType={type} />)
+            : metrics?.map((category) => (
+                <MetricCard
+                  key={category.category}
+                  cardType={category.category}
+                  kpiValues={category.value}
+                />
+              ))}
         </DashboardGrid>
         <DashboardGrid padding="0px 30px 30px 30px" gridTemplate="4fr 1fr">
           <DeviceActivityCard />
