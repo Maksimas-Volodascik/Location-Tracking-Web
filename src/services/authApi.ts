@@ -1,6 +1,6 @@
 import { type LoginProps, type RegisterProps } from "../types/shared";
-import { baseURL } from "./api";
-import { saveAccessToken } from "./tokenService";
+import { baseURL } from "./apiConfig";
+import { saveAccessToken } from "./authToken";
 
 export async function userRegister({
   email,

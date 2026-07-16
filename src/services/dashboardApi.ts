@@ -1,6 +1,6 @@
 import type { MetricCardData, MetricEntry } from "../types/dashboard";
-import { baseURL } from "./api";
-import { getAccessToken } from "./tokenService";
+import { baseURL } from "./apiConfig";
+import { getAccessToken } from "./authToken";
 
 export async function getMetricData(): Promise<MetricEntry[]> {
   const accessToken = getAccessToken();

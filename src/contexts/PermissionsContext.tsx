@@ -4,7 +4,7 @@ import {
   type Permissions,
   type Role,
 } from "../types/permissions";
-import { getRole } from "../services/tokenService";
+import { getRole } from "../services/authToken";
 
 interface PermissionsValue {
   role: Role;

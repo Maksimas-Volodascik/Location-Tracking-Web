@@ -1,7 +1,7 @@
 import { Box, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { clearAccessToken } from "../../services/tokenService";
+import { clearAccessToken } from "../../services/authToken";
 import { theme } from "../../styles/theme";
 import navIcon from "../../assets/navIcon.png";
 

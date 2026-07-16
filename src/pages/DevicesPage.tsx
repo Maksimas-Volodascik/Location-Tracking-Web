@@ -54,11 +54,13 @@ export function DevicesPage() {
   };
 
   const handleDelete = async () => {
-    await deleteDevice(selectedDevice ? selectedDevice.id : null);
+    if (!selectedDevice) return;
+    await deleteDevice(selectedDevice.id);
     queryClient.invalidateQueries({ queryKey: ["devices"] });
   };
 
   const handleUpdate = async (form: DeviceForm, deviceId: string | null) => {
+    if (!deviceId) return;
     await updateDevice(form, deviceId);
     queryClient.invalidateQueries({ queryKey: ["devices"] });
   };

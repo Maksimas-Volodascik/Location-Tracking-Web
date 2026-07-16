@@ -31,9 +31,10 @@ export function RecordList({ deviceId }: RecordListProps) {
     data: records,
     //isLoading,
     //error,
-  } = useQuery<RecordData[] | null>({
+  } = useQuery<RecordData[]>({
     queryKey: ["records", deviceId],
-    queryFn: () => getDeviceRecords(deviceId),
+    queryFn: () => getDeviceRecords(deviceId!),
+    enabled: deviceId != null,
     staleTime: 1000 * 60 * 2,
   });
 
