@@ -1,4 +1,5 @@
 import { jwtDecode, type JwtPayload } from "jwt-decode";
+import { Roles, type Role } from "../types/permissions";
 const roleURI = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
 interface jwtPayload extends JwtPayload {
@@ -40,14 +41,25 @@ export function isTokenExpired(): boolean {
   return decodedJwt.exp < now;
 }
 
-export function getRole() {
+function isRole(value: unknown): value is Role {
+  return (
+    typeof value === "string" && (Roles as readonly string[]).includes(value)
+  );
+}
+
+export function getRole(): Role | null {
   const token = getAccessToken();
   if (!token || token === "Invalid credentials.") {
     return null; // no token found
   }
 
-  const decodedJwt = jwtDecode<jwtPayload>(token);
+  let decodedJwt: jwtPayload;
+  try {
+    decodedJwt = jwtDecode<jwtPayload>(token);
+  } catch {
+    return null; // malformed token
+  }
 
-  if (!decodedJwt) return null;
-  return decodedJwt[roleURI];
+  const role = decodedJwt[roleURI];
+  return isRole(role) ? role : null;
 }
