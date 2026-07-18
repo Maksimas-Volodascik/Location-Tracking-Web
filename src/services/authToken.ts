@@ -16,8 +16,8 @@ export function saveAccessToken(accessToken: string) {
   localStorage.setItem("accessToken", accessToken);
 }
 
-export function getAccessToken(): string | undefined {
-  return localStorage.getItem("accessToken")?.split(" ")[1];
+export function getAccessToken() {
+  return localStorage.getItem("accessToken");
 }
 
 export function clearAccessToken() {
@@ -25,7 +25,7 @@ export function clearAccessToken() {
 }
 
 export function isTokenExpired(): boolean {
-  const token = localStorage.getItem("accessToken");
+  const token = getAccessToken();
   const now = Date.now() / 1000;
 
   if (!token || token === "Invalid credentials.") {
@@ -47,8 +47,7 @@ function isRole(value: unknown): value is Role {
   );
 }
 
-export function getRole(): Role | null {
-  const token = getAccessToken();
+export function getRole(token: string | null = getAccessToken()): Role | null {
   if (!token || token === "Invalid credentials.") {
     return null; // no token found
   }
@@ -60,6 +59,6 @@ export function getRole(): Role | null {
     return null; // malformed token
   }
 
-  const role = decodedJwt[roleURI];
+  const role = decodedJwt[roleURI]?.toLowerCase();
   return isRole(role) ? role : null;
 }

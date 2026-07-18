@@ -1,4 +1,4 @@
-import { usePermissions } from "../contexts/PermissionsContext";
+import { useAuth } from "../contexts/AuthContext";
 import type { Permissions } from "../types/permissions";
 
 export function Can({
@@ -10,6 +10,6 @@ export function Can({
   children: React.ReactNode;
   fallback?: React.ReactNode;
 }) {
-  const { can } = usePermissions();
+  const { can } = useAuth();
   return <>{can(permission) ? children : fallback}</>;
 }

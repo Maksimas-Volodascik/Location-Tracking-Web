@@ -9,30 +9,28 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import type { LoginProps } from "../types/shared";
-import { userLogin } from "../services/authApi";
-import { useNavigate } from "react-router-dom";
 import { theme } from "../styles/theme";
 import navIcon from "../assets/navIcon.png";
 import { AuthLayout } from "../components/layout/AuthLayout";
 import { Button } from "../components/ui/Button";
+import { useAuth } from "../contexts/AuthContext";
 
 export function LoginPage() {
   const [formData, setFormData] = useState<LoginProps>({
     email: "",
     password: "",
   });
-
+  const auth = useAuth();
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const navigate = useNavigate();
-
   async function onSubmit(data: LoginProps) {
-    const response = await userLogin(data);
-    if (!response) {
-      navigate("/dashboard");
+    try {
+      await auth.loginAction(data);
+    } catch (error) {
+      // set error indicator in login form
     }
   }
 

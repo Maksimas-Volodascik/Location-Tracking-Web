@@ -1,25 +1,24 @@
 import { Box, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { clearAccessToken } from "../../services/authToken";
 import { theme } from "../../styles/theme";
 import navIcon from "../../assets/navIcon.png";
+import { useAuth } from "../../contexts/AuthContext";
 
 export function ProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const auth = useAuth();
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
-    clearAccessToken();
-    navigate("/login");
+    auth.logoutAction();
   };
 
   return (
