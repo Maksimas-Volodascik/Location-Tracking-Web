@@ -5,6 +5,7 @@ import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import "leaflet/dist/leaflet.css";
 
 const queryClient = new QueryClient();
 
