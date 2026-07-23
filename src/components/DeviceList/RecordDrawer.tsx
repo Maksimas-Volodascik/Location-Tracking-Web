@@ -1,15 +1,18 @@
-import { Box, Button, Drawer, IconButton, Typography } from "@mui/material";
+import { Box, Drawer, IconButton, Typography } from "@mui/material";
 import type { RecordData } from "../../types/shared";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { parseNumberOrKeepString } from "../../utils";
 import { theme } from "../../styles/theme";
 import type { Dispatch, SetStateAction } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import MapIcon from "@mui/icons-material/Map";
 
 type RecordDrawerProps = {
   headers: string[];
   setHeaders: Dispatch<SetStateAction<string[]>>;
   handleClose: () => void;
+  handleOpenMap: () => void;
   openDrawer: boolean;
   selectedItem: RecordData | null;
 };
@@ -19,6 +22,7 @@ export function RecordDrawer({
   setHeaders,
   openDrawer,
   handleClose,
+  handleOpenMap,
   selectedItem,
 }: RecordDrawerProps) {
   const parsedData = (() => {
@@ -63,29 +67,43 @@ export function RecordDrawer({
         sx={{
           borderBottom: theme.borders.default,
           width: "100%",
+          height: "100%",
           display: "flex",
+          alignItems: "center",
           justifyContent: "space-between",
         }}
       >
-        <Button
+        <IconButton aria-label="close" onClick={handleClose}>
+          <CloseIcon />
+        </IconButton>
+
+        <Box
           sx={{
-            minWidth: 0,
-            width: 32,
-            height: 32,
-            borderRadius: "4px",
-            color: theme.colors.valueText,
-            fontSize: theme.fontSize.base,
-            fontWeight: theme.fontWeight.bold,
+            display: "flex",
+            flexDirection: "column",
+            pr: "10px",
           }}
-          onClick={handleClose}
         >
-          X
-        </Button>
-        <Typography
-          sx={{ fontSize: theme.fontSize.xs, color: theme.colors.description }}
-        >
-          {selectedItem ? selectedItem.receivedAt : ""}
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: theme.fontSize.xs,
+              color: theme.colors.description,
+            }}
+          >
+            {selectedItem ? selectedItem.receivedAt : ""}
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton size="small" aria-label="close" onClick={handleOpenMap}>
+              <MapIcon sx={{ width: "20px" }} />
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
 
       {Object.entries(parsedData).map(([key, value], idx) => (

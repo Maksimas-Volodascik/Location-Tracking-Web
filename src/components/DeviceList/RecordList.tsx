@@ -1,23 +1,19 @@
 import {
   Box,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { RecordData } from "../../types/shared";
 import { getDeviceRecords } from "../../services/deviceApi";
 import { theme } from "../../styles/theme";
 import { RecordDrawer } from "./RecordDrawer";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import Draggable from "react-draggable";
-import { type LatLngTuple } from "leaflet";
+import { Map } from "../ui/Map";
 
 type RecordListProps = {
   deviceId: string | null;
@@ -30,10 +26,8 @@ export function RecordList({ deviceId }: RecordListProps) {
     "Raw.Record",
   ]);
 
-  const position: LatLngTuple = [54.6872, 25.2797];
-  const nodeRef = useRef(null);
-
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openMap, setOpenMap] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RecordData | null>(null);
   const {
     data: records,
@@ -45,6 +39,10 @@ export function RecordList({ deviceId }: RecordListProps) {
     enabled: deviceId != null,
     staleTime: 1000 * 60 * 2,
   });
+
+  function handleOpenMap() {
+    setOpenMap(openMap ? false : true);
+  }
 
   function handleDrawerOpen(item: RecordData) {
     //todo: change any to type
@@ -153,12 +151,15 @@ export function RecordList({ deviceId }: RecordListProps) {
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>{handleRow()}</TableBody>
         </Table>
       </TableContainer>
 
+      <Map open={openMap} />
       <RecordDrawer
         headers={headers}
+        handleOpenMap={handleOpenMap}
         setHeaders={setHeaders}
         selectedItem={selectedItem}
         openDrawer={openDrawer}
@@ -169,55 +170,6 @@ export function RecordList({ deviceId }: RecordListProps) {
           }
         }}
       />
-      <Draggable handle=".window-title" nodeRef={nodeRef}>
-        <Paper
-          ref={nodeRef}
-          elevation={8}
-          sx={{
-            position: "fixed",
-            top: 100,
-            left: 100,
-            width: 300,
-            zIndex: 1300,
-            overflow: "hidden",
-            borderRadius: 2,
-          }}
-        >
-          <Box
-            className="window-title"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              px: 1.5,
-              py: 0.5,
-              bgcolor: "primary.main",
-              color: "primary.contrastText",
-              cursor: "move",
-            }}
-          >
-            <Typography variant="subtitle2">My Folder</Typography>
-          </Box>
-          <Box>
-            <MapContainer
-              center={position}
-              zoom={13}
-              scrollWheelZoom={false}
-              style={{ height: 250, width: "100%" }}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <Marker position={[51.505, -0.09]}>
-                <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-              </Marker>
-            </MapContainer>
-          </Box>
-        </Paper>
-      </Draggable>
     </Box>
   );
 }
