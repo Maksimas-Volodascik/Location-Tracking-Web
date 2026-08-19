@@ -1,9 +1,9 @@
 import { Box, Drawer, IconButton, Typography } from "@mui/material";
-import type { RecordData } from "../../types/shared";
+import type { RecordData } from "../../../types/shared";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { parseNumberOrKeepString } from "../../utils";
-import { theme } from "../../styles/theme";
+import { parseNumberOrKeepString } from "../../../utils";
+import { theme } from "../../../styles/theme";
 import type { Dispatch, SetStateAction } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import MapIcon from "@mui/icons-material/Map";
@@ -71,6 +71,8 @@ export function RecordDrawer({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          minHeight: "50px",
+          maxHeight: "50px",
         }}
       >
         <IconButton aria-label="close" onClick={handleClose}>

@@ -144,3 +144,5 @@ vite.config.ts.timestamp-*
 
 # Agents
 agents
+# Source folders named "logs" are code, not runtime logs
+!src/**/logs/

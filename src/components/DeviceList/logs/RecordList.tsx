@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { RecordData } from "../../types/shared";
-import { getDeviceRecords } from "../../services/deviceApi";
-import { theme } from "../../styles/theme";
+import type { RecordData } from "../../../types/shared";
+import { getDeviceRecords } from "../../../services/deviceApi";
+import { theme } from "../../../styles/theme";
 import { RecordDrawer } from "./RecordDrawer";
-import { Map } from "../ui/Map";
+import { Map } from "../../ui/Map";
 
 type RecordListProps = {
   deviceId: string | null;

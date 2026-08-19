@@ -3,8 +3,10 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { theme } from "../../styles/theme";
-import { RecordList } from "./RecordList";
+import { RecordList } from "./logs/RecordList";
 import { Map } from "../ui/Map";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { DeviceMap } from "./DeviceMap";
 
 type ModalProps = {
   handleClose: () => void;
@@ -27,11 +29,7 @@ export function DeviceRecordsModal({
     if (tab == "Edit") {
       return null;
     }
-    return (
-      <Box sx={{ width: "100%", height: "100%" }}>
-        <Map open={true} />
-      </Box>
-    );
+    return <DeviceMap open={true} />;
   };
 
   return (
