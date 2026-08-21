@@ -28,7 +28,7 @@ export function isTokenExpired(): boolean {
   const token = getAccessToken();
   const now = Date.now() / 1000;
 
-  if (!token || token === "Invalid credentials.") {
+  if (!token) {
     return true; // no token found
   }
 
@@ -48,7 +48,8 @@ function isRole(value: unknown): value is Role {
 }
 
 export function getRole(token: string | null = getAccessToken()): Role | null {
-  if (!token || token === "Invalid credentials.") {
+  if (!token) {
+    console.log("this");
     return null; // no token found
   }
 

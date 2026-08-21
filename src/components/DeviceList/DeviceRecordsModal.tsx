@@ -3,7 +3,8 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { theme } from "../../styles/theme";
-import { RecordList } from "./RecordList";
+import { RecordList } from "./logs/RecordList";
+import { DeviceMap } from "./DeviceMap";
 
 type ModalProps = {
   handleClose: () => void;
@@ -17,7 +18,17 @@ export function DeviceRecordsModal({
   deviceId,
 }: ModalProps) {
   if (!isOpen) return null;
-  const [activeTab, setActiveTab] = useState("Logs"); //Toolbar
+  const [activeTab, setActiveTab] = useState("Graph"); //Toolbar
+
+  const contentRender = (tab: string) => {
+    if (tab == "Logs") {
+      return <RecordList deviceId={deviceId} />;
+    }
+    if (tab == "Edit") {
+      return null;
+    }
+    return <DeviceMap open={true} />;
+  };
 
   return (
     <div>
@@ -137,7 +148,7 @@ export function DeviceRecordsModal({
               scrollbarWidth: "thin",
             }}
           >
-            <RecordList deviceId={deviceId} />
+            {contentRender(activeTab)}
           </Box>
         </Box>
       </Modal>
