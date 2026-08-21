@@ -7,7 +7,8 @@ import {
   updateDevice,
 } from "../services/deviceApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { DeviceData, DeviceForm, MenuOptions } from "../types/shared";
+import type { DeviceData, DeviceForm } from "../types/device";
+import type { MenuOptions } from "../components/ui/OptionMenu";
 import { useState } from "react";
 import { theme } from "../styles/theme";
 import loadingIcon from "../assets/loading.svg";
@@ -15,8 +16,8 @@ import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
 import { DeviceRecordsModal } from "../components/deviceList/DeviceRecordsModal";
 import { DeviceListItem } from "../components/deviceList/DeviceListItem";
 import { Header } from "../components/ui/Header";
-import { DeviceModal } from "../components/deviceList/DeviceModal";
 import { ConfirmDialog } from "../components/ui/ConfirmDialog";
+import { DeviceModal } from "../components/deviceList/DeviceModal";
 
 export function DevicesPage() {
   const {
@@ -118,7 +119,7 @@ export function DevicesPage() {
       <DeviceRecordsModal
         isOpen={isRecordListOpen}
         handleClose={handleClose}
-        deviceId={selectedDevice ? selectedDevice.id : null}
+        device={selectedDevice ? selectedDevice : null}
       />
     </>
   );
