@@ -4,8 +4,6 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { theme } from "../../styles/theme";
 import { RecordList } from "./logs/RecordList";
-import { Map } from "../ui/Map";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { DeviceMap } from "./DeviceMap";
 
 type ModalProps = {

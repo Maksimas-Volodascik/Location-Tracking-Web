@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { EventsPanel } from "./graph/EventsPanel";
 import { RangePanel } from "./graph/RangePanel";
+import { SelectionPanel } from "./graph/SelectionPanel";
+import { ActionPanel } from "./graph/ActionPanel";
 
 type DeviceMapProps = {
   open: boolean;
@@ -40,8 +42,8 @@ export function DeviceMap({ open }: DeviceMapProps) {
       <Box sx={{ display: "grid", gridTemplateColumns: "30% 30% 20% 20%" }}>
         <RangePanel />
         <EventsPanel />
-        <Typography>Range</Typography>
-        <Typography>Range</Typography>
+        <SelectionPanel />
+        <ActionPanel />
       </Box>
     </Box>
   );
