@@ -35,28 +35,32 @@ export function EventsPanel() {
       </Typography>
 
       <Box sx={{ display: "flex" }}>
-        <ButtonGroup
-          variant="outlined"
-          aria-label="Event button group"
-          sx={{ border: theme.borders.focusDark, borderRadius: "10px" }}
-        >
-          {events.map((event, index) => (
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+          {events.map((event) => (
             <Button
               sx={{
-                border: 0,
+                border: theme.borders.focusDark,
+                borderRadius: "10px",
                 color: theme.colors.accent,
                 fontSize: theme.fontSize.sm,
-                borderLeftWidth: index > 0 ? "1px" : 0,
+                minWidth: 0,
               }}
             >
               {event}
             </Button>
           ))}
-        </ButtonGroup>
+        </Box>
       </Box>
 
-      <Box sx={{ display: "flex", gap: "16px" }}>
-        <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Box sx={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            minWidth: "45%",
+          }}
+        >
           <Typography
             sx={{
               color: theme.colors.description,
