@@ -1,5 +1,5 @@
 import { Box, Drawer, IconButton, Typography } from "@mui/material";
-import type { RecordData } from "../../../types/shared";
+import type { RecordData } from "../../../types/device";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { parseNumberOrKeepString } from "../../../utils";

@@ -4,10 +4,10 @@ import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Can } from "../Can";
-import { DeviceModal } from "./DeviceModal";
 import { createNewDevice } from "../../services/deviceApi";
 import { useQueryClient } from "@tanstack/react-query";
-import type { DeviceForm } from "../../types/shared";
+import type { DeviceForm } from "../../types/device";
+import { DeviceModal } from "./DeviceModal";
 
 export function DeviceListFooter() {
   const [focused, setFocused] = useState(false);
