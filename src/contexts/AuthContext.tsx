@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import type { LoginProps } from "../types/shared";
+import type { LoginProps } from "../types/auth";
 import { userLogin } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import {

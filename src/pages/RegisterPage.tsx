@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import type { RegisterProps } from "../types/shared";
+import type { RegisterProps } from "../types/auth";
 import { userRegister } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../styles/theme";

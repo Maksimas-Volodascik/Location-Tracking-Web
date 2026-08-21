@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import type { LoginProps } from "../types/shared";
+import type { LoginProps } from "../types/auth";
 import { theme } from "../styles/theme";
 import navIcon from "../assets/navIcon.png";
 import { AuthLayout } from "../components/layout/AuthLayout";
