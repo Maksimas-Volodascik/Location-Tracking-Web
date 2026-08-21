@@ -3,8 +3,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { theme } from "../../styles/theme";
-import type { MenuOptions } from "../../types/shared";
 import { Can } from "../Can";
+
+export type MenuOptions = "view" | "edit" | "delete";
 
 type OptionMenuProps = {
   menuIsOpen: { top: number; left: number } | null;

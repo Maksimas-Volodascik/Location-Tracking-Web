@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Slider, Typography } from "@mui/material";
+import { Box, Button, Slider, Typography } from "@mui/material";
 import { theme } from "../../../styles/theme";
 import { useState } from "react";
 

@@ -1,4 +1,4 @@
-import { type LoginProps, type RegisterProps } from "../types/shared";
+import { type LoginProps, type RegisterProps } from "../types/auth";
 import { postRequest } from "./httpClient";
 
 export async function userRegister({

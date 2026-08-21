@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Modal,
   Box,
@@ -17,8 +17,9 @@ import {
 
 import ClearIcon from "@mui/icons-material/Clear";
 import DevicesIcon from "@mui/icons-material/Devices";
-import type { DeviceData, DeviceForm } from "../../types/shared";
+import type { DeviceData, DeviceForm } from "../../types/device";
 import { theme } from "../../styles/theme";
+import { useDeviceForm } from "../../hooks/useDeviceForm";
 
 const DEVICE_MODELS = [
   "CustomProtocol",
@@ -30,22 +31,6 @@ const DEVICE_MODELS = [
   "FMC130",
   "FMC150",
 ];
-
-const EMPTY_FORM: DeviceForm = {
-  imei: "",
-  name: "",
-  isEnabled: false,
-  deviceModelName: "",
-};
-
-function toForm(device: DeviceData): DeviceForm {
-  return {
-    imei: device.imei,
-    name: device.name,
-    isEnabled: device.isEnabled,
-    deviceModelName: "FMC650", //edit once devicemodel is fetched from backend
-  };
-}
 
 interface DeviceModalProps {
   open: boolean;
@@ -61,28 +46,23 @@ export function DeviceModal({
   initialData,
 }: DeviceModalProps) {
   const isEditMode = initialData !== null;
-  const [form, setForm] = useState<DeviceForm>(
-    initialData ? toForm(initialData) : EMPTY_FORM,
-  );
+
+  const { form, handleChange, handleClear } = useDeviceForm({
+    initialData,
+  });
 
   useEffect(() => {
     if (open) {
-      setForm(initialData ? toForm(initialData) : EMPTY_FORM);
+      handleClear();
     }
-  }, [open, initialData]);
+  }, [open, handleClear]);
 
   const handleClose = () => setIsOpen(false);
-
-  const handleChange = (field: string, value: string | boolean) =>
-    setForm((prev) => ({ ...prev, [field]: value }));
 
   const handleSubmit = () => {
     onSubmit(form, initialData ? initialData.id : null);
     handleClose();
   };
-
-  const handleClear = () =>
-    setForm(initialData ? toForm(initialData) : EMPTY_FORM);
 
   return (
     <Modal

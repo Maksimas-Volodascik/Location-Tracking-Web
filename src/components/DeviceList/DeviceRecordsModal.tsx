@@ -5,27 +5,29 @@ import { useState } from "react";
 import { theme } from "../../styles/theme";
 import { RecordList } from "./logs/RecordList";
 import { DeviceMap } from "./DeviceMap";
+import type { DeviceData } from "../../types/device";
+import { EditDeviceForm } from "./edit/EditDeviceForm";
 
 type ModalProps = {
   handleClose: () => void;
   isOpen: boolean;
-  deviceId: string | null;
+  device: DeviceData | null;
 };
 
 export function DeviceRecordsModal({
   isOpen,
   handleClose,
-  deviceId,
+  device,
 }: ModalProps) {
   if (!isOpen) return null;
   const [activeTab, setActiveTab] = useState("Graph"); //Toolbar
 
   const contentRender = (tab: string) => {
     if (tab == "Logs") {
-      return <RecordList deviceId={deviceId} />;
+      return <RecordList deviceId={device?.id} />;
     }
     if (tab == "Edit") {
-      return null;
+      return <EditDeviceForm />;
     }
     return <DeviceMap open={true} />;
   };

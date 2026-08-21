@@ -3,8 +3,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Box } from "@mui/material";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import { theme } from "../../styles/theme";
-import type { DeviceData, MenuOptions } from "../../types/shared";
-import { OptionMenu } from "../ui/OptionMenu";
+import type { DeviceData } from "../../types/device";
+import { OptionMenu, type MenuOptions } from "../ui/OptionMenu";
 import { useState } from "react";
 
 interface DeviceListItemProps {

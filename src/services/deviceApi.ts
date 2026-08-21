@@ -2,7 +2,7 @@ import {
   type DeviceData,
   type DeviceForm,
   type RecordData,
-} from "../types/shared";
+} from "../types/device";
 import {
   deleteRequest,
   getRequest,
