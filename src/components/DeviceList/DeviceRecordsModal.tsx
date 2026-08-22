@@ -4,9 +4,9 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { theme } from "../../styles/theme";
 import { RecordList } from "./logs/RecordList";
-import { DeviceMap } from "./DeviceMap";
 import type { DeviceData } from "../../types/device";
 import { EditDeviceForm } from "./edit/EditDeviceForm";
+import { DeviceMap } from "./graph/DeviceMap";
 
 type ModalProps = {
   handleClose: () => void;

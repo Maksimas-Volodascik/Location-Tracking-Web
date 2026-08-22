@@ -14,6 +14,7 @@ import { getDeviceRecords } from "../../../services/deviceApi";
 import { theme } from "../../../styles/theme";
 import { RecordDrawer } from "./RecordDrawer";
 import { Map } from "../../ui/Map";
+import { DraggableWindow } from "../../ui/DraggableWindow";
 
 type RecordListProps = {
   deviceId?: string | null;
@@ -156,7 +157,12 @@ export function RecordList({ deviceId }: RecordListProps) {
         </Table>
       </TableContainer>
 
-      <Map open={openMap} />
+      <DraggableWindow open={openMap}>
+        <Box sx={{ height: 500, width: "100%" }}>
+          <Map />
+        </Box>
+      </DraggableWindow>
+
       <RecordDrawer
         headers={headers}
         handleOpenMap={handleOpenMap}
