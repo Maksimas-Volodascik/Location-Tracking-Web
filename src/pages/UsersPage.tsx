@@ -20,68 +20,21 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
-
-type MockUser = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  isOnline: boolean;
-};
-
-const mockUsers: MockUser[] = [
-  {
-    id: "1",
-    firstName: "Maksimas",
-    lastName: "Volodascik",
-    email: "maksimas@ltw.io",
-    role: "Admin",
-    isOnline: true,
-  },
-  {
-    id: "2",
-    firstName: "Elena",
-    lastName: "Kazlauskaite",
-    email: "elena.k@ltw.io",
-    role: "Admin",
-    isOnline: false,
-  },
-  {
-    id: "3",
-    firstName: "Tomas",
-    lastName: "Petrauskas",
-    email: "tomas.p@ltw.io",
-    role: "User",
-    isOnline: true,
-  },
-  {
-    id: "4",
-    firstName: "Unknown",
-    lastName: "",
-    email: "justina.r@ltw.io",
-    role: "User",
-    isOnline: false,
-  },
-  {
-    id: "5",
-    firstName: "Dovydas",
-    lastName: "Sakalauskas",
-    email: "dovydas.s@ltw.io",
-    role: "Admin",
-    isOnline: true,
-  },
-  {
-    id: "6",
-    firstName: "Greta",
-    lastName: "Andriuskeviciute",
-    email: "greta.a@ltw.io",
-    role: "User",
-    isOnline: false,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "../services/userApi";
+import loadingIcon from "../assets/loading.svg";
+import type { UserData } from "../types/users";
 
 export function UsersPage() {
+  const {
+    data: users,
+    isLoading,
+    isError,
+  } = useQuery<UserData[] | null>({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
+    staleTime: 1000 * 60 * 2,
+  });
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
   const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -142,77 +95,102 @@ export function UsersPage() {
       </Box>
 
       <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-        {mockUsers.map((user) => (
-          <ListItem disablePadding key={user.id}>
-            <ListItemButton
-              dense
-              onClick={handleItemClick}
-              sx={{
-                padding: "14px 10px",
-                margin: "0px 5px 5px 5px",
-                borderRadius: "10px",
-                ...theme.listItem,
-              }}
+        <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
+          {isLoading ? (
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
             >
-              <ListItemAvatar>
-                <Avatar
+              <img src={loadingIcon} alt="loading" width={50} height={50} />
+            </Box>
+          ) : (
+            users?.map((user) => (
+              <ListItem disablePadding key={user.guid}>
+                <ListItemButton
+                  dense
+                  onClick={handleItemClick}
                   sx={{
-                    bgcolor: theme.surface.avatar,
-                    color: theme.colors.lightText,
-                    fontSize: theme.fontSize.sm,
+                    padding: "14px 10px",
+                    margin: "0px 5px 5px 5px",
+                    borderRadius: "10px",
+                    ...theme.listItem,
                   }}
                 >
-                  {user.firstName[0]}
-                  {user.lastName[0]}
-                </Avatar>
-              </ListItemAvatar>
+                  <ListItemAvatar>
+                    <Avatar
+                      sx={{
+                        bgcolor: theme.surface.avatar,
+                        color: theme.colors.lightText,
+                        fontSize: theme.fontSize.sm,
+                      }}
+                    >
+                      {user.firstName
+                        ? user.firstName[0] + user.lastName[0]
+                        : "/"}
+                    </Avatar>
+                  </ListItemAvatar>
 
-              <ListItemText
-                primary={`${user.firstName} ${user.lastName}`}
-                secondary={user.email}
-                slotProps={{
-                  primary: {
-                    sx: {
-                      fontWeight: theme.fontWeight.bold,
-                      fontSize: theme.fontSize.xs,
-                      color: theme.colors.lightText,
-                    },
-                  },
-                  secondary: {
-                    sx: {
-                      fontSize: theme.fontSize.xs,
-                      color: theme.colors.description,
-                    },
-                  },
-                }}
-              />
+                  <ListItemText
+                    primary={`${user.firstName} ${user.lastName}`}
+                    secondary={user.email}
+                    slotProps={{
+                      primary: {
+                        sx: {
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                          color: theme.colors.lightText,
+                        },
+                      },
+                      secondary: {
+                        sx: {
+                          fontWeight: theme.fontWeight.bold,
+                          fontSize: theme.fontSize.xs,
+                          color: theme.colors.faintDescription,
+                        },
+                      },
+                    }}
+                  />
 
-              <Chip
-                label={user.role}
-                size="small"
+                  <Chip
+                    label={user.role}
+                    size="small"
+                    sx={{
+                      marginRight: "10px",
+                      border: "1px solid",
+                      ...(theme.roleTheme[user.role?.toLowerCase()] ??
+                        theme.roleTheme.user),
+                    }}
+                  />
+
+                  <Chip
+                    //label={user.isOnline ? "Online" : "Offline"}
+                    label="Online"
+                    size="small"
+                    sx={{
+                      border: "1px solid",
+                      ...theme.userStatusTheme.online,
+                      /*...(user.isOnline
+                        ? theme.userStatusTheme.online
+                        : theme.userStatusTheme.offline),*/
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))
+          )}
+          {isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography
                 sx={{
-                  marginRight: "10px",
-                  border: "1px solid",
-                  ...(theme.roleTheme[user.role?.toLowerCase()] ??
-                    theme.roleTheme.user),
+                  color: theme.colors.faintDescription,
+                  fontSize: theme.fontSize.xl,
                 }}
-              />
-
-              <Chip
-                label={user.isOnline ? "Online" : "Offline"}
-                size="small"
-                sx={{
-                  border: "1px solid",
-                  ...(user.isOnline
-                    ? theme.userStatusTheme.online
-                    : theme.userStatusTheme.offline),
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+              >
+                List is empty :(
+              </Typography>
+            </Box>
+          ) : null}
+        </List>
       </List>
-
       <Menu
         anchorEl={menuAnchor}
         open={Boolean(menuAnchor)}
