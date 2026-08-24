@@ -24,6 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../services/userApi";
 import loadingIcon from "../assets/loading.svg";
 import type { UserData } from "../types/users";
+import { Header } from "../components/ui/Header";
 
 export function UsersPage() {
   const {
@@ -50,146 +51,102 @@ export function UsersPage() {
 
   return (
     <ContentLayout overflow="hidden">
-      <Box
-        sx={{
-          background: theme.surface.card,
-          border: theme.borders.subtle,
-          borderWidth: "0px 1px 1px 1px",
-          padding: "15px",
-          marginBottom: "10px",
-        }}
-      >
-        <Box
-          sx={{
-            color: theme.colors.valueText,
-            fontWeight: theme.fontWeight.bold,
-            marginBottom: "6px",
-          }}
-        >
-          Users
-        </Box>
-        <Breadcrumbs
-          separator={
-            <NavigateNextIcon
-              sx={{
-                fontSize: theme.fontSize.sm,
-                color: theme.colors.description,
-              }}
-            />
-          }
-        >
-          <Typography
-            sx={{
-              fontSize: theme.fontSize.xs,
-              color: theme.colors.description,
-            }}
-          >
-            Access Control
-          </Typography>
-          <Typography
-            sx={{ fontSize: theme.fontSize.xs, color: theme.colors.accent }}
-          >
-            Users
-          </Typography>
-        </Breadcrumbs>
-      </Box>
+      <Header page="Users" tab="Access Control" />
 
       <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-        <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-          {isLoading ? (
-            <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              <img src={loadingIcon} alt="loading" width={50} height={50} />
-            </Box>
-          ) : (
-            users?.map((user) => (
-              <ListItem disablePadding key={user.guid}>
-                <ListItemButton
-                  dense
-                  onClick={handleItemClick}
-                  sx={{
-                    padding: "14px 10px",
-                    margin: "0px 5px 5px 5px",
-                    borderRadius: "10px",
-                    ...theme.listItem,
-                  }}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      sx={{
-                        bgcolor: theme.surface.avatar,
-                        color: theme.colors.lightText,
-                        fontSize: theme.fontSize.sm,
-                      }}
-                    >
-                      {user.firstName
-                        ? user.firstName[0] + user.lastName[0]
-                        : "/"}
-                    </Avatar>
-                  </ListItemAvatar>
-
-                  <ListItemText
-                    primary={`${user.firstName} ${user.lastName}`}
-                    secondary={user.email}
-                    slotProps={{
-                      primary: {
-                        sx: {
-                          fontWeight: theme.fontWeight.bold,
-                          fontSize: theme.fontSize.xs,
-                          color: theme.colors.lightText,
-                        },
-                      },
-                      secondary: {
-                        sx: {
-                          fontWeight: theme.fontWeight.bold,
-                          fontSize: theme.fontSize.xs,
-                          color: theme.colors.faintDescription,
-                        },
-                      },
-                    }}
-                  />
-
-                  <Chip
-                    label={user.role}
-                    size="small"
-                    sx={{
-                      marginRight: "10px",
-                      border: "1px solid",
-                      ...(theme.roleTheme[user.role?.toLowerCase()] ??
-                        theme.roleTheme.user),
-                    }}
-                  />
-
-                  <Chip
-                    //label={user.isOnline ? "Online" : "Offline"}
-                    label="Online"
-                    size="small"
-                    sx={{
-                      border: "1px solid",
-                      ...theme.userStatusTheme.online,
-                      /*...(user.isOnline
-                        ? theme.userStatusTheme.online
-                        : theme.userStatusTheme.offline),*/
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))
-          )}
-          {isError ? (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Typography
+        {isLoading ? (
+          <Box
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img src={loadingIcon} alt="loading" width={50} height={50} />
+          </Box>
+        ) : (
+          users?.map((user) => (
+            <ListItem disablePadding key={user.guid}>
+              <ListItemButton
+                dense
+                onClick={handleItemClick}
                 sx={{
-                  color: theme.colors.faintDescription,
-                  fontSize: theme.fontSize.xl,
+                  padding: "14px 10px",
+                  margin: "0px 5px 5px 5px",
+                  borderRadius: "10px",
+                  ...theme.listItem,
                 }}
               >
-                List is empty :(
-              </Typography>
-            </Box>
-          ) : null}
-        </List>
+                <ListItemAvatar>
+                  <Avatar
+                    sx={{
+                      bgcolor: theme.surface.avatar,
+                      color: theme.colors.lightText,
+                      fontSize: theme.fontSize.sm,
+                    }}
+                  >
+                    {user.firstName
+                      ? user.firstName[0] + user.lastName[0]
+                      : "/"}
+                  </Avatar>
+                </ListItemAvatar>
+
+                <ListItemText
+                  primary={`${user.firstName} ${user.lastName}`}
+                  secondary={user.email}
+                  slotProps={{
+                    primary: {
+                      sx: {
+                        fontWeight: theme.fontWeight.bold,
+                        fontSize: theme.fontSize.xs,
+                        color: theme.colors.lightText,
+                      },
+                    },
+                    secondary: {
+                      sx: {
+                        fontWeight: theme.fontWeight.bold,
+                        fontSize: theme.fontSize.xs,
+                        color: theme.colors.faintDescription,
+                      },
+                    },
+                  }}
+                />
+
+                <Chip
+                  label={user.role}
+                  size="small"
+                  sx={{
+                    marginRight: "10px",
+                    border: "1px solid",
+                    ...(theme.roleTheme[user.role?.toLowerCase()] ??
+                      theme.roleTheme.user),
+                  }}
+                />
+
+                <Chip
+                  //label={user.isOnline ? "Online" : "Offline"}
+                  label="Online"
+                  size="small"
+                  sx={{
+                    border: "1px solid",
+                    ...theme.userStatusTheme.online,
+                    /*...(user.isOnline
+                        ? theme.userStatusTheme.online
+                        : theme.userStatusTheme.offline),*/
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))
+        )}
+        {isError ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography
+              sx={{
+                color: theme.colors.faintDescription,
+                fontSize: theme.fontSize.xl,
+              }}
+            >
+              List is empty :(
+            </Typography>
+          </Box>
+        ) : null}
       </List>
       <Menu
         anchorEl={menuAnchor}
