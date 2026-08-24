@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Breadcrumbs,
   Chip,
   Divider,
   List,
@@ -16,15 +15,16 @@ import {
 import React, { useState } from "react";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { theme } from "../styles/theme";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllUsers } from "../services/userApi";
 import loadingIcon from "../assets/loading.svg";
 import type { UserData } from "../types/users";
 import { Header } from "../components/ui/Header";
+import { ItemListFooter } from "../components/ui/ItemListFooter";
+import type { RegisterProps } from "../types/auth";
+import { userRegister } from "../services/authApi";
 
 export function UsersPage() {
   const {
@@ -37,7 +37,7 @@ export function UsersPage() {
     staleTime: 1000 * 60 * 2,
   });
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-
+  const queryClient = useQueryClient();
   const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {
     setMenuAnchor(event.currentTarget);
   };
@@ -49,10 +49,14 @@ export function UsersPage() {
     handleMenuClose();
   };
 
+  const handleCreate = async (form: RegisterProps) => {
+    await userRegister(form);
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+  };
+
   return (
     <ContentLayout overflow="hidden">
       <Header page="Users" tab="Access Control" />
-
       <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
         {isLoading ? (
           <Box
@@ -148,6 +152,7 @@ export function UsersPage() {
           </Box>
         ) : null}
       </List>
+
       <Menu
         anchorEl={menuAnchor}
         open={Boolean(menuAnchor)}
@@ -174,7 +179,8 @@ export function UsersPage() {
           Delete
         </MenuItem>
       </Menu>
-      <DeviceListFooter />
+
+      <ItemListFooter type="User" handleCreate={() => handleCreate} />
     </ContentLayout>
   );
 }
