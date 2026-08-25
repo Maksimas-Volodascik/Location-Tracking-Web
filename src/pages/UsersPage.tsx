@@ -37,11 +37,15 @@ export function UsersPage() {
     staleTime: 1000 * 60 * 2,
   });
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [filter, setFilter] = useState<string>("");
   const queryClient = useQueryClient();
   const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {
     setMenuAnchor(event.currentTarget);
   };
 
+  const filteredItems = users?.filter((user) =>
+    user.email.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+  );
   const handleMenuClose = () => setMenuAnchor(null);
 
   const handleAction = (type: "edit" | "delete") => {
@@ -65,7 +69,7 @@ export function UsersPage() {
             <img src={loadingIcon} alt="loading" width={50} height={50} />
           </Box>
         ) : (
-          users?.map((user) => (
+          filteredItems?.map((user) => (
             <ListItem disablePadding key={user.guid}>
               <ListItemButton
                 dense
@@ -180,7 +184,11 @@ export function UsersPage() {
         </MenuItem>
       </Menu>
 
-      <ItemListFooter type="User" handleCreate={() => handleCreate} />
+      <ItemListFooter
+        type="User"
+        setFilter={setFilter}
+        handleCreate={() => handleCreate}
+      />
     </ContentLayout>
   );
 }

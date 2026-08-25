@@ -1,6 +1,6 @@
 import { Box, IconButton, InputBase } from "@mui/material";
 import { theme } from "../../styles/theme";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Can } from "../Can";
@@ -9,10 +9,15 @@ import { UserModal } from "../userList/UserModal";
 
 type ItemListFooterProps = {
   type: "User" | "Device";
+  setFilter: Dispatch<SetStateAction<string>>;
   handleCreate: () => void;
 };
 
-export function ItemListFooter({ type, handleCreate }: ItemListFooterProps) {
+export function ItemListFooter({
+  type,
+  setFilter,
+  handleCreate,
+}: ItemListFooterProps) {
   const [focused, setFocused] = useState(false);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -60,9 +65,12 @@ export function ItemListFooter({ type, handleCreate }: ItemListFooterProps) {
         />
         <InputBase
           fullWidth
-          placeholder={`Search ${type}...`}
+          placeholder={type === "User" ? "Search Email..." : "Search IMEI..."}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setFilter(e.target.value);
+          }}
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 150)}
           sx={{
