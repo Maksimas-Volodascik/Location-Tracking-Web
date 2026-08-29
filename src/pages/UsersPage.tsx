@@ -18,7 +18,7 @@ import { theme } from "../styles/theme";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllUsers } from "../services/userApi";
+import { deleteUser, getAllUsers, updateUser } from "../services/userApi";
 import loadingIcon from "../assets/loading.svg";
 import type { UserData } from "../types/users";
 import { Header } from "../components/ui/Header";
@@ -38,8 +38,14 @@ export function UsersPage() {
   });
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [filter, setFilter] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+
   const queryClient = useQueryClient();
-  const handleItemClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleItemClick = (
+    userData: UserData,
+    event: React.MouseEvent<HTMLElement>,
+  ) => {
+    setSelectedUser(userData);
     setMenuAnchor(event.currentTarget);
   };
 
@@ -48,8 +54,14 @@ export function UsersPage() {
   );
   const handleMenuClose = () => setMenuAnchor(null);
 
+  const handleDelete = async () => {
+    if (!selectedUser) return;
+    await deleteUser(selectedUser.userGuid);
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+  };
+
   const handleAction = (type: "edit" | "delete") => {
-    console.log("pressed " + type);
+    console.log("pressed " + type + " and data: " + selectedUser?.userGuid);
     handleMenuClose();
   };
 
@@ -70,10 +82,10 @@ export function UsersPage() {
           </Box>
         ) : (
           filteredItems?.map((user) => (
-            <ListItem disablePadding key={user.guid}>
+            <ListItem disablePadding key={user.userGuid}>
               <ListItemButton
                 dense
-                onClick={handleItemClick}
+                onClick={(e) => handleItemClick(user, e)}
                 sx={{
                   padding: "14px 10px",
                   margin: "0px 5px 5px 5px",
@@ -173,10 +185,7 @@ export function UsersPage() {
           Edit
         </MenuItem>
         <Divider />
-        <MenuItem
-          onClick={() => handleAction("delete")}
-          sx={{ color: theme.buttons.danger }}
-        >
+        <MenuItem onClick={handleDelete} sx={{ color: theme.buttons.danger }}>
           <DeleteIcon
             sx={{ marginRight: "8px", fontSize: theme.fontSize.lg }}
           />
