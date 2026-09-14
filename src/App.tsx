@@ -10,7 +10,7 @@ import { DevicesPage } from "./pages/DevicesPage";
 import { PublicAccess } from "./routes/PublicAccess";
 import { PrivateAccess } from "./routes/PrivateAccess";
 import { RequirePermission } from "./routes/RequirePermission";
-import { AdminDashboard } from "./pages/AdminDashboard";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
 
 export const App = () => {
   return (
@@ -24,7 +24,7 @@ export const App = () => {
         <Route element={<PrivateAccess />}>
           <Route element={<PageLayout />}>
             <Route path="/" element={<DashboardPage />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
 
             <Route element={<RequirePermission permission="view:devices" />}>
