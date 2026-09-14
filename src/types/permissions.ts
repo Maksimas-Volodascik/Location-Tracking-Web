@@ -2,6 +2,7 @@ export const Roles = ["demo", "user", "admin"];
 export type Role = (typeof Roles)[number];
 
 export type Permissions =
+  | "view:admin-dashboard"
   | "view:dashboard"
   | "view:devices"
   | "view:users"
@@ -14,6 +15,7 @@ export type Permissions =
 
 export const Role_Permissions: Record<Role, Permissions[]> = {
   admin: [
+    "view:admin-dashboard",
     "view:dashboard",
     "view:devices",
     "view:users",

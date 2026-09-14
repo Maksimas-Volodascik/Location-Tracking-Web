@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../styles/theme";
 import navIcon from "../../assets/navIcon.png";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { Can } from "../Can";
 
 export function Sidebar() {
@@ -79,6 +80,17 @@ export function Sidebar() {
             component="nav"
             dense={true}
           >
+            <Can permission="view:admin-dashboard">
+              <ListItemButton component={Link} to="admin-dashboard">
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon
+                    sx={{ color: theme.colors.valueText }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Admin Dashboard" />
+              </ListItemButton>
+            </Can>
+
             <ListItemButton component={Link} to="dashboard">
               <ListItemIcon>
                 <DashboardIcon sx={{ color: theme.colors.valueText }} />
