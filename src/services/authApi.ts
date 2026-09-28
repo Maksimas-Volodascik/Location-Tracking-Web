@@ -1,4 +1,8 @@
-import { type LoginProps, type RegisterProps } from "../types/auth";
+import {
+  type LoginProps,
+  type RegisterProps,
+  type TokenResponse,
+} from "../types/auth";
 import { postRequest } from "./httpClient";
 
 export async function userRegister({
@@ -18,11 +22,10 @@ export async function userRegister({
 export async function userLogin({
   email,
   password,
-}: LoginProps): Promise<string> {
-  const accessToken = await postRequest<string>("users/login", {
+}: LoginProps): Promise<TokenResponse> {
+  const accessToken = await postRequest<TokenResponse>("users/login", {
     email,
     password,
   });
-
   return accessToken;
 }

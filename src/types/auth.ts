@@ -11,3 +11,8 @@ export type LoginProps = {
   email: string;
   password: string;
 };
+
+export type TokenResponse = {
+  accessToken: string;
+  //refreshToken: string;
+};

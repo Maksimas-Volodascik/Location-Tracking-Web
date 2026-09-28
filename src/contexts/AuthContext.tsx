@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import type { LoginProps } from "../types/auth";
+import type { LoginProps, TokenResponse } from "../types/auth";
 import { userLogin } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import {
@@ -37,9 +37,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginAction = async (data: LoginProps) => {
     const response = await userLogin(data);
-    setToken(response);
-    saveAccessToken(response);
-    setRole(getRole(response));
+    console.log(response.accessToken);
+    setToken(response.accessToken);
+    saveAccessToken(response.accessToken);
+    setRole(getRole(response.accessToken));
     navigate("/dashboard");
   };
 
