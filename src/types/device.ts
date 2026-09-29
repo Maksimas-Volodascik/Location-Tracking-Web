@@ -17,7 +17,7 @@ export type DeviceForm = {
   imei: string;
   name: string;
   isEnabled: boolean;
-  deviceModelName: string;
+  deviceModelId: string;
 };
 
 export type RecordData = {
@@ -31,7 +31,7 @@ export const EMPTY_FORM: DeviceForm = {
   imei: "",
   name: "",
   isEnabled: false,
-  deviceModelName: "",
+  deviceModelId: "",
 };
 
 export function toForm(device: DeviceData): DeviceForm {
@@ -39,6 +39,6 @@ export function toForm(device: DeviceData): DeviceForm {
     imei: device.imei,
     name: device.name,
     isEnabled: device.isEnabled,
-    deviceModelName: "FMC650", //edit once devicemodel is fetched from backend
+    deviceModelId: "01a0dd1d-7798-75ea-8be2-93b4b7f509ce", //edit once devicemodel is fetched from backend
   };
 }

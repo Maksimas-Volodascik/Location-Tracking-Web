@@ -240,7 +240,7 @@ export function DeviceModal({
 
             <FormControl fullWidth size="small">
               <Select
-                value={form.deviceModelName}
+                value={form.deviceModelId}
                 onChange={(e: SelectChangeEvent) =>
                   handleChange("deviceModelName", e.target.value)
                 }

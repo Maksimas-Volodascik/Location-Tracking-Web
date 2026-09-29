@@ -15,7 +15,7 @@ function toDevicePayload(deviceData: DeviceForm) {
     imei: deviceData.imei,
     name: deviceData.name,
     isEnabled: deviceData.isEnabled,
-    deviceModelName: deviceData.deviceModelName,
+    deviceModelId: "01a0dd1d-7798-75ea-8be2-93b4b7f509ce",
   };
 }
 
@@ -29,20 +29,16 @@ export async function getDeviceRecords(
   return getRequest<RecordData[]>(`records/${deviceId}`);
 }
 
-export async function createNewDevice(
-  deviceData: DeviceForm,
-): Promise<DeviceData> {
-  return postRequest<DeviceData>("device", toDevicePayload(deviceData));
+export async function createNewDevice(deviceData: DeviceForm): Promise<void> {
+  console.log(deviceData);
+  return postRequest<void>("device", toDevicePayload(deviceData));
 }
 
 export async function updateDevice(
   deviceData: DeviceForm,
   deviceId: string,
-): Promise<DeviceData> {
-  return patchRequest<DeviceData>(
-    `device/${deviceId}`,
-    toDevicePayload(deviceData),
-  );
+): Promise<void> {
+  return patchRequest<void>(`device/${deviceId}`, toDevicePayload(deviceData));
 }
 
 export async function deleteDevice(deviceId: string): Promise<void> {
