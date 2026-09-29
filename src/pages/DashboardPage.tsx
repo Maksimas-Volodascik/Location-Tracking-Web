@@ -1,9 +1,9 @@
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { DashboardGrid } from "../components/layout/DashboardGrid";
 import type { ConnMetrics, MetricEntry } from "../types/dashboard";
-import { ConnHealthCard } from "../components/dashboardCards/ConnHealthCard";
-import { MetricCard } from "../components/dashboardCards/MetricCard";
-import { DeviceActivityCard } from "../components/dashboardCards/DeviceActivityCard";
+import { ConnHealthCard } from "../components/DashboardCards/ConnHealthCard";
+import { MetricCard } from "../components/DashboardCards/MetricCard";
+import { DeviceActivityCard } from "../components/DashboardCards/DeviceActivityCard";
 import { getMetricData } from "../services/dashboardApi";
 import { useQuery } from "@tanstack/react-query";
 

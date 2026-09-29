@@ -49,7 +49,6 @@ function isRole(value: unknown): value is Role {
 
 export function getRole(token: string | null = getAccessToken()): Role | null {
   if (!token) {
-    console.log("this");
     return null; // no token found
   }
 

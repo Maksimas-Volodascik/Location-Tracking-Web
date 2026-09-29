@@ -12,12 +12,12 @@ import type { MenuOptions } from "../components/ui/OptionMenu";
 import { useState } from "react";
 import { theme } from "../styles/theme";
 import loadingIcon from "../assets/loading.svg";
-import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
-import { DeviceRecordsModal } from "../components/deviceList/DeviceRecordsModal";
-import { DeviceListItem } from "../components/deviceList/DeviceListItem";
+import { DeviceListFooter } from "../components/DeviceList/DeviceListFooter";
+import { DeviceRecordsModal } from "../components/DeviceList/DeviceRecordsModal";
+import { DeviceListItem } from "../components/DeviceList/DeviceListItem";
 import { Header } from "../components/ui/Header";
 import { ConfirmDialog } from "../components/ui/ConfirmDialog";
-import { DeviceModal } from "../components/deviceList/DeviceModal";
+import { DeviceModal } from "../components/DeviceList/DeviceModal";
 
 export function DevicesPage() {
   const {
