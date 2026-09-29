@@ -19,7 +19,9 @@ async function request<Type>(
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-
+  if (response.status === 204) {
+    return undefined as Type;
+  }
   return response.json() as Promise<Type>;
 }
 
