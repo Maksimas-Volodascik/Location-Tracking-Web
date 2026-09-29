@@ -19,7 +19,7 @@ import { theme } from "../styles/theme";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DeviceListFooter } from "../components/DeviceList/DeviceListFooter";
+import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../services/userApi";
 import loadingIcon from "../assets/loading.svg";
