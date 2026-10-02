@@ -14,7 +14,7 @@ export type Permissions =
 // add more permissions later
 
 export const Role_Permissions: Record<Role, Permissions[]> = {
-  admin: [
+  Admin: [
     "view:admin-dashboard",
     "view:dashboard",
     "view:devices",
@@ -25,6 +25,6 @@ export const Role_Permissions: Record<Role, Permissions[]> = {
     "edit:devices",
     "edit:users",
   ],
-  user: ["view:dashboard", "view:devices", "view:users", "create:objects"],
-  demo: ["view:dashboard"],
+  User: ["view:dashboard", "view:devices", "view:users", "create:objects"],
+  Demo: ["view:dashboard"],
 };

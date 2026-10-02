@@ -59,6 +59,6 @@ export function getRole(token: string | null = getAccessToken()): Role | null {
     return null; // malformed token
   }
 
-  const role = decodedJwt[roleURI]?.toLowerCase();
+  const role = decodedJwt[roleURI];
   return isRole(role) ? role : null;
 }
