@@ -24,7 +24,13 @@ export const App = () => {
         <Route element={<PrivateAccess />}>
           <Route element={<PageLayout />}>
             <Route path="/" element={<DashboardPage />} />
-            <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+
+            <Route
+              element={<RequirePermission permission="view:admin-dashboard" />}
+            >
+              <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+            </Route>
+
             <Route path="/dashboard" element={<DashboardPage />} />
 
             <Route element={<RequirePermission permission="view:devices" />}>

@@ -1,4 +1,4 @@
-export const Roles = ["demo", "user", "admin"];
+export const Roles = ["Demo", "User", "Admin"];
 export type Role = (typeof Roles)[number];
 
 export type Permissions =
