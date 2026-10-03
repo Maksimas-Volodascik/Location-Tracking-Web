@@ -1,5 +1,5 @@
 import { baseURL } from "./apiConfig";
-import { getAccessToken } from "./authToken";
+import { clearAccessToken, getAccessToken } from "./authToken";
 
 async function request<Type>(
   path: string,
@@ -15,6 +15,12 @@ async function request<Type>(
       ...options.headers,
     },
   });
+
+  if (response.status === 401) {
+    clearAccessToken();
+    window.location.assign("/login");
+    return new Promise<never>(() => {});
+  }
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);

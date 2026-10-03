@@ -33,12 +33,15 @@ export function isTokenExpired(): boolean {
   }
 
   const decodedJwt = jwtDecode<jwtPayload>(token);
+  try {
+    if (!decodedJwt.exp) {
+      return true; // missing expiration date
+    }
 
-  if (!decodedJwt.exp) {
-    return true; // missing expiration date
+    return decodedJwt.exp < now;
+  } catch {
+    return true;
   }
-
-  return decodedJwt.exp < now;
 }
 
 function isRole(value: unknown): value is Role {
