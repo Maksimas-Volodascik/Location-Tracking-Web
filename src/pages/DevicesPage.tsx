@@ -8,16 +8,17 @@ import {
 } from "../services/deviceApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DeviceData, DeviceForm } from "../types/device";
-import type { MenuOptions } from "../components/ui/OptionMenu";
-import { useState } from "react";
+import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
+import { useState, type MouseEvent } from "react";
 import { theme } from "../styles/theme";
 import loadingIcon from "../assets/loading.svg";
 import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
 import { DeviceRecordsModal } from "../components/deviceList/DeviceRecordsModal";
-import { DeviceListItem } from "../components/deviceList/DeviceListItem";
 import { Header } from "../components/ui/Header";
 import { ConfirmDialog } from "../components/ui/ConfirmDialog";
 import { DeviceModal } from "../components/deviceList/DeviceModal";
+import { deviceToRow } from "../utils/rowMapper";
+import { EntityList } from "../components/entityList/EntityList";
 
 export function DevicesPage() {
   const {
@@ -53,6 +54,37 @@ export function DevicesPage() {
       handleOpen(device);
     }
   };
+  const [menuIsOpen, setMenuIsOpen] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
+  const findDevice = (deviceId: string) =>
+    devices?.find((d) => d.id === deviceId);
+
+  // left click -> records modal
+  const handleRowClick = (deviceId: string) => {
+    const device = findDevice(deviceId);
+    if (device) handleOpen(device);
+  };
+
+  // right click -> option menu at cursor position
+  const handleRowContextMenu = (
+    deviceId: string,
+    event: MouseEvent<HTMLElement>,
+  ) => {
+    const device = findDevice(deviceId);
+    if (!device) return;
+    setSelectedDevice(device);
+    setMenuIsOpen({ top: event.clientY, left: event.clientX });
+  };
+
+  const handleMenuClose = () => setMenuIsOpen(null);
+
+  const handleMenuAction = (type: MenuOptions) => {
+    if (selectedDevice) handleAction(type, selectedDevice);
+    handleMenuClose();
+  };
 
   const handleDelete = async () => {
     if (!selectedDevice) return;
@@ -78,14 +110,11 @@ export function DevicesPage() {
               <img src={loadingIcon} alt="loading" width={50} height={50} />
             </Box>
           ) : (
-            devices?.map((device) => (
-              <DeviceListItem
-                key={device.id}
-                device={device}
-                onClick={handleOpen}
-                handleAction={handleAction}
-              />
-            ))
+            <EntityList
+              rows={devices?.map(deviceToRow)}
+              onRowClick={handleRowClick}
+              onRowContextMenu={handleRowContextMenu}
+            />
           )}
 
           {isError ? (
@@ -103,6 +132,11 @@ export function DevicesPage() {
         </List>
         <DeviceListFooter />
       </ContentLayout>
+      <OptionMenu
+        menuIsOpen={menuIsOpen}
+        handleMenuClose={handleMenuClose}
+        handleAction={handleMenuAction}
+      />
       <DeviceModal
         open={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
