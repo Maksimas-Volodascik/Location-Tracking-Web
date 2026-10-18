@@ -1,4 +1,4 @@
-import { Box, Divider, List, Menu, MenuItem, Typography } from "@mui/material";
+import { Divider, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { theme } from "../styles/theme";
@@ -6,7 +6,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteUser, getAllUsers } from "../services/userApi";
-import loadingIcon from "../assets/loading.svg";
 import type { UserData } from "../types/users";
 import { Header } from "../components/ui/Header";
 import { ItemListFooter } from "../components/ui/ItemListFooter";
@@ -14,24 +13,33 @@ import type { RegisterProps } from "../types/auth";
 import { userRegister } from "../services/authApi";
 import { EntityList } from "../components/entityList/EntityList";
 import { userToRow } from "../utils/rowMapper";
+import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
 
 export function UsersPage() {
   const {
     data: users,
     isLoading,
-    isError,
+    isLoadingError,
   } = useQuery<UserData[] | null>({
     queryKey: ["users"],
     queryFn: getAllUsers,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 1000,
   });
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [menuIsOpen, setMenuIsOpen] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
   const [filter, setFilter] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<UserData | undefined | null>(
     null,
   );
 
   const queryClient = useQueryClient();
+
+  const handleMenuAction = (type: MenuOptions) => {
+    if (selectedUser) handleAction(type);
+    handleMenuClose();
+  };
 
   const handleItemClick = (
     userId: string,
@@ -40,15 +48,15 @@ export function UsersPage() {
     const user = users?.find((u) => u.userGuid == userId);
 
     setSelectedUser(user);
-    setMenuAnchor(event.currentTarget);
+    setMenuIsOpen({ top: event.clientY, left: event.clientX });
   };
 
   const filteredItems = users?.filter((user) =>
     user.email.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
   );
-  const handleMenuClose = () => setMenuAnchor(null);
+  const handleMenuClose = () => setMenuIsOpen(null);
 
-  const handleAction = async (type: "edit" | "delete") => {
+  const handleAction = async (type: MenuOptions) => {
     if (!selectedUser) return;
     if (type === "edit") {
       console.log("edit was executed");
@@ -68,60 +76,18 @@ export function UsersPage() {
   return (
     <ContentLayout overflow="hidden">
       <Header page="Users" tab="Access Control" />
-      <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-        {isLoading ? (
-          <Box
-            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <img src={loadingIcon} alt="loading" width={50} height={50} />
-          </Box>
-        ) : (
-          <Entitylist
-            rows={filteredItems?.map(userToRow)}
-            onRowClick={(item, e) => handleItemClick(item, e)}
-          />
-        )}
-        {isError ? (
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography
-              sx={{
-                color: theme.colors.faintDescription,
-                fontSize: theme.fontSize.xl,
-              }}
-            >
-              List is empty :(
-            </Typography>
-          </Box>
-        ) : null}
-      </List>
-
-      <Menu
-        anchorEl={menuAnchor}
-        open={Boolean(menuAnchor)}
-        onClose={handleMenuClose}
-        slotProps={{
-          paper: { sx: { backgroundColor: theme.surface.tooltip } },
-        }}
-      >
-        <MenuItem
-          onClick={() => handleAction("edit")}
-          sx={{ color: theme.colors.valueText }}
-        >
-          <EditIcon sx={{ marginRight: "8px", fontSize: theme.fontSize.lg }} />
-          Edit
-        </MenuItem>
-        <Divider />
-        <MenuItem
-          onClick={() => handleAction("delete")}
-          sx={{ color: theme.buttons.danger }}
-        >
-          <DeleteIcon
-            sx={{ marginRight: "8px", fontSize: theme.fontSize.lg }}
-          />
-          Delete
-        </MenuItem>
-      </Menu>
-
+      <EntityList
+        rows={filteredItems?.map(userToRow)}
+        onRowClick={(item, e) => handleItemClick(item, e)}
+        isLoadingError={isLoadingError}
+        isLoading={isLoading}
+      />
+      <OptionMenu
+        menuIsOpen={menuIsOpen}
+        handleMenuClose={handleMenuClose}
+        handleAction={handleAction}
+        entity="users"
+      />
       <ItemListFooter
         type="User"
         setFilter={setFilter}

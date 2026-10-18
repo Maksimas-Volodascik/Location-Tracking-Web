@@ -1,6 +1,4 @@
-import List from "@mui/material/List";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { Box, Typography } from "@mui/material";
 import {
   deleteDevice,
   getAllDevices,
@@ -10,8 +8,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DeviceData, DeviceForm } from "../types/device";
 import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
 import { useState, type MouseEvent } from "react";
-import { theme } from "../styles/theme";
-import loadingIcon from "../assets/loading.svg";
 import { DeviceListFooter } from "../components/deviceList/DeviceListFooter";
 import { DeviceRecordsModal } from "../components/deviceList/DeviceRecordsModal";
 import { Header } from "../components/ui/Header";
@@ -24,11 +20,11 @@ export function DevicesPage() {
   const {
     data: devices,
     isLoading,
-    isError,
+    isLoadingError,
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 1000,
   });
   const queryClient = useQueryClient();
 
@@ -102,40 +98,20 @@ export function DevicesPage() {
     <>
       <ContentLayout overflow="hidden">
         <Header page="Devices" tab="Telematics" />
-        <List sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-          {isLoading ? (
-            <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              <img src={loadingIcon} alt="loading" width={50} height={50} />
-            </Box>
-          ) : (
-            <EntityList
-              rows={devices?.map(deviceToRow)}
-              onRowClick={handleRowClick}
-              onRowContextMenu={handleRowContextMenu}
-            />
-          )}
-
-          {isError ? (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Typography
-                sx={{
-                  color: theme.colors.faintDescription,
-                  fontSize: theme.fontSize.xl,
-                }}
-              >
-                List is empty :(
-              </Typography>
-            </Box>
-          ) : null}
-        </List>
+        <EntityList
+          rows={devices?.map(deviceToRow)}
+          onRowClick={handleRowClick}
+          onRowContextMenu={handleRowContextMenu}
+          isLoading={isLoading}
+          isLoadingError={isLoadingError}
+        />
         <DeviceListFooter />
       </ContentLayout>
       <OptionMenu
         menuIsOpen={menuIsOpen}
         handleMenuClose={handleMenuClose}
         handleAction={handleMenuAction}
+        entity="devices"
       />
       <DeviceModal
         open={isEditModalOpen}

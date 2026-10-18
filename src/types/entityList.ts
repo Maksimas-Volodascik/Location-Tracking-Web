@@ -4,6 +4,8 @@ export interface EntityListProps {
   rows: ListRow[] | undefined | null;
   onRowClick?: (id: string, event: MouseEvent<HTMLElement>) => void;
   onRowContextMenu?: (id: string, event: MouseEvent<HTMLElement>) => void; // right click
+  isLoadingError?: boolean;
+  isLoading?: boolean;
 }
 
 export type ListRow = {

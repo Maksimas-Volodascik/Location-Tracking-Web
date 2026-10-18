@@ -6,17 +6,20 @@ import { theme } from "../../styles/theme";
 import { Can } from "../Can";
 
 export type MenuOptions = "view" | "edit" | "delete";
+export type EntityType = "users" | "devices";
 
 type OptionMenuProps = {
   menuIsOpen: { top: number; left: number } | null;
   handleMenuClose: () => void;
   handleAction: (type: MenuOptions) => void;
+  entity: EntityType;
 };
 
 export function OptionMenu({
   menuIsOpen,
   handleMenuClose,
   handleAction,
+  entity,
 }: OptionMenuProps) {
   return (
     <Menu
@@ -38,7 +41,7 @@ export function OptionMenu({
         />
         View
       </MenuItem>
-      <Can permission="edit:devices">
+      <Can permission={`edit:${entity}`}>
         <MenuItem
           dense
           onClick={() => handleAction("edit")}
@@ -48,7 +51,7 @@ export function OptionMenu({
           Edit
         </MenuItem>
       </Can>
-      <Can permission="delete:devices">
+      <Can permission={`delete:${entity}`}>
         <MenuItem
           dense
           onClick={() => handleAction("delete")}
