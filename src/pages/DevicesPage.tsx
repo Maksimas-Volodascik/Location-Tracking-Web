@@ -24,7 +24,7 @@ export function DevicesPage() {
   } = useQuery<DeviceData[] | null>({
     queryKey: ["devices"],
     queryFn: getAllDevices,
-    staleTime: 1000,
+    staleTime: 1000 * 60 * 2,
   });
   const queryClient = useQueryClient();
 

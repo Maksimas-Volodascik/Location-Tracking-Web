@@ -1,9 +1,5 @@
-import { Divider, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { ContentLayout } from "../components/layout/ContentLayout";
-import { theme } from "../styles/theme";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteUser, getAllUsers } from "../services/userApi";
 import type { UserData } from "../types/users";
@@ -23,7 +19,7 @@ export function UsersPage() {
   } = useQuery<UserData[] | null>({
     queryKey: ["users"],
     queryFn: getAllUsers,
-    staleTime: 1000,
+    staleTime: 1000 * 60 * 2,
   });
   const [menuIsOpen, setMenuIsOpen] = useState<{
     top: number;
@@ -35,11 +31,6 @@ export function UsersPage() {
   );
 
   const queryClient = useQueryClient();
-
-  const handleMenuAction = (type: MenuOptions) => {
-    if (selectedUser) handleAction(type);
-    handleMenuClose();
-  };
 
   const handleItemClick = (
     userId: string,
