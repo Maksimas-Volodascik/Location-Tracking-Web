@@ -5,3 +5,12 @@ export type LogEntry = {
   message: string;
   severity: string;
 };
+
+export type AdminTableOption = "users" | "devices" | "deviceModels";
+
+export type DeviceModelData = {
+  id: string;
+  name: string;
+  protocolName: string;
+  description: string;
+};

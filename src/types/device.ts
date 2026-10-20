@@ -7,10 +7,7 @@ export type DeviceData = {
   isEnabled: boolean;
   lastSeen: string;
   dateAdded: string;
-  userId: string;
-  user: null;
   deviceModelId: string;
-  deviceModel: null;
 };
 
 export type DeviceForm = {

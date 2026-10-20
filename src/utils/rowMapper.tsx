@@ -4,6 +4,8 @@ import type { DeviceData } from "../types/device";
 import type { ListRow } from "../types/entityList";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import type { UserData } from "../types/users";
+import ModelIcon from "@mui/icons-material/Memory";
+import type { DeviceModelData } from "../types/admin";
 
 export const deviceToRow = (d: DeviceData): ListRow => ({
   id: d.id,
@@ -32,4 +34,21 @@ export const userToRow = (u: UserData): ListRow => ({
   ),
   main: { primary: `${u.firstName} ${u.lastName}`, secondary: u.email },
   tags: [{ label: u.role, sx: theme.roleTheme[u.role.toLowerCase()] }],
+});
+
+export const deviceModelToRow = (m: DeviceModelData): ListRow => ({
+  id: m.id,
+  icon: (
+    <ModelIcon
+      sx={{
+        width: 28,
+        height: 28,
+        marginRight: 2,
+        flexShrink: 0,
+        color: theme.colors.valueText,
+      }}
+    />
+  ),
+  main: { primary: m.name, secondary: m.manufacturer },
+  details: { primary: m.protocol, secondary: m.id },
 });
