@@ -9,7 +9,12 @@ const EntityOptions: { value: AdminTableOption; label: string }[] = [
   { value: "deviceModels", label: "Device Models" },
 ];
 
-export function AdminTableBar({ selected }: { selected: AdminTableOption }) {
+interface AdminTableProps {
+  selected: AdminTableOption;
+  setSelectedTable: (value: AdminTableOption) => void;
+}
+
+export function AdminTableBar({ selected, setSelectedTable }: AdminTableProps) {
   return (
     <Box
       sx={{
@@ -25,6 +30,7 @@ export function AdminTableBar({ selected }: { selected: AdminTableOption }) {
         return (
           <ButtonBase
             key={option.value}
+            onClick={() => setSelectedTable(option.value)}
             sx={{
               padding: "6px 12px",
               borderRadius: "8px",

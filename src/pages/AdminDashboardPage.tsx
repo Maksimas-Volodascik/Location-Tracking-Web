@@ -1,13 +1,7 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { theme } from "../styles/theme";
-import type {
-  AdminTableOption,
-  DeviceModelData,
-  LogEntry,
-} from "../types/admin";
-import { useQuery } from "@tanstack/react-query";
-import { getAllLogEntries } from "../services/adminPanelApi";
+import type { AdminTableOption, DeviceModelData } from "../types/admin";
 import { AdminTableBar } from "../components/adminPanel/AdminTableBar";
 import { EntityList } from "../components/entityList/EntityList";
 import type { ListRow } from "../types/entityList";
@@ -15,6 +9,7 @@ import { deviceModelToRow, deviceToRow, userToRow } from "../utils/rowMapper";
 import type { DeviceData } from "../types/device";
 import type { UserData } from "../types/users";
 import { ConsoleWindow } from "../components/adminPanel/ConsoleWindow";
+import { useState } from "react";
 
 const mockUsers: UserData[] = [
   {
@@ -63,7 +58,7 @@ const mockDevices: DeviceData[] = [
 
 const mockDeviceModels: DeviceModelData[] = [
   {
-    id: "1db077dd-e60c-4fed-a31e-d605bd630492",
+    id: "1db077dd-e60c-4fed-a31e-d605bd630491",
     name: "FMC650(Teltonika)",
     protocolName: "FMC650",
     description: "Codec 8E",
@@ -75,7 +70,7 @@ const mockDeviceModels: DeviceModelData[] = [
     description: "Codec 8",
   },
   {
-    id: "1db077dd-e60c-4fed-a31e-d605bd630492",
+    id: "1db077dd-e60c-4fed-a31e-d605bd630493",
     name: "G502(Test)",
     protocolName: "G502",
     description: "GT06",
@@ -89,7 +84,7 @@ const mockRows: Record<AdminTableOption, ListRow[]> = {
 };
 
 export function AdminDashboardPage() {
-  const selectedTable: AdminTableOption = "deviceModels";
+  const [selectedTable, setSelectedTable] = useState<AdminTableOption>("users");
 
   return (
     <>
@@ -116,7 +111,10 @@ export function AdminDashboardPage() {
               overflow: "hidden",
             }}
           >
-            <AdminTableBar selected={selectedTable} />
+            <AdminTableBar
+              selected={selectedTable}
+              setSelectedTable={(v) => setSelectedTable(v)}
+            />
             <Box sx={{ flex: 1, minHeight: 0, paddingTop: "5px" }}>
               <EntityList rows={mockRows[selectedTable]} />
             </Box>
