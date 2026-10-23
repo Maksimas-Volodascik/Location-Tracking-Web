@@ -10,81 +10,45 @@ import type { DeviceData } from "../types/device";
 import type { UserData } from "../types/users";
 import { ConsoleWindow } from "../components/adminPanel/ConsoleWindow";
 import { useState } from "react";
-
-const mockUsers: UserData[] = [
-  {
-    userGuid: "u-1",
-    firstName: "John",
-    lastName: "Smith",
-    email: "john.smith@example.com",
-    role: "Admin",
-  },
-  {
-    userGuid: "u-2",
-    firstName: "Anna",
-    lastName: "Kowalska",
-    email: "anna.k@example.com",
-    role: "User",
-  },
-  {
-    userGuid: "u-3",
-    firstName: "Tom",
-    lastName: "Baker",
-    email: "tom.baker@example.com",
-    role: "User",
-  },
-];
-
-const mockDevices: DeviceData[] = [
-  {
-    id: "d-1",
-    imei: "356307042441013",
-    name: "Truck #12",
-    isEnabled: true,
-    lastSeen: "2026-10-19T08:12:00Z",
-    dateAdded: "2026-09-01T10:00:00Z",
-    deviceModelId: "FMC650",
-  },
-  {
-    id: "d-2",
-    imei: "352093081234567",
-    name: "Van #3",
-    isEnabled: false,
-    lastSeen: "2026-10-17T15:40:00Z",
-    dateAdded: "2026-09-14T09:30:00Z",
-    deviceModelId: "FMB920",
-  },
-];
-
-const mockDeviceModels: DeviceModelData[] = [
-  {
-    id: "1db077dd-e60c-4fed-a31e-d605bd630491",
-    name: "FMC650(Teltonika)",
-    protocolName: "FMC650",
-    description: "Codec 8E",
-  },
-  {
-    id: "1db077dd-e60c-4fed-a31e-d605bd630492",
-    name: "FMB920(Teltonika)",
-    protocolName: "FMB920",
-    description: "Codec 8",
-  },
-  {
-    id: "1db077dd-e60c-4fed-a31e-d605bd630493",
-    name: "G502(Test)",
-    protocolName: "G502",
-    description: "GT06",
-  },
-];
-
-const mockRows: Record<AdminTableOption, ListRow[]> = {
-  users: mockUsers.map(userToRow),
-  devices: mockDevices.map(deviceToRow),
-  deviceModels: mockDeviceModels.map(deviceModelToRow),
-};
+import { useQuery } from "@tanstack/react-query";
+import { getAllDeviceModels } from "../services/deviceModelApi";
+import { getAllDevices } from "../services/deviceApi";
+import { getAllUsers } from "../services/userApi";
 
 export function AdminDashboardPage() {
   const [selectedTable, setSelectedTable] = useState<AdminTableOption>("users");
+
+  const usersQuery = useQuery<UserData[] | null>({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const devicesQuery = useQuery<DeviceData[] | null>({
+    queryKey: ["devices"],
+    queryFn: getAllDevices,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const deviceModelsQuery = useQuery<DeviceModelData[] | null>({
+    queryKey: ["deviceModels"],
+    queryFn: getAllDeviceModels,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const queries = {
+    users: usersQuery,
+    devices: devicesQuery,
+    deviceModels: deviceModelsQuery,
+  };
+
+  const activeQuery = queries[selectedTable];
+
+  const rows: Record<AdminTableOption, ListRow[]> = {
+    users: usersQuery.data?.map(userToRow) ?? [],
+    devices: devicesQuery.data?.map(deviceToRow) ?? [],
+    deviceModels: deviceModelsQuery.data?.map(deviceModelToRow) ?? [],
+  };
 
   return (
     <>
@@ -116,7 +80,11 @@ export function AdminDashboardPage() {
               setSelectedTable={(v) => setSelectedTable(v)}
             />
             <Box sx={{ flex: 1, minHeight: 0, paddingTop: "5px" }}>
-              <EntityList rows={mockRows[selectedTable]} />
+              <EntityList
+                rows={rows[selectedTable]}
+                isLoading={activeQuery.isLoading}
+                isLoadingError={activeQuery.isLoadingError}
+              />
             </Box>
           </Paper>
         </Box>
