@@ -6,7 +6,7 @@ export async function getAllUsers(): Promise<UserData[]> {
 }
 
 export async function updateUser(
-  userData: UserData,
+  userData: UpdateUserData,
   userId: string,
 ): Promise<UserData> {
   return patchRequest<UserData>(`users/${userId}`, userData);

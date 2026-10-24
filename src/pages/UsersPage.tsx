@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteUser, getAllUsers } from "../services/userApi";
-import type { UserData } from "../types/users";
+import { deleteUser, getAllUsers, updateUser } from "../services/userApi";
+import type { UserData, UserForm } from "../types/users";
 import { Header } from "../components/ui/Header";
 import { ItemListFooter } from "../components/ui/ItemListFooter";
-import type { RegisterProps } from "../types/auth";
 import { userRegister } from "../services/authApi";
 import { EntityList } from "../components/entityList/EntityList";
 import { userToRow } from "../utils/rowMapper";
 import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
+import { UserModal } from "../components/userList/UserModal";
 
 export function UsersPage() {
   const {
@@ -29,6 +29,7 @@ export function UsersPage() {
   const [selectedUser, setSelectedUser] = useState<UserData | undefined | null>(
     null,
   );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -50,7 +51,7 @@ export function UsersPage() {
   const handleAction = async (type: MenuOptions) => {
     if (!selectedUser) return;
     if (type === "edit") {
-      console.log("edit was executed");
+      setIsEditModalOpen(true);
     }
     if (type === "delete") {
       await deleteUser(selectedUser.userGuid);
@@ -59,8 +60,22 @@ export function UsersPage() {
     handleMenuClose();
   };
 
-  const handleCreate = async (form: RegisterProps) => {
+  const handleCreate = async (form: UserForm) => {
     await userRegister(form);
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+  };
+
+  const handleUpdate = async (form: UserForm, userGuid: string | null) => {
+    if (!userGuid || !selectedUser) return;
+    // role is not editable yet, so send the current one back unchanged
+    await updateUser(
+      {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        role: selectedUser.role,
+      },
+      userGuid,
+    );
     queryClient.invalidateQueries({ queryKey: ["users"] });
   };
 
@@ -82,7 +97,13 @@ export function UsersPage() {
       <ItemListFooter
         type="User"
         setFilter={setFilter}
-        handleCreate={() => handleCreate}
+        handleCreate={handleCreate}
+      />
+      <UserModal
+        open={isEditModalOpen}
+        setIsOpen={setIsEditModalOpen}
+        onSubmit={handleUpdate}
+        initialData={selectedUser}
       />
     </ContentLayout>
   );

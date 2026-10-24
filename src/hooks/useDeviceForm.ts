@@ -15,8 +15,9 @@ export function useDeviceForm({ initialData }: DeviceFormProps) {
     initialData ? toForm(initialData) : EMPTY_FORM,
   );
 
-  const handleChange = (field: string, value: string | boolean) =>
+  const handleChange = (field: string, value: string | boolean | undefined) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleClear = useCallback(
     () => setForm(initialData ? toForm(initialData) : EMPTY_FORM),

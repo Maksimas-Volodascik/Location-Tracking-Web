@@ -12,3 +12,26 @@ export type UpdateUserData = {
   lastName: string;
   role: string;
 };
+
+export type UserForm = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+export const EMPTY_USER_FORM: UserForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+};
+
+export function toUserForm(user: UserData): UserForm {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    password: "",
+  };
+}
