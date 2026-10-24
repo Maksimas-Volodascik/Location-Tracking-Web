@@ -10,13 +10,28 @@ import type { DeviceData } from "../types/device";
 import type { UserData } from "../types/users";
 import { ConsoleWindow } from "../components/adminPanel/ConsoleWindow";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllDeviceModels } from "../services/deviceModelApi";
-import { getAllDevices } from "../services/deviceApi";
-import { getAllUsers } from "../services/userApi";
+import {
+  deleteDevice,
+  getAllDevices,
+  updateDevice,
+} from "../services/deviceApi";
+import { deleteUser, getAllUsers } from "../services/userApi";
+import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
 
 export function AdminDashboardPage() {
   const [selectedTable, setSelectedTable] = useState<AdminTableOption>("users");
+  const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
+
+  const [selectedEntity, setSelectedEntity] = useState<
+    UserData | DeviceData | DeviceModelData | undefined | null
+  >(null);
+
+  const [menuIsOpen, setMenuIsOpen] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
   const usersQuery = useQuery<UserData[] | null>({
     queryKey: ["users"],
@@ -42,12 +57,55 @@ export function AdminDashboardPage() {
     deviceModels: deviceModelsQuery,
   };
 
+  const queryClient = useQueryClient();
+
   const activeQuery = queries[selectedTable];
+
+  const handleMenuClose = () => {
+    setMenuIsOpen(null);
+    setSelectedEntityId(null);
+  };
 
   const rows: Record<AdminTableOption, ListRow[]> = {
     users: usersQuery.data?.map(userToRow) ?? [],
     devices: devicesQuery.data?.map(deviceToRow) ?? [],
     deviceModels: deviceModelsQuery.data?.map(deviceModelToRow) ?? [],
+  };
+
+  const handleItemClick = (
+    entityId: string,
+    event: React.MouseEvent<HTMLElement>,
+  ) => {
+    if (selectedTable === "users") {
+      setSelectedEntity(usersQuery.data?.find((u) => u.userGuid == entityId));
+    }
+    if (selectedTable === "devices") {
+      setSelectedEntity(devicesQuery.data?.find((u) => u.id == entityId));
+    }
+    if (selectedTable === "deviceModels") {
+      setSelectedEntity(deviceModelsQuery.data?.find((u) => u.id == entityId));
+    }
+    setSelectedEntityId(entityId);
+    setMenuIsOpen({ top: event.clientY, left: event.clientX });
+  };
+
+  const handleDelete: Record<AdminTableOption, (id: string) => Promise<void>> =
+    {
+      users: deleteUser,
+      devices: deleteDevice,
+      deviceModels: deleteDevice,
+    };
+
+  const handleAction = async (type: MenuOptions) => {
+    if (selectedEntity == null || selectedEntityId == null) return;
+
+    if (type === "delete") {
+      await handleDelete[selectedTable](selectedEntityId);
+      queryClient.invalidateQueries({ queryKey: [`${selectedTable}`] });
+    }
+
+    setSelectedEntityId(null);
+    setMenuIsOpen(null);
   };
 
   return (
@@ -84,6 +142,13 @@ export function AdminDashboardPage() {
                 rows={rows[selectedTable]}
                 isLoading={activeQuery.isLoading}
                 isLoadingError={activeQuery.isLoadingError}
+                onRowClick={(item, e) => handleItemClick(item, e)}
+              />
+              <OptionMenu
+                menuIsOpen={menuIsOpen}
+                handleMenuClose={() => setMenuIsOpen(null)}
+                handleAction={handleAction}
+                entity="users"
               />
             </Box>
           </Paper>
