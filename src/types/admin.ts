@@ -7,10 +7,3 @@ export type LogEntry = {
 };
 
 export type AdminTableOption = "users" | "devices" | "deviceModels";
-
-export type DeviceModelData = {
-  id: string;
-  name: string;
-  protocolName: string;
-  description: string;
-};

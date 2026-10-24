@@ -1,7 +1,8 @@
 import { Box, Paper } from "@mui/material";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { theme } from "../styles/theme";
-import type { AdminTableOption, DeviceModelData } from "../types/admin";
+import type { AdminTableOption } from "../types/admin";
+import type { DeviceModelData } from "../types/deviceModels";
 import { AdminTableBar } from "../components/adminPanel/AdminTableBar";
 import { EntityList } from "../components/entityList/EntityList";
 import type { ListRow } from "../types/entityList";
@@ -11,12 +12,11 @@ import type { UserData } from "../types/users";
 import { ConsoleWindow } from "../components/adminPanel/ConsoleWindow";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllDeviceModels } from "../services/deviceModelApi";
 import {
-  deleteDevice,
-  getAllDevices,
-  updateDevice,
-} from "../services/deviceApi";
+  deleteDeviceModel,
+  getAllDeviceModels,
+} from "../services/deviceModelApi";
+import { deleteDevice, getAllDevices } from "../services/deviceApi";
 import { deleteUser, getAllUsers } from "../services/userApi";
 import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
 
@@ -61,11 +61,6 @@ export function AdminDashboardPage() {
 
   const activeQuery = queries[selectedTable];
 
-  const handleMenuClose = () => {
-    setMenuIsOpen(null);
-    setSelectedEntityId(null);
-  };
-
   const rows: Record<AdminTableOption, ListRow[]> = {
     users: usersQuery.data?.map(userToRow) ?? [],
     devices: devicesQuery.data?.map(deviceToRow) ?? [],
@@ -93,7 +88,7 @@ export function AdminDashboardPage() {
     {
       users: deleteUser,
       devices: deleteDevice,
-      deviceModels: deleteDevice,
+      deviceModels: deleteDeviceModel,
     };
 
   const handleAction = async (type: MenuOptions) => {

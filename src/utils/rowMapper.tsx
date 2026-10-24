@@ -5,7 +5,7 @@ import type { ListRow } from "../types/entityList";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import type { UserData } from "../types/users";
 import ModelIcon from "@mui/icons-material/Memory";
-import type { DeviceModelData } from "../types/admin";
+import type { DeviceModelData } from "../types/deviceModels";
 
 export const deviceToRow = (d: DeviceData): ListRow => ({
   id: d.id,
@@ -49,6 +49,6 @@ export const deviceModelToRow = (m: DeviceModelData): ListRow => ({
       }}
     />
   ),
-  main: { primary: m.name, secondary: m.manufacturer },
-  details: { primary: m.protocol, secondary: m.id },
+  main: { primary: m.name, secondary: m.description },
+  details: { primary: m.protocolName, secondary: m.id },
 });
