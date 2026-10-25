@@ -5,3 +5,5 @@ export type LogEntry = {
   message: string;
   severity: string;
 };
+
+export type AdminTableOption = "users" | "devices" | "deviceModels";

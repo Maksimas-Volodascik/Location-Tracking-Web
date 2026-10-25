@@ -4,13 +4,13 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Can } from "../Can";
-import { DeviceModal } from "../deviceList/DeviceModal";
 import { UserModal } from "../userList/UserModal";
+import type { UserForm } from "../../types/users";
 
 type ItemListFooterProps = {
   type: "User" | "Device";
   setFilter: Dispatch<SetStateAction<string>>;
-  handleCreate: () => void;
+  handleCreate: (form: UserForm) => void;
 };
 
 export function ItemListFooter({
@@ -22,17 +22,6 @@ export function ItemListFooter({
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
 
-  const typeSelector = () => {
-    if (type == "User") {
-      return (
-        <UserModal open={open} setIsOpen={setOpen} onSubmit={handleCreate} />
-      );
-    } else {
-      return (
-        <DeviceModal open={open} setIsOpen={setOpen} onSubmit={handleCreate} />
-      );
-    }
-  };
   return (
     <Box
       sx={{
@@ -104,7 +93,7 @@ export function ItemListFooter({
           </IconButton>
         </Box>
       </Can>
-      {typeSelector()}
+      <UserModal open={open} setIsOpen={setOpen} onSubmit={handleCreate} />
     </Box>
   );
 }

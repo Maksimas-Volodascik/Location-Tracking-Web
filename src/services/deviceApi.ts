@@ -15,7 +15,7 @@ function toDevicePayload(deviceData: DeviceForm) {
     imei: deviceData.imei,
     name: deviceData.name,
     isEnabled: deviceData.isEnabled,
-    deviceModelName: deviceData.deviceModelName,
+    deviceModelId: deviceData.deviceModelId,
   };
 }
 
