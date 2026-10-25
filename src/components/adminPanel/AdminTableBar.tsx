@@ -12,9 +12,14 @@ const EntityOptions: { value: AdminTableOption; label: string }[] = [
 interface AdminTableProps {
   selected: AdminTableOption;
   setSelectedTable: (value: AdminTableOption) => void;
+  onCreateClick: () => void;
 }
 
-export function AdminTableBar({ selected, setSelectedTable }: AdminTableProps) {
+export function AdminTableBar({
+  selected,
+  setSelectedTable,
+  onCreateClick,
+}: AdminTableProps) {
   return (
     <Box
       sx={{
@@ -52,7 +57,12 @@ export function AdminTableBar({ selected, setSelectedTable }: AdminTableProps) {
         );
       })}
 
-      <IconButton size="small" sx={{ marginLeft: "auto" }} aria-label="add">
+      <IconButton
+        size="small"
+        sx={{ marginLeft: "auto" }}
+        aria-label="add"
+        onClick={() => onCreateClick()}
+      >
         <AddIcon sx={{ color: theme.colors.accent }} />
       </IconButton>
     </Box>

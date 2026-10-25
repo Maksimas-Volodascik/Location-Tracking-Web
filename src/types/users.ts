@@ -10,7 +10,7 @@ export type UserData = {
 export type UpdateUserData = {
   firstName: string;
   lastName: string;
-  role: string;
+  role: string | undefined;
 };
 
 export type UserForm = {

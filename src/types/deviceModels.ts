@@ -10,3 +10,19 @@ export type DeviceModelForm = {
   protocolName: string;
   description: string;
 };
+
+export const EMPTY_DEVICE_MODEL_FORM: DeviceModelForm = {
+  name: "",
+  protocolName: "",
+  description: "",
+};
+
+export function toDeviceModelForm(
+  deviceModel: DeviceModelData,
+): DeviceModelForm {
+  return {
+    name: deviceModel.name,
+    protocolName: deviceModel.protocolName,
+    description: deviceModel.description,
+  };
+}

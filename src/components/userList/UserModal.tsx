@@ -28,7 +28,6 @@ export function UserModal({
   initialData,
 }: UserModalProps) {
   const isEditMode = !!initialData;
-
   const { form, handleChange, handleClear } = useUserForm({
     initialData,
   });
