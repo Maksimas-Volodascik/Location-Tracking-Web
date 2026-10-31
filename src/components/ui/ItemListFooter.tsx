@@ -73,7 +73,7 @@ export function ItemListFooter({
           }}
         />
       </Box>
-      <Can permission="create:objects">
+      <Can permission="create:users">
         <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
           <IconButton
             sx={{
