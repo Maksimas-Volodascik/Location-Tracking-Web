@@ -15,7 +15,17 @@ const roleTheme: Record<
     bgcolor: "#651dff43",
     borderColor: "#9684be3d",
   },
+  manager: {
+    color: "#b3c7e6",
+    bgcolor: "#1d6fff38",
+    borderColor: "#84a0be3d",
+  },
   user: { color: "#a1a1aa", bgcolor: "#26262a", borderColor: "#ffffff12" },
+  demo: {
+    color: "#e6cfa3",
+    bgcolor: "#f59e0b26",
+    borderColor: "#be9f6a3d",
+  },
 };
 
 const userStatusTheme = {

@@ -8,6 +8,7 @@ export type DeviceData = {
   lastSeen: string;
   dateAdded: string;
   deviceModelId: string;
+  workspaceId: string;
 };
 
 export type DeviceForm = {

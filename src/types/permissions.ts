@@ -1,4 +1,4 @@
-export const Roles = ["demo", "user", "admin"];
+export const Roles = ["demo", "user", "manager", "admin"] as const;
 export type Role = (typeof Roles)[number];
 
 export type Permissions =
@@ -6,25 +6,38 @@ export type Permissions =
   | "view:dashboard"
   | "view:devices"
   | "view:users"
-  | "edit:users"
+  | "view:workspaces"
+  | "create:devices"
+  | "create:users"
   | "edit:devices"
-  | "delete:users"
+  | "edit:users"
+  | "edit:workspaces"
   | "delete:devices"
-  | "create:objects";
-// add more permissions later
+  | "delete:users";
+
+const ManagerPermissions: Permissions[] = [
+  "view:dashboard",
+  "view:devices",
+  "view:users",
+  "view:workspaces",
+  "create:devices",
+  "create:users",
+  "edit:devices",
+  "edit:users",
+  "edit:workspaces",
+  "delete:devices",
+  "delete:users",
+];
 
 export const Role_Permissions: Record<Role, Permissions[]> = {
-  admin: [
-    "view:admin-dashboard",
+  admin: [...ManagerPermissions, "view:admin-dashboard"],
+  manager: ManagerPermissions,
+  user: [
     "view:dashboard",
     "view:devices",
     "view:users",
-    "create:objects",
-    "delete:devices",
-    "delete:users",
-    "edit:devices",
-    "edit:users",
+    "view:workspaces",
+    "create:devices",
   ],
-  user: ["view:dashboard", "view:devices", "view:users", "create:objects"],
   demo: ["view:dashboard"],
 };

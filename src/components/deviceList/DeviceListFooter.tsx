@@ -69,7 +69,8 @@ export function DeviceListFooter() {
           }}
         />
       </Box>
-      <Can permission="create:objects">
+
+      <Can permission="create:devices">
         <Box sx={{ display: "flex", justifyContent: "center", width: "10%" }}>
           <IconButton
             sx={{
@@ -89,6 +90,7 @@ export function DeviceListFooter() {
           </IconButton>
         </Box>
       </Can>
+
       <DeviceModal open={open} setIsOpen={setOpen} onSubmit={handleCreate} />
     </Box>
   );
