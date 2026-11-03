@@ -11,7 +11,6 @@ import { useState } from "react";
 import UserIcon from "@mui/icons-material/Person";
 import DevicesIcon from "@mui/icons-material/DeveloperBoard";
 import TelematicsIcon from "@mui/icons-material/Monitor";
-import SpeedIcon from "@mui/icons-material/Speed";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -23,6 +22,7 @@ import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../styles/theme";
 import navIcon from "../../assets/navIcon.png";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import WorkspacesIcon from "@mui/icons-material/Business";
 import { Can } from "../Can";
 
 export function Sidebar() {
@@ -136,17 +136,25 @@ export function Sidebar() {
 
               <Collapse in={openAccControl} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding dense={true}>
+                  <Can permission="view:workspaces">
+                    <ListItemButton
+                      component={Link}
+                      to="workspace"
+                      sx={{ pl: 4 }}
+                    >
+                      <ListItemIcon>
+                        <WorkspacesIcon
+                          sx={{ color: theme.colors.valueText }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary="Workspace" />
+                    </ListItemButton>
+                  </Can>
                   <ListItemButton component={Link} to="users" sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <UserIcon sx={{ color: theme.colors.valueText }} />
                     </ListItemIcon>
                     <ListItemText primary="Users" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <SpeedIcon sx={{ color: theme.colors.valueText }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Limits" />
                   </ListItemButton>
                 </List>
               </Collapse>

@@ -5,6 +5,7 @@ export type RegisterProps = {
   lastName: string;
   email: string;
   password: string;
+  workspaceName: string;
 };
 
 export type LoginProps = {
