@@ -11,6 +11,7 @@ import { PublicAccess } from "./routes/PublicAccess";
 import { PrivateAccess } from "./routes/PrivateAccess";
 import { RequirePermission } from "./routes/RequirePermission";
 import { AdminDashboardPage } from "./pages/AdminDashboardPage";
+import { WorkspacePage } from "./pages/WorkspacePage";
 
 export const App = () => {
   return (
@@ -32,6 +33,10 @@ export const App = () => {
 
             <Route element={<RequirePermission permission="view:users" />}>
               <Route path="/users" element={<UsersPage />} />
+            </Route>
+
+            <Route element={<RequirePermission permission="view:workspaces" />}>
+              <Route path="/workspace" element={<WorkspacePage />} />
             </Route>
 
             <Route
