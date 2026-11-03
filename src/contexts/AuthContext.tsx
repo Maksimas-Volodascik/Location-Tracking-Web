@@ -47,7 +47,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     setRole(null);
     clearAccessToken();
-    navigate("/login");
   };
 
   const userPerm = useMemo<{

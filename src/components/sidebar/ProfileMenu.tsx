@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { theme } from "../../styles/theme";
 import navIcon from "../../assets/navIcon.png";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function ProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,6 +21,7 @@ export function ProfileMenu() {
 
   const handleLogout = () => {
     auth.logoutAction();
+    navigate("/login");
   };
 
   return (

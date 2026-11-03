@@ -32,12 +32,6 @@ const ManagerPermissions: Permissions[] = [
 export const Role_Permissions: Record<Role, Permissions[]> = {
   admin: [...ManagerPermissions, "view:admin-dashboard"],
   manager: ManagerPermissions,
-  user: [
-    "view:dashboard",
-    "view:devices",
-    "view:users",
-    "view:workspaces",
-    "create:devices",
-  ],
+  user: ["view:dashboard", "view:devices", "view:users", "view:workspaces"],
   demo: ["view:dashboard"],
 };
