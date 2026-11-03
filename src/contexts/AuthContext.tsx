@@ -37,7 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginAction = async (data: LoginProps) => {
     const response = await userLogin(data);
-    console.log(response.accessToken);
     setToken(response.accessToken);
     saveAccessToken(response.accessToken);
     setRole(getRole(response.accessToken));

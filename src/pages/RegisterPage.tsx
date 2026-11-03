@@ -15,6 +15,7 @@ export function RegisterPage() {
     lastName: "",
     email: "",
     password: "",
+    workspaceName: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,6 @@ export function RegisterPage() {
     if (response == null) {
       navigate("/login");
     }
-    console.log(response);
   }
   return (
     <>
@@ -38,7 +38,7 @@ export function RegisterPage() {
           sx={{
             background: theme.surface.page,
             border: theme.borders.primary,
-            width: "350px",
+            width: "400px",
           }}
         >
           <CardContent>
@@ -90,6 +90,12 @@ export function RegisterPage() {
                 gap: 2,
               }}
             >
+              <TextField
+                name="workspaceName"
+                label="Workspace Name"
+                type="text"
+                onChange={handleChange}
+              ></TextField>
               <Box sx={{ display: "flex", gap: "10px" }}>
                 <TextField
                   name="firstName"
