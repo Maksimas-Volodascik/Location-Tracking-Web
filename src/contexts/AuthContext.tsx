@@ -13,6 +13,7 @@ import {
   type Permissions,
   type Role,
 } from "../types/permissions";
+import { useQueryClient } from "@tanstack/react-query";
 
 type AuthProps = {
   token: string | null;
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [token, setToken] = useState<string | null>(getAccessToken() || null);
   const [role, setRole] = useState<Role | null>(getRole() || null);
+  const queryClient = useQueryClient();
 
   const loginAction = async (data: LoginProps) => {
     const response = await userLogin(data);
@@ -46,7 +48,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logoutAction = () => {
     setToken(null);
     setRole(null);
+    queryClient.clear();
     clearAccessToken();
+    navigate("/login");
   };
 
   const userPerm = useMemo<{
