@@ -16,7 +16,6 @@ export function DeviceListFooter() {
   const queryClient = useQueryClient();
 
   const handleCreate = async (form: DeviceForm) => {
-    console.log(form);
     await createNewDevice(form);
     queryClient.invalidateQueries({ queryKey: ["devices"] });
   };

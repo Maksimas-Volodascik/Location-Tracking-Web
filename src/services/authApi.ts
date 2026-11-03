@@ -5,18 +5,10 @@ import {
 } from "../types/auth";
 import { postRequest } from "./httpClient";
 
-export async function userRegister({
-  email,
-  firstName,
-  lastName,
-  password,
-}: RegisterProps): Promise<string> {
-  return await postRequest<string>("users/register", {
-    firstName,
-    lastName,
-    email,
-    password,
-  });
+export async function userRegister(
+  registerRequest: RegisterProps,
+): Promise<string> {
+  return await postRequest<string>("users/register", registerRequest);
 }
 
 export async function userLogin({
