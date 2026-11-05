@@ -40,6 +40,17 @@ export function postRequest<Type, Body = unknown>(
   });
 }
 
+export function putRequest<Type, Body = unknown>(
+  path: string,
+  body: Body,
+): Promise<Type> {
+  return request<Type>(path, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
 export function patchRequest<Type, Body = unknown>(
   path: string,
   body: Body,
