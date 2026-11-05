@@ -1,14 +1,18 @@
 import { Box, Chip, Skeleton, Typography } from "@mui/material";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Can } from "../components/Can";
 import { ContentLayout } from "../components/layout/ContentLayout";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { Header } from "../components/ui/Header";
+import { WorkspaceModal } from "../components/workspace/WorkspaceModal";
 import { theme } from "../styles/theme";
-import type { WorkspaceData } from "../types/workspace";
-import { useQuery } from "@tanstack/react-query";
-import { getWorkspaceData } from "../services/workspaceApi";
+import type { UpdateWorkspaceData, WorkspaceData } from "../types/workspace";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getWorkspaceData,
+  updateWorkspaceData,
+} from "../services/workspaceApi";
 
 export function WorkspacePage() {
   const {
@@ -20,6 +24,15 @@ export function WorkspacePage() {
     queryFn: getWorkspaceData,
     staleTime: Infinity,
   });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const handleUpdate = async (form: UpdateWorkspaceData) => {
+    if (!workspaceData) return;
+    await updateWorkspaceData(form, workspaceData.id);
+    queryClient.invalidateQueries({ queryKey: ["workspace"] });
+  };
 
   const status = workspaceData?.isActive
     ? theme.userStatusTheme.online
@@ -104,13 +117,18 @@ export function WorkspacePage() {
               }}
             >
               <Box sx={{ width: "140px" }}>
-                {/* no edit flow yet, button is display only */}
-                <Button onClick={() => {}}>Edit</Button>
+                <Button onClick={() => setIsEditModalOpen(true)}>Edit</Button>
               </Box>
             </Box>
           </Can>
         </Card>
       </Box>
+      <WorkspaceModal
+        open={isEditModalOpen}
+        setIsOpen={setIsEditModalOpen}
+        onSubmit={handleUpdate}
+        initialData={workspaceData}
+      />
     </ContentLayout>
   );
 }
