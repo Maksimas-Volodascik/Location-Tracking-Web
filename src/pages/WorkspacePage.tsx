@@ -1,4 +1,4 @@
-import { Box, Chip, Typography } from "@mui/material";
+import { Box, Chip, Skeleton, Typography } from "@mui/material";
 import type { ReactNode } from "react";
 import { Can } from "../components/Can";
 import { ContentLayout } from "../components/layout/ContentLayout";
@@ -7,31 +7,32 @@ import { Card } from "../components/ui/Card";
 import { Header } from "../components/ui/Header";
 import { theme } from "../styles/theme";
 import type { WorkspaceData } from "../types/workspace";
-
-// mock data until the workspace api exists
-const WorkspaceJson: WorkspaceData = {
-  name: "Northern Fleet",
-  description: "Delivery vehicles operating across the northern region.",
-  isActive: true,
-  createdAt: "2026-03-14T09:30:00Z",
-  userCount: 12,
-  deviceCount: 48,
-};
+import { useQuery } from "@tanstack/react-query";
+import { getWorkspaceData } from "../services/workspaceApi";
 
 export function WorkspacePage() {
-  const workspace = WorkspaceJson;
-  const status = workspace.isActive
+  const {
+    data: workspaceData,
+    isLoading,
+    isLoadingError,
+  } = useQuery<WorkspaceData | null>({
+    queryKey: ["workspace"],
+    queryFn: getWorkspaceData,
+    staleTime: Infinity,
+  });
+
+  const status = workspaceData?.isActive
     ? theme.userStatusTheme.online
     : theme.userStatusTheme.offline;
 
   const fields: { label: string; value: ReactNode }[] = [
-    { label: "Name", value: workspace.name },
-    { label: "Description", value: workspace.description },
+    { label: "Name", value: workspaceData?.name },
+    { label: "Description", value: workspaceData?.description },
     {
       label: "Status",
-      value: (
+      value: workspaceData && (
         <Chip
-          label={workspace.isActive ? "Active" : "Inactive"}
+          label={workspaceData.isActive ? "Active" : "Inactive"}
           size="small"
           sx={{ border: "1px solid", ...status }}
         />
@@ -39,10 +40,11 @@ export function WorkspacePage() {
     },
     {
       label: "Created",
-      value: new Date(workspace.createdAt).toLocaleDateString(),
+      value:
+        workspaceData && new Date(workspaceData.createdAt).toLocaleDateString(),
     },
-    { label: "Users", value: workspace.userCount },
-    { label: "Devices", value: workspace.deviceCount },
+    { label: "Users", value: workspaceData?.userCount },
+    { label: "Devices", value: workspaceData?.deviceCount },
   ];
 
   return (
@@ -76,7 +78,20 @@ export function WorkspacePage() {
                   fontSize: theme.fontSize.sm,
                 }}
               >
-                {field.value}
+                {isLoading ? (
+                  <Skeleton variant="text" sx={{ width: "60%" }} />
+                ) : isLoadingError ? (
+                  <Typography
+                    sx={{
+                      color: theme.colors.faintDescription,
+                      fontSize: theme.fontSize.sm,
+                    }}
+                  >
+                    Failed to load
+                  </Typography>
+                ) : (
+                  field.value
+                )}
               </Box>
             </Box>
           ))}
