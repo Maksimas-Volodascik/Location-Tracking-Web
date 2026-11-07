@@ -4,6 +4,7 @@ export type UserData = {
   lastName: string;
   email: string;
   role: string;
+  workspaceId: string;
   //isOnline: boolean; true - connected last 24 hours ago
 };
 
@@ -18,6 +19,7 @@ export type UserForm = {
   lastName: string;
   email: string;
   password: string;
+  workspaceName: string;
 };
 
 export const EMPTY_USER_FORM: UserForm = {
@@ -25,6 +27,7 @@ export const EMPTY_USER_FORM: UserForm = {
   lastName: "",
   email: "",
   password: "",
+  workspaceName: "",
 };
 
 export function toUserForm(user: UserData): UserForm {
@@ -33,5 +36,6 @@ export function toUserForm(user: UserData): UserForm {
     lastName: user.lastName,
     email: user.email,
     password: "",
+    workspaceName: "",
   };
 }

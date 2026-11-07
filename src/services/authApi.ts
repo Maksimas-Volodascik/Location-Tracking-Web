@@ -1,8 +1,10 @@
 import {
+  type InvitationToken,
   type LoginProps,
   type RegisterProps,
   type TokenResponse,
 } from "../types/auth";
+import type { Role } from "../types/permissions";
 import { postRequest } from "./httpClient";
 
 export async function userRegister(
@@ -20,4 +22,11 @@ export async function userLogin({
     password,
   });
   return accessToken;
+}
+
+export async function userInvite(role: Role): Promise<InvitationToken> {
+  const inviteToken = await postRequest<InvitationToken>("users/invites", {
+    role: role,
+  });
+  return inviteToken;
 }
