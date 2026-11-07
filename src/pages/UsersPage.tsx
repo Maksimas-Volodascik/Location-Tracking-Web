@@ -60,14 +60,8 @@ export function UsersPage() {
     handleMenuClose();
   };
 
-  const handleCreate = async (form: UserForm) => {
-    await userRegister(form);
-    queryClient.invalidateQueries({ queryKey: ["users"] });
-  };
-
   const handleUpdate = async (form: UserForm, userGuid: string | null) => {
     if (!userGuid || !selectedUser) return;
-    // role is not editable yet, so send the current one back unchanged
     await updateUser(
       {
         firstName: form.firstName,
@@ -97,7 +91,7 @@ export function UsersPage() {
       <ItemListFooter
         type="User"
         setFilter={setFilter}
-        handleCreate={handleCreate}
+        handleCreate={() => {}}
       />
       <UserModal
         open={isEditModalOpen}

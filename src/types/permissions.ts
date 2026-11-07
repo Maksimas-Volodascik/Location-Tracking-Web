@@ -35,3 +35,10 @@ export const Role_Permissions: Record<Role, Permissions[]> = {
   user: ["view:dashboard", "view:devices", "view:users", "view:workspaces"],
   demo: ["view:dashboard"],
 };
+
+export function getAvailableUserRoles(current: Role | null): Role[] {
+  if (!current) {
+    return [];
+  }
+  return Roles.slice(0, Roles.indexOf(current) + 1);
+}
