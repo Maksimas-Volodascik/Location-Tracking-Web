@@ -32,6 +32,7 @@ export function ModalLayout({ open, onClose, children }: ModalLayoutProps) {
           border: theme.borders.default,
           borderRadius: "16px",
           overflow: "hidden",
+          outline: "none",
         }}
       >
         {children}

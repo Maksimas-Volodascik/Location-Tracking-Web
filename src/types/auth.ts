@@ -21,3 +21,11 @@ export type TokenResponse = {
 export type InvitationToken = {
   token: string;
 };
+
+export type InviteRegisterProps = {
+  token: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};

@@ -5,6 +5,7 @@ import { themeTemplate } from "./styles/theme";
 import { UsersPage } from "./pages/UsersPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { InviteRegisterPage } from "./pages/InviteRegisterPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { DevicesPage } from "./pages/DevicesPage";
 import { PublicAccess } from "./routes/PublicAccess";
@@ -20,6 +21,7 @@ export const App = () => {
         <Route element={<PublicAccess />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/invite" element={<InviteRegisterPage />} />
           <Route path="*" element={<RegisterPage />} />
         </Route>
         <Route element={<PrivateAccess />}>
