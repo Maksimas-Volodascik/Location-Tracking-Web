@@ -13,11 +13,6 @@ import {
   validateInviteToken,
 } from "../services/authApi";
 
-function mockInviteRegister(data: InviteRegisterProps): null {
-  console.log("Invite register body:", data);
-  return null;
-}
-
 export function InviteRegisterPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

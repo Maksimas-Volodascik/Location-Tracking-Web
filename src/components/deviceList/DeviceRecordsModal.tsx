@@ -29,7 +29,7 @@ export function DeviceRecordsModal({
     if (tab == "Edit") {
       return <EditDeviceForm />;
     }
-    return <DeviceMap open={true} />;
+    return <DeviceMap open={true} deviceId={device?.id} />;
   };
 
   return (
