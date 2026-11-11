@@ -1,6 +1,7 @@
 import {
   type DeviceData,
   type DeviceForm,
+  type DevicePositionData,
   type RecordData,
 } from "../types/device";
 import {
@@ -26,7 +27,13 @@ export async function getAllDevices(): Promise<DeviceData[]> {
 export async function getDeviceRecords(
   deviceId: string,
 ): Promise<RecordData[]> {
-  return getRequest<RecordData[]>(`records/${deviceId}`);
+  return getRequest<RecordData[]>(`records/${deviceId}/records`);
+}
+
+export async function getDevicePositions(
+  deviceId: string,
+): Promise<DevicePositionData[]> {
+  return getRequest<DevicePositionData[]>(`records/${deviceId}/positions`);
 }
 
 export async function createNewDevice(

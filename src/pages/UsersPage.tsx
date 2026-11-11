@@ -5,7 +5,6 @@ import { deleteUser, getAllUsers, updateUser } from "../services/userApi";
 import type { UserData, UserForm } from "../types/users";
 import { Header } from "../components/ui/Header";
 import { ItemListFooter } from "../components/ui/ItemListFooter";
-import { userRegister } from "../services/authApi";
 import { EntityList } from "../components/entityList/EntityList";
 import { userToRow } from "../utils/rowMapper";
 import { OptionMenu, type MenuOptions } from "../components/ui/OptionMenu";
